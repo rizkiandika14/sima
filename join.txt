@@ -1,0 +1,30 @@
+SELECT user.id,user.divisi, pengajuan.waktu_pengajuan,
+SUM(pengajuan.user_id) AS total_pengajuan
+FROM pengajuan,user 
+WHERE user.id=pengajuan.user_id AND pengajuan.status='proses' 
+GROUP BY pengajuan.waktu_pengajuan AND pengajuan.status='proses' 
+
+
+SELECT user.id,user.divisi,pengajuan.waktu_pengajuan, Sum(pengajuan.user_id) AS total_pengajuan
+FROM user, pengajuan
+WHERE pengajuan.status='proses'
+INNER JOIN pengajuan
+ON user.id=pengajuan.user_id
+WHERE pengajuan.status='proses' 
+GROUP BY pengajuan.waktu_pengajuan
+
+SELECT distinct(unit), instansi, tgl_permintaan FROM permintaan WHERE status!=1
+
+SELECT distinct(divisi), minggu, waktu_pengajuan FROM pengajuan WHERE status!='proses'
+
+SELECT barang.nama_brg, pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.user_id, pengajuan.divisi, pengajuan.id, pengajuan.waktu_pengajuan
+        FROM pengajuan
+        INNER JOIN barang ON pengajuan.barang_id=barang.id
+        where pengajuan.waktu_pengajuan = '2023-03-25 00:05:13'
+
+
+
+
+
+SELECT barang_temp.waktu_pengajuan, pengajuan.user_id, pengajuan.barang_id, nama_brg, jumlah, satuan, status FROM permintaan INNER JOIN 
+        stokbarang ON permintaan.kode_brg = stokbarang.kode_brg  WHERE tgl_permintaan='$tgl' AND unit='$unit' AND status!=1
