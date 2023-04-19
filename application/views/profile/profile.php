@@ -8,11 +8,9 @@
                         <div>
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
-                                        data-toggle="tab">Home</a></li>
+                                        data-toggle="tab">Profile</a></li>
                                 <li role="presentation"><a href="#profile_settings" aria-controls="settings" role="tab"
-                                        data-toggle="tab">Profile Settings</a></li>
-                                <li role="presentation"><a href="#change_password_settings" aria-controls="settings"
-                                        role="tab" data-toggle="tab">Change Password</a></li>
+                                        data-toggle="tab">Edit Profile</a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -25,18 +23,21 @@
                                                         <img src="<?= base_url('assets/'); ?>images/user.png" />
                                                     </a>
                                                 </div>
+                                                <?php
+                                                foreach ($user as $u) : ?>
 
+                                                <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                                 <div class="media-body">
                                                     <h4 class="media-heading">
-                                                        <a href="#"><?= $this->session->userdata('username'); ?></a>
+                                                        <a><?= $this->session->userdata('username'); ?></a>
                                                     </h4>
-                                                    <?= $this->session->userdata('email'); ?>
-
-                                                    <li>Divisi : <a><?= $user['divisi']; ?></a></li>
-                                                    <li>Contact : <a><?= $user['contact']; ?></a></li>
+                                                    <li>Email : <a><?= $u['email']; ?></a></li>
+                                                    <li>Nama Lengkap : <a><?= $u['nama']; ?></a></li>
+                                                    <li>Divisi : <a><?= $u['divisi']; ?></a></li>
+                                                    <li>Contact : <a><?= $u['contact']; ?></a></li>
 
                                                 </div>
-
+                                                <?php endforeach; ?>
                                             </div>
                                         </div>
 
@@ -44,15 +45,29 @@
 
 
                                 </div>
+                                <?php
+                                foreach ($user as $u) : ?>
                                 <div role="tabpanel" class="tab-pane fade in" id="profile_settings">
-                                    <form class="form-horizontal">
+                                    <form class="form-horizontal"
+                                        action="<?= base_url() ?>user/fungsi_edit/<?= $u['id']; ?>" method="post"
+                                        enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <label for="NameSurname" class="col-sm-2 control-label">Name Surname</label>
+                                            <label for="NameSurname" class="col-sm-2 control-label">Divisi</label>
                                             <div class="col-sm-10">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" id="NameSurname"
-                                                        name="NameSurname" placeholder="Name Surname"
-                                                        value="Marc K. Hammond" required>
+                                                    <input type="text" class="form-control" id="username"
+                                                        name="username" placeholder="Username"
+                                                        value="<?= $u['divisi']; ?>" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NameSurname" class="col-sm-2 control-label">Username</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" id="username"
+                                                        name="username" placeholder="Username"
+                                                        value="<?= $u['username']; ?>" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -60,79 +75,37 @@
                                             <label for="Email" class="col-sm-2 control-label">Email</label>
                                             <div class="col-sm-10">
                                                 <div class="form-line">
-                                                    <input type="email" class="form-control" id="Email" name="Email"
-                                                        placeholder="Email" value="example@example.com" required>
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        placeholder="Email" value="<?= $u['email']; ?>" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="InputExperience"
-                                                class="col-sm-2 control-label">Experience</label>
-
+                                            <label for="Nama" class="col-sm-2 control-label">Nama Lengkap</label>
                                             <div class="col-sm-10">
                                                 <div class="form-line">
-                                                    <textarea class="form-control" id="InputExperience"
-                                                        name="InputExperience" rows="3"
-                                                        placeholder="Experience"></textarea>
+                                                    <input type="text" class="form-control" id="nama" name="nama"
+                                                        placeholder="Nama Lengkap" value="<?= $u['nama']; ?>" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="InputSkills" class="col-sm-2 control-label">Skills</label>
-
+                                            <label for="Contact" class="col-sm-2 control-label">Contact Person</label>
                                             <div class="col-sm-10">
                                                 <div class="form-line">
-                                                    <input type="text" class="form-control" id="InputSkills"
-                                                        name="InputSkills" placeholder="Skills">
+                                                    <input type="number" class="form-control" id="contact"
+                                                        name="contact" placeholder="Contact"
+                                                        value="<?= $u['contact']; ?>" required>
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="submit" class="btn btn-danger">SUBMIT</button>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
-                                    <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label for="OldPassword" class="col-sm-3 control-label">Old Password</label>
-                                            <div class="col-sm-9">
-                                                <div class="form-line">
-                                                    <input type="password" class="form-control" id="OldPassword"
-                                                        name="OldPassword" placeholder="Old Password" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="NewPassword" class="col-sm-3 control-label">New Password</label>
-                                            <div class="col-sm-9">
-                                                <div class="form-line">
-                                                    <input type="password" class="form-control" id="NewPassword"
-                                                        name="NewPassword" placeholder="New Password" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="NewPasswordConfirm" class="col-sm-3 control-label">New Password
-                                                (Confirm)</label>
-                                            <div class="col-sm-9">
-                                                <div class="form-line">
-                                                    <input type="password" class="form-control" id="NewPasswordConfirm"
-                                                        name="NewPasswordConfirm" placeholder="New Password (Confirm)"
-                                                        required>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <?php endforeach; ?>
 
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-3 col-sm-9">
-                                                <button type="submit" class="btn btn-danger">SUBMIT</button>
-                                            </div>
-                                        </div>
                                     </form>
                                 </div>
                             </div>

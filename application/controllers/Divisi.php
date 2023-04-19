@@ -83,6 +83,8 @@ class Divisi extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -100,6 +102,8 @@ class Divisi extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -117,6 +121,8 @@ class Divisi extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -134,6 +140,8 @@ class Divisi extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -217,5 +225,32 @@ class Divisi extends CI_Controller
         $this->db->insert('barang_temp', $data);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Barang added!</div>');
         redirect('divisi/pengajuan4');
+    }
+
+    public function rekap_detail($waktu, $minggu)
+    {
+        $this->load->model('Divpengajuan_model', 'divpengajuan_model');
+        $data['waktu'] = $this->divpengajuan_model->getDetail($waktu, $minggu);
+        $data['divpengajuan'] = $this->divpengajuan_model->getRekapDetail($waktu, $minggu);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/divisi_sidebar');
+        $this->load->view('divisi/rekap_detail', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function rekap()
+    {
+        $this->load->model('Divpengajuan_model', 'divpengajuan_model');
+        $data['nama_brg'] = $this->db->get('pengajuan')->result_array();
+        $this->load->model('User_model', 'user_model');
+
+        $data['user'] = $this->user_model->getDataUser();
+        // $data['dpengajuan'] = $this->dpengajuan_model->getPengajuanTemp();
+        $data['pengajuandiv'] = $this->divpengajuan_model->getRekap();
+        $this->load->view('templates/header');
+        $this->load->view('templates/divisi_sidebar');
+        $this->load->view('divisi/rekap', $data);
+        $this->load->view('templates/footer');
     }
 }

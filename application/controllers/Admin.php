@@ -42,11 +42,23 @@ class Admin extends CI_Controller
 
         $this->form_validation->set_rules('nama_brg', 'Barang', 'required');
         $data = [
-            'nama_brg' => $this->input->post('nama_brg'),
-            'stok' => $this->input->post('stok')
+            'nama_brg' => $this->input->post('nama_brg')
         ];
         $this->db->insert('barang', $data);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Barang added!</div>');
+        redirect('admin/barang');
+    }
+
+    public function tambah_satuan()
+    {
+        $data['satuan'] = $this->db->get('barang_satuan')->result_array();
+
+        $this->form_validation->set_rules('satuan', 'barang_satuan', 'required');
+        $data = [
+            'satuan' => $this->input->post('satuan')
+        ];
+        $this->db->insert('barang_satuan', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Satuan added!</div>');
         redirect('admin/barang');
     }
 
@@ -54,37 +66,14 @@ class Admin extends CI_Controller
     {
         $id = $this->input->post('id');
         $nama_brg = $this->input->post('nama_brg');
-        $stok = $this->input->post('stok');
         $ArrUpdate = array(
-            'nama_brg' => $nama_brg,
-            'stok' => $stok
+            'nama_brg' => $nama_brg
         );
         $this->barang_model->updateBarang($id, $ArrUpdate);
         $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Barang Edited!</div>');
         Redirect(base_url('admin/barang'));
     }
 
-    public function fungsi_edit_pengajuan()
-    {
-        $id = $this->input->post('id');
-
-        $jumlah = $this->input->post('jumlah');
-        $harga = $this->input->post('harga');
-        $satuan = $this->input->post('satuan');
-        $total = $this->input->post('total');
-        $ArrUpdate = array(
-
-            'jumlah' => $jumlah,
-            'harga' => $harga,
-            'satuan' => $satuan,
-            'total' => $total
-
-        );
-        $this->pengajuan_model->updatePengajuan($id, $ArrUpdate);
-        // Redirect('admin', 'refresh');
-        $referred_from = $this->session->userdata('referred_from');
-        redirect($referred_from, 'refresh');
-    }
 
     public function fungsi_delete($id)
     {
@@ -151,6 +140,8 @@ class Admin extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -168,6 +159,8 @@ class Admin extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -185,6 +178,8 @@ class Admin extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -202,6 +197,8 @@ class Admin extends CI_Controller
         $data['nama_brg'] = $this->db->get('barang')->result_array();
         $this->load->model('Temp_model', 'temp_model');
         $data['nama_brg'] = $this->db->get('barang_temp')->result_array();
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
 
 
         $data['barang'] = $this->barang_model->getBarang();
@@ -313,6 +310,50 @@ class Admin extends CI_Controller
         }
     }
 
+    public function rekapBarang()
+    {
+        $this->load->model('Barang_model', 'barang_model');
+        $this->load->model('User_model', 'user_model');
+        $this->load->model('Pengajuan_model', 'pengajuan_model');
+
+        $data['user'] = $this->user_model->getDataUser();
+        $data['barang'] = $this->barang_model->getBarang();
+
+        $data['pencarian_data'] = $this->pengajuan_model->getAllBarang();
+        $tgla = $this->input->post('tgla');
+        $tglb = $this->input->post('tglb');
+        $nama_brg = $this->input->post('nama_brg');
+        $divisi = $this->input->post('nama_divisi');
+        $data['totalp'] = $this->pengajuan_model->getJumlahBarang($tgla, $tglb, $nama_brg, $divisi);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/rekap_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function rekapBarangdet()
+    {
+        $tgla = $this->input->post('tgla');
+        $tglb = $this->input->post('tglb');
+        $nama_brg = $this->input->post('nama_brg');
+        $divisi = $this->input->post('nama_divisi');
+        $this->load->model('Barang_model', 'barang_model');
+        $this->load->model('User_model', 'user_model');
+        $this->load->model('Pengajuan_model', 'pengajuan_model');
+
+        $data['user'] = $this->user_model->getDataUser();
+        $data['barang'] = $this->barang_model->getBarang();
+
+
+
+        $data['pencarian_data'] = $this->pengajuan_model->getDateBarang($tgla, $tglb, $nama_brg, $divisi);
+        $data['totalp'] = $this->pengajuan_model->getJumlahBarang($tgla, $tglb, $nama_brg, $divisi);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/rekap_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function laporan()
     {
         $this->load->model('Dpengajuan_model', 'dpengajuan_model');
@@ -321,10 +362,307 @@ class Admin extends CI_Controller
 
         $data['user'] = $this->user_model->getDataUser();
         // $data['dpengajuan'] = $this->dpengajuan_model->getPengajuanTemp();
-        $data['pengajuandiv'] = $this->dpengajuan_model->getDivisiTemp();
+        $data['pengajuandiv'] = $this->dpengajuan_model->getLaporan();
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
         $this->load->view('laporan/laporan', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function laporanDetail($waktu, $divisi, $minggu)
+    {
+        $this->load->model('Dpengajuan_model', 'dpengajuan_model');
+        $this->load->model('Laporan_model', 'laporan_model');
+        $data['waktu'] = $this->dpengajuan_model->getPengajuanDetail($waktu, $divisi, $minggu);
+        $data['dpengajuan'] = $this->dpengajuan_model->getLaporanTemp($waktu, $divisi, $minggu);
+        $data['divisi'] = $divisi;
+        $data['minggu'] = $minggu;
+        $data['tanggal'] = $waktu;
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('laporan/laporan_detail', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function import_excel()
+    {
+        if (isset($_FILES["fileExcel"]["name"])) {
+            $path = $_FILES["fileExcel"]["tmp_name"];
+            $object = PHPExcel_IOFactory::load($path);
+            foreach ($object->getWorksheetIterator() as $worksheet) {
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+                for ($row = 4; $row <= $highestRow; $row++) {
+                    $nama_brg = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $temp_data[] = array(
+                        'nama_brg'    => $nama_brg
+                    );
+                }
+            }
+            $this->load->model('Import_model');
+            $insert = $this->Import_model->insert($temp_data);
+            if ($insert) {
+                $this->session->set_flashdata('status', '<span class="glyphicon glyphicon-ok"></span> Data Berhasil di Import ke Database');
+                redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                $this->session->set_flashdata('status', '<span class="glyphicon glyphicon-remove"></span> Terjadi Kesalahan');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            echo "Tidak ada file yang masuk";
+        }
+    }
+
+    public function validasi_pengajuan()
+    {
+        $this->load->model('Divpengajuan_model', 'divpengajuan_model');
+        $data['nama_brg'] = $this->db->get('pengajuan')->result_array();
+        $data['divpengajuan'] = $this->divpengajuan_model->getDivpengajuanTemp();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/validasi_pengajuan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    //ASAL BARANG
+    public function asal_barang()
+    {
+        $this->load->model('Upbmaster_model', 'Upbmaster_model');
+        $data['nama_asal_barang'] = $this->db->get('asal_barang')->result_array();
+
+
+        $data['asal_barang'] = $this->Upbmaster_model->getAsalBarang();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/asal_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambah_asal_barang()
+    {
+        $data['nama_asal_barang'] = $this->db->get('asal_barang')->result_array();
+
+        $this->form_validation->set_rules('nama_asal_barang', 'Barang', 'required');
+        $data = [
+
+            'nama_asal_barang' => $this->input->post('nama_asal_barang')
+        ];
+        $this->db->insert('asal_barang', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Asal Barang added!</div>');
+        redirect('admin/asal_barang');
+    }
+
+    public function fungsi_edit_asal_barang()
+    {
+        $id = $this->input->post('id_asal_barang');
+        $nama_asal_barang = $this->input->post('nama_asal_barang');
+        $ArrUpdate = array(
+            'nama_asal_barang' => $nama_asal_barang
+
+
+        );
+        $this->Upbmaster_model->updateAsalBarang($id, $ArrUpdate);
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Asal Barang Edited!</div>');
+        Redirect(base_url('admin/asal_barang'));
+    }
+
+    public function fungsi_delete_asal_barang($id)
+    {
+        $this->Upbmaster_model->hapus($id);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Asal Barang Deleted!</div>');
+        Redirect(Base_url('admin/asal_barang'));
+    }
+
+    //JENIS BARANG 
+    public function jenis_barang()
+    {
+        $this->load->model('Upbmaster_model', 'Upbmaster_model');
+        $data['jenis_barang'] = $this->db->get('jenis_barang')->result_array();
+
+
+        $data['jenis_barang'] = $this->Upbmaster_model->getJenisBarang();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/jenis_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambah_jenis_barang()
+    {
+        $data['jenis_barang'] = $this->db->get('jenis_barang')->result_array();
+
+        $this->form_validation->set_rules('nama_asal_barang', 'Barang', 'required');
+        $data = [
+
+            'jenis_barang' => $this->input->post('jenis_barang')
+        ];
+        $this->db->insert('jenis_barang', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Jenis Barang added!</div>');
+        redirect('admin/jenis_barang');
+    }
+
+    public function fungsi_edit_jenis_barang()
+    {
+        $id = $this->input->post('id_jenis_barang');
+        $jenis_barang = $this->input->post('jenis_barang');
+        $ArrUpdate = array(
+            'jenis_barang' => $jenis_barang
+
+
+        );
+        $this->Upbmaster_model->updateJenisBarang($id, $ArrUpdate);
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Jenis Barang Edited!</div>');
+        Redirect(base_url('admin/jenis_barang'));
+    }
+
+    public function fungsi_delete_jenis_barang($id)
+    {
+        $this->Upbmaster_model->hapusjenisbarang($id);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Jenis Barang Deleted!</div>');
+        Redirect(Base_url('admin/jenis_barang'));
+    }
+
+    //LANTAI
+    public function lantai()
+    {
+        $this->load->model('Upbmaster_model', 'Upbmaster_model');
+        $data['lantai'] = $this->db->get('lantai')->result_array();
+
+
+        $data['lantai'] = $this->Upbmaster_model->getLantai();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/lantai', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambah_lantai()
+    {
+        $data['lantai'] = $this->db->get('lantai')->result_array();
+
+        $this->form_validation->set_rules('lantai', 'Barang', 'required');
+        $data = [
+
+            'kode' => $this->input->post('kode'),
+            'lantai' => $this->input->post('lantai')
+        ];
+        $this->db->insert('lantai', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Lantai added!</div>');
+        redirect('admin/lantai');
+    }
+
+    public function fungsi_edit_lantai()
+    {
+        $id = $this->input->post('id');
+        $kode = $this->input->post('kode');
+        $lantai = $this->input->post('lantai');
+        $ArrUpdate = array(
+            'kode' => $kode,
+            'lantai' => $lantai
+
+
+        );
+        $this->Upbmaster_model->updateLantai($id, $ArrUpdate);
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Lantai Edited!</div>');
+        Redirect(base_url('admin/lantai'));
+    }
+
+    public function fungsi_delete_lantai($id)
+    {
+        $this->Upbmaster_model->hapuslantai($id);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Lantai Deleted!</div>');
+        Redirect(Base_url('admin/jenis_barang'));
+    }
+
+    //GOLONGAN
+    public function golongan()
+    {
+        $this->load->model('Upbmaster_model', 'Upbmaster_model');
+        $data['golongan'] = $this->db->get('golongan')->result_array();
+
+
+        $data['golongan'] = $this->Upbmaster_model->getGolongan();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/golongan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambah_golongan()
+    {
+        $data['golongan'] = $this->db->get('golongan')->result_array();
+
+        $this->form_validation->set_rules('lantai', 'Barang', 'required');
+        $data = [
+
+            'kode' => $this->input->post('kode'),
+            'keterangan' => $this->input->post('keterangan')
+        ];
+        $this->db->insert('golongan', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Golongan added!</div>');
+        redirect('admin/golongan');
+    }
+
+    public function fungsi_edit_golongan()
+    {
+        $id = $this->input->post('id_golongan');
+        $kode = $this->input->post('kode');
+        $keterangan = $this->input->post('keterangan');
+        $ArrUpdate = array(
+            'kode' => $kode,
+            'keterangan' => $keterangan
+
+
+        );
+        $this->Upbmaster_model->updateGolongan($id, $ArrUpdate);
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Golongan Edited!</div>');
+        Redirect(base_url('admin/golongan'));
+    }
+
+    public function fungsi_delete_golongan($id)
+    {
+        $this->Upbmaster_model->hapusgolongan($id);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Golongan Deleted!</div>');
+        Redirect(Base_url('admin/golongan'));
+    }
+
+    //KLASIFIKASI
+    public function klasifikasi()
+    {
+        $this->load->model('Upbmaster_model', 'Upbmaster_model');
+        $data['klasifikasi'] = $this->db->get('klasifikasi')->result_array();
+
+
+
+        $data['golongan'] = $this->Upbmaster_model->getGolongan();
+
+
+        $data['klasifikasi'] = $this->Upbmaster_model->getKlasifikasi();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/klasifikasi', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_klasifikasi()
+    {
+        $data['keterangan'] = $this->db->get('klasifikasi')->result_array();
+        $data = [
+
+            'kode_klas' => $this->input->post('kode'),
+            'keterangan_klas' => $this->input->post('keterangan'),
+            'golongan_id' => $this->input->post('golongan_id')
+
+        ];
+        $this->db->insert('klasifikasi', $data);
+
+
+        redirect('admin/klasifikasi');
+    }
+
+    public function fungsi_delete_klasifikasi($id_klas)
+    {
+        $this->Upbmaster_model->hapus_klasifikasi($id_klas);
+        Redirect(Base_url('admin/klasifikasi'));
     }
 }

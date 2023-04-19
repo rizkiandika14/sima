@@ -46,7 +46,7 @@
                             <a href="<?= base_url('auth/register'); ?>">Register Now!</a>
                         </div>
                         <div class="col-xs-6 align-right">
-                            <a href="forgot-password.html">Forgot Password?</a>
+                            <a href="<?= base_url('auth/forgot_password'); ?>">Forgot Password?</a>
                         </div>
                     </div>
                 </form>

@@ -37,8 +37,8 @@
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">Manajemen Barang | Admin</a>
-                
+                <a class="navbar-brand" href="<?php echo base_url('admin') ?>">SIMA | Admin</a>
+
             </div>
 
         </div>
@@ -61,7 +61,12 @@
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="<?php echo site_url('user') ?>"><i class="material-icons">person</i>Profile</a>
+                            <li><a href="<?= base_url() ?>user/profile/<?= $this->session->userdata('id'); ?>"><i
+                                        class="material-icons">person</i>Profile</a>
+                            </li>
+
+                            <li><a href="<?= base_url('user/changepassword') ?>"><i
+                                class="material-icons">lock</i>Change Password</a>
                             </li>
 
                             <li role="separator" class="divider"></li>
@@ -80,6 +85,12 @@
                         <a href="<?php echo base_url('admin') ?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('user/getDataUser') ?>">
+                            <i class="material-icons">person</i>
+                            <span>Kelola User</span>
                         </a>
                     </li>
 
@@ -127,25 +138,63 @@
                                     <span>Data Pengajuan</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/validasi_pengajuan') ?>">
+                                    <span>Validasi Pengajuan</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('pengajuan/detpengajuan') ?>">
+                                    <span>Detail Pengajuan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/rekapBarang') ?>">
+                                    <span>Rekap Barang</span>
+                                </a>
+                            </li>
                         </ul>
 
                     </li>
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">menu</i>
-                            <span>UPB</span>
+                            <i class="material-icons">storage</i>
+                            <span>Master Data</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo base_url('upb/pengajuan') ?>">Data UPB</a>
+                                <a href="<?php echo base_url('admin/asal_barang') ?>">Asal Barang</a>
                             </li>
+
+                            <li>
+                                <a href="<?php echo base_url('admin/jenis_barang') ?>">Jenis Barang</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('admin/lantai') ?>">Lantai</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('admin/golongan') ?>">Golongan</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('admin/klasifikasi') ?>">Klasifikasi</a>
+                            </li>
+
+
+
                         </ul>
+
                     </li>
+
+
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">menu</i>
+                            <i class="material-icons">file_download</i>
                             <span>Laporan</span>
                         </a>
                         <ul class="ml-menu">

@@ -11,7 +11,8 @@
 
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <?= $this->session->flashdata('message'); ?>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
                     <h2>
@@ -29,19 +30,26 @@
                         <input type="hidden" name="barang_id" id="barang_id" placeholder="id barang"
                             class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
                         <br>
+
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group float">
                                     <div class="form-line">
                                         <select name="satuan" id="satuan" class="form-control" required>
                                             <option value="">--Pilih Satuan--</option>
-                                            <option value="Buah">Buah</option>
-                                            <option value="Pcs">Pcs</option>
+                                            <?php
+                                            foreach ($satuans as $satuan) : ?>
+                                            <option value="<?php echo $satuan['satuan']; ?>">
+                                                <?php echo $satuan['satuan']; ?>
+                                            </option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
                         <input type="number" name="jumlah" id="jumlah" placeholder="Jumlah"
                             class="form-control ui-autocomplete-input" value="" autocomplete="off">
 

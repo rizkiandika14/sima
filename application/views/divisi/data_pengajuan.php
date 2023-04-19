@@ -19,11 +19,13 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Tanggal Pengajuan</th>
                                         <th>Nama Barang</th>
                                         <th>Jumlah</th>
                                         <th>Satuan</th>
                                         <th>Harga</th>
                                         <th>Total</th>
+                                        <th>Realisasi</th>
                                         <th>Status</th>
                                         <th>Validasi</th>
                                         <th>Aksi</th>
@@ -40,13 +42,16 @@
                                     foreach ($divpengajuan as $divp) : ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
+                                        <td><?= $divp['waktu_pengajuan']; ?></td>
                                         <td><?= $divp['nama_brg']; ?></td>
                                         <td><?= $divp['jumlah']; ?></td>
                                         <td><?= $divp['satuan']; ?></td>
                                         <td>Rp. <?= number_format($divp['harga']);  ?></td>
                                         <td>Rp. <?= number_format($divp['total']); ?></td>
+                                        <td><?= $divp['realisasi']; ?></td>
                                         <td><?= $divp['status']; ?></td>
                                         <td><?= $divp['validasi']; ?></td>
+                                        <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                         <td>
                                             <a class="btn btn-sm btn-success"
                                                 href="<?= base_url() ?>pengajuan/diterima/<?= $divp['id']; ?>"><span

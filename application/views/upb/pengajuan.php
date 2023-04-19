@@ -25,6 +25,7 @@
                                         <th>No</th>
                                         <th>Tanggal Pengajuan</th>
                                         <th>Nama Divisi / Bagian</th>
+                                        <th>Minggu Ke - </th>
                                         <th>Aksi</th>
                                     </tr>
 
@@ -40,9 +41,10 @@
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $dp['waktu_pengajuan']; ?></td>
                                         <td><?= $dp['divisi']; ?></td>
+                                        <td><?= $dp['minggu']; ?></td>
                                         <td>
                                             <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>pengajuan/pengajuanDetail/<?= $dp['waktu_pengajuan']; ?>"><i
+                                                href="<?= base_url() ?>Upb/pengajuanDetail/<?= $dp['waktu_pengajuan']; ?>/<?= $dp['divisi']; ?>/<?= $dp['minggu']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>
                                                 Detail</a>

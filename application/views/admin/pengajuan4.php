@@ -11,6 +11,7 @@
 
         <!-- #END# Basic Examples -->
         <!-- Exportable Table -->
+        <?= $this->session->flashdata('message'); ?>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="card">
                 <div class="header">
@@ -35,8 +36,12 @@
                                     <div class="form-line">
                                         <select name="satuan" id="satuan" class="form-control" required>
                                             <option value="">--Pilih Satuan--</option>
-                                            <option value="Buah">Buah</option>
-                                            <option value="Pcs">Pcs</option>
+                                            <?php
+                                            foreach ($satuans as $satuan) : ?>
+                                            <option value="<?php echo $satuan['satuan']; ?>">
+                                                <?php echo $satuan['satuan']; ?>
+                                            </option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>

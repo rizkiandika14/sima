@@ -10,8 +10,20 @@
                     <div class="header">
                         <h2>
                             Data Pengajuan
-                        </h2>
-
+                        </h2><br>
+                        <h5>Minggu Ke - <?= $minggu ?></h5>
+                        <h5>Divisi : <?= $divisi ?></h5>
+                        <h5>Tanggal : <?php echo tanggal_indo($tanggal) ?></h5>
+                        <form
+                            action="<?= base_url('export/cetak_pengajuan'); ?>/<?= $tanggal ?>/<?= $divisi ?>/<?= $minggu ?>"
+                            method=" post" enctype="multipart/form-data">
+                            <div>
+                                <button class='btn btn-primary waves-effect m-r-20' type="submit">
+                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                                    Cetak
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     <div class="body">
                         <div class="table-responsive">
@@ -45,29 +57,38 @@
                                         <td>Rp. <?= number_format($dp['harga']);  ?></td>
                                         <td>Rp. <?= number_format($dp['total']); ?></td>
                                         <td><?= $dp['status']; ?></td>
+                                        <!-- <td>
+                                            <?php
+                                            if ($dp->status == 'proses') {
+                                            ?>
+                                            <span class="label bg-green">proses</span>
+                                            <?php
+                                            } else {
+                                                echo $row->status == 'diterima' ? '<span class="badge badge-success">diterima</span>' : '<span class="badge badge-danger">Ditolak</span>';
+                                            }
+                                            ?>
+                                        </td> -->
 
                                         <td>
-                                            <div class="btn btn-sm btn-warning">
+                                            <div class="btn btn-sm btn-success">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editModal<?= $dp['id']; ?>"> <i
-                                                        class="material-icons"></i> <span class="icon-name">Edit</span>
+                                                        class="material-icons"></i> <span
+                                                        class="icon-name">Setujui</span>
                                                 </div>
                                             </div>
 
                                             <?php $this->session->set_userdata('referred_from', current_url()); ?>
-                                            <a class="btn btn-sm btn-success"
-                                                href="<?= base_url() ?>pengajuan/disetujui/<?= $dp['id']; ?>"><span
-                                                    class="fa fa-trash"></span>
-                                                Setujui</a>
+
 
                                             <a class="btn btn-sm btn-danger"
                                                 href="<?= base_url() ?>pengajuan/ditolak/<?= $dp['id']; ?>"><span
                                                     class="fa fa-trash"></span>
                                                 Tolak</a>
 
-
+                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                             <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>pengajuan/disusulkan/<?= $dp['id']; ?>"><span
+                                                href="<?= base_url() ?>pengajuan/diusulkan/<?= $dp['id']; ?>"><span
                                                     class="fa fa-trash"></span>
                                                 Diusulkan</a>
                                         </td>
@@ -95,10 +116,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Edit Barang</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">SETUJUI PENGAJUAN</h4>
                 </div>
                 <div class="modal-body">
-                    <?= form_open_multipart('admin/fungsi_edit_pengajuan') ?>
+                    <?= form_open_multipart('pengajuan/setuju') ?>
                     <input type="hidden" name="id" value="<?= $brg['id']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
@@ -123,7 +144,20 @@
                                         <div class="form-line">
 
                                             <input type="number" id="jumlah" name="jumlah" class="form-control"
-                                                onkeyup="hitung();" value="<?= $brg['jumlah']; ?>">
+                                                onkeyup="hitung();" value="<?= $brg['jumlah']; ?>" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                    <label for="nama">Realisasi</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                    <div class="form-group">
+                                        <div class="form-line">
+
+                                            <input type="number" id="realisasi" name="realisasi" class="form-control"
+                                                value="<?= $brg['jumlah']; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -172,8 +206,7 @@
 
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-link waves-effect">SAVE
-                                    CHANGES</button>
+                                <button type="submit" class="btn btn-link waves-effect">SETUJUI</button>
                                 <button type="button" class="btn btn-link waves-effect"
                                     data-dismiss="modal">CLOSE</button>
                                 <?php echo form_close() ?>

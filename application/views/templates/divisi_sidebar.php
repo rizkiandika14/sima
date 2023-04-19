@@ -37,7 +37,7 @@
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">Manajemen Barang | Divisi</a>
+                <a class="navbar-brand" href="<?php echo base_url('divisi') ?>">SIMA | Divisi</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -258,9 +258,11 @@
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="<?php echo site_url('user') ?>"><i class="material-icons">person</i>Profile</a>
+                            <li><a href="<?= base_url() ?>user/profile2/<?= $this->session->userdata('id'); ?>"><i class="material-icons">person</i>Profile</a>
                             </li>
-
+                            <li><a href="<?= base_url('user/changepassword2') ?>"><i
+                                class="material-icons">lock</i>Change Password</a>
+                            </li>
                             <li role="separator" class="divider"></li>
                             <li><a href="<?php echo site_url('auth') ?>"><i class="material-icons">input</i>Sign Out</a>
                             </li>
@@ -316,6 +318,11 @@
                             <li>
                                 <a href="<?php echo base_url('Pengajuan/divpengajuan') ?>">
                                     <span>Data Pengajuan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('divisi/rekap') ?>">
+                                    <span>Rekap Pengajuan</span>
                                 </a>
                             </li>
                         </ul>

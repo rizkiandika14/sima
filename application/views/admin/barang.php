@@ -19,41 +19,62 @@
                             Data Barang
                         </h2>
 
-                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                 Launch demo modal
-                            </button> -->
+
 
 
                         <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal"
                             data-target="#defaultModal"> <i class="material-icons">add</i> <span
                                 class="icon-name"></i>Add Barang</button>
 
-                        <button type="button" class="btn btn-info waves-effect m-r-20" data-toggle="modal"
-                            data-target="#defaultModal"> <i class="material-icons">file_upload</i> <span
-                                class="icon-name"></i>Import File</button>
+
+                        <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal"
+                            data-target="#satuanModal"> <i class="material-icons">add</i> <span
+                                class="icon-name"></i>Add Satuan</button>
+
+                        <br>
+                        <br>
+                        <form action="<?= base_url('admin/import_excel'); ?>" method="post"
+                            enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Pilih File Excel</label>
+                                <input type="file" name="fileExcel">
+                            </div>
+                            <div>
+                                <button class='btn btn-info' type="submit">
+                                    <!-- <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    Import -->
+                                    <i class="material-icons">file_upload</i> <span class="icon-name"></i>Import Barang
+                                </button>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- <form action="<?= base_url('export/cetak_barang'); ?>" method="post"
+                            enctype="multipart/form-data">
+                            <div>
+                                <button class='btn btn-primary waves-effect m-r-20' type="submit">
+                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                                    Export Pdf
+                                </button>
+                            </div>
+                        </form> -->
 
 
 
 
 
-
-
-
-                        <ul class="header-dropdown m-r--5">
-                            <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
-                                    role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="javascript:void(0);">Action</a></li>
-                                    <li><a href="javascript:void(0);">Another action</a></li>
-                                    <li><a href="javascript:void(0);">Something else here</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                     </div>
                     <div class="body">
+                        <form action="<?= base_url('export/cetak_barang'); ?>" method="post"
+                            enctype="multipart/form-data">
+                            <div>
+                                <button class='btn btn-primary waves-effect m-r-20' type="submit">
+                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                                    Export Pdf
+                                </button>
+                            </div>
+                        </form>
+                        <br>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover dataTable js-exportable"
                                 id="example">
@@ -61,7 +82,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Barang</th>
-                                        <th>Stok</th>
+
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -69,7 +90,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Barang</th>
-                                        <th>Stok</th>
+
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -81,7 +102,7 @@
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $brg['nama_brg']; ?></td>
-                                        <td><?= $brg['stok']; ?></td>
+
                                         <td>
                                             <div class="btn btn-sm btn-warning">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
@@ -150,18 +171,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                    <label for="nama">Stok</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                    <div class="form-group">
-                                        <div class="form-line">
 
-                                            <input type="number" id="stok" name="stok" class="form-control"
-                                                value="<?= $brg['stok']; ?>">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="modal-footer">
@@ -203,18 +213,55 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+
+
+
+                                <div class="modal-footer js-sweetalert">
+                                    <button type="submit" id="tombol-tambah" class="btn btn-primary waves-effect"
+                                        data-type="success">SAVE
+                                        CHANGES</button>
+                                    <button type="button" class="btn btn-link waves-effect"
+                                        data-dismiss="modal">CLOSE</button>
+                                    <?php echo form_close() ?>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ADD -->
+    <div class="modal fade" id="satuanModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Add Satuan</h4>
+                </div>
+                <form action="<?= base_url('admin/tambah_satuan') ?>" method="post">
+                    <div class="modal-body">
+                        <?php echo form_open_multipart() ?>
+                        <div class="body">
+                            <form class="form-horizontal">
+                                <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="nama">Stok</label>
+                                        <label for="nama">Nama Satuan</label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="number" id="stok" name="stok" class="form-control"
+                                                <input type="text" id="satuan" name="satuan" class="form-control"
                                                     placeholder="">
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
+
+
 
                                 <div class="modal-footer js-sweetalert">
                                     <button type="submit" id="tombol-tambah" class="btn btn-primary waves-effect"

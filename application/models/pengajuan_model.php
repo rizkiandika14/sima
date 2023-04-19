@@ -110,4 +110,54 @@ class Pengajuan_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('pengajuan', $data);
     }
+
+    public function getAll()
+    {
+        $query = "SELECT barang.nama_brg, pengajuan.waktu_pengajuan, pengajuan.id, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi, pengajuan.user_id
+        FROM pengajuan
+        INNER JOIN barang ON pengajuan.barang_id=barang.id
+        where status != 'proses'
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getDate($tgla, $tglb, $status)
+    {
+        $query = "SELECT barang.nama_brg, pengajuan.waktu_pengajuan, pengajuan.id, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi, pengajuan.user_id
+        FROM pengajuan
+        INNER JOIN barang ON pengajuan.barang_id=barang.id
+        where waktu_pengajuan BETWEEN '$tgla' AND '$tglb' AND status = '$status'
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllBarang()
+    {
+        $query = "SELECT barang.nama_brg, pengajuan.divisi, pengajuan.waktu_pengajuan, pengajuan.id, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi, pengajuan.user_id
+        FROM pengajuan
+        INNER JOIN barang ON pengajuan.barang_id=barang.id
+        where status = 'disetujui'
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getDateBarang($tgla, $tglb, $nama_brg, $divisi)
+    {
+        $query = "SELECT barang.nama_brg, pengajuan.divisi, pengajuan.waktu_pengajuan, pengajuan.id, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi, pengajuan.user_id
+        FROM pengajuan
+        INNER JOIN barang ON pengajuan.barang_id=barang.id
+        where waktu_pengajuan BETWEEN '$tgla' AND '$tglb' AND nama_brg = '$nama_brg' AND divisi = '$divisi'
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getjumlahBarang($tgla, $tglb, $nama_brg, $divisi)
+    {
+        $query = "SELECT sum(pengajuan.jumlah) as totalp, barang.nama_brg, pengajuan.divisi, pengajuan.waktu_pengajuan, pengajuan.id, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi, pengajuan.user_id
+        FROM pengajuan
+        INNER JOIN barang ON pengajuan.barang_id=barang.id
+        where waktu_pengajuan BETWEEN '$tgla' AND '$tglb' AND nama_brg = '$nama_brg' AND divisi = '$divisi'
+                    ";
+        return $this->db->query($query)->result_array();
+    }
 }

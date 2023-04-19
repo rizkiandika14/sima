@@ -20,4 +20,20 @@ class User_model extends CI_Model
                     ";
         return $this->db->query($query)->result_array();
     }
+
+    public function getUserDetail($id)
+    {
+
+        $query = "SELECT *
+                    FROM user
+                    WHERE id= '$id'
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+    function updateUser($id, $data)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('user', $data);
+    }
 }

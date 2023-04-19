@@ -19,6 +19,15 @@
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" required
+                                autofocus>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
                             <i class="material-icons">email</i>
                         </span>
                         <div class="form-line">

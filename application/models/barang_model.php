@@ -11,6 +11,14 @@ class Barang_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function getSatuan()
+    {
+        $query = "SELECT *
+                    FROM barang_satuan ORDER BY satuan ASC
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
 
     function getBarangDetail($id)
     {

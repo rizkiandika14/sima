@@ -45,7 +45,7 @@
 
                                         <td>
                                             <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>pengajuan/pengajuanDetail/<?= $dp['waktu_pengajuan']; ?>/<?= $dp['divisi']; ?>/<?= $dp['minggu']; ?>"><i
+                                                href="<?= base_url() ?>admin/laporanDetail/<?= $dp['waktu_pengajuan']; ?>/<?= $dp['divisi']; ?>/<?= $dp['minggu']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>
                                                 Detail</a>
