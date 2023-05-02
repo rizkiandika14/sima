@@ -95,7 +95,7 @@
                                         <td>
 
                                             <a class="btn btn-sm btn-danger waves-effect " data-type="success"
-                                                href="<?= base_url() ?>upb/fungsi_delete_klasifikasi/<?= $klas['id']; ?>"><span
+                                                href="<?= base_url() ?>admin/fungsi_delete_klasifikasi/<?= $klas['id']; ?>"><span
                                                     class="fa fa-trash tombol-hapus"></span>
                                                 Hapus</a>
 

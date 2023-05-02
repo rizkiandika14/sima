@@ -76,7 +76,7 @@
                                                 </div>
                                             </div>
                                             <a class="btn btn-sm btn-danger waves-effect " data-type="success"
-                                                href="<?= base_url() ?>upb/fungsi_delete_lantai/<?= $lan['id']; ?>"><span
+                                                href="<?= base_url() ?>admin/fungsi_delete_lantai/<?= $lan['id']; ?>"><span
                                                     class="fa fa-trash tombol-hapus"></span>
                                                 Hapus</a>
 
@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <?= form_open_multipart('upb/fungsi_edit_lantai') ?>
+                    <?= form_open_multipart('admin/fungsi_edit_lantai') ?>
                     <input type="hidden" name="id" value="<?= $lan['id']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
@@ -175,7 +175,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="defaultModalLabel">Add Lantai</h4>
                 </div>
-                <form action="<?= base_url('upb/tambah_lantai') ?>" method="post">
+                <form action="<?= base_url('admin/tambah_lantai') ?>" method="post">
                     <div class="modal-body">
                         <?php echo form_open_multipart() ?>
                         <div class="body">
