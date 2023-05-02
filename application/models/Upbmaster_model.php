@@ -90,7 +90,7 @@ class Upbmaster_model extends CI_Model
     //KLASIFIKASI
     public function getKlasifikasi()
     {
-        $query =  "SELECT golongan.keterangan, klasifikasi.golongan_id, klasifikasi.kode_klas, klasifikasi.keterangan_klas
+        $query =  "SELECT golongan.keterangan, klasifikasi.golongan_id, klasifikasi.id, klasifikasi.kode_klas, klasifikasi.keterangan_klas
         FROM klasifikasi 
         INNER JOIN golongan ON klasifikasi.golongan_id=golongan.id_golongan
        
@@ -98,9 +98,9 @@ class Upbmaster_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function hapus_klasifikasi($id_klas)
+    public function hapus_klasifikasi($id)
     {
-        $this->db->where('id', $id_klas);
+        $this->db->where('id', $id);
         $this->db->delete('klasifikasi');
     }
 }

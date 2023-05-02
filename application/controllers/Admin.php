@@ -660,9 +660,9 @@ class Admin extends CI_Controller
         redirect('admin/klasifikasi');
     }
 
-    public function fungsi_delete_klasifikasi($id_klas)
+    public function fungsi_delete_klasifikasi($id)
     {
-        $this->Upbmaster_model->hapus_klasifikasi($id_klas);
+        $this->Upbmaster_model->hapus_klasifikasi($id);
         Redirect(Base_url('admin/klasifikasi'));
     }
 }
