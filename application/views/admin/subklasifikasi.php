@@ -15,17 +15,17 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Form Input Klasifikasi</h2>
+                        Form Input Sub Klasifikasi</h2>
                 </div>
                 <div class="body">
 
-                    <form method="post" action="<?= base_url('admin/add_klasifikasi'); ?>">
-                        <input type="text" data-toggle="modal" data-target="#defaultModal" name="keterangan"
-                            id="keterangan" placeholder="Golongan" class="form-control ui-autocomplete-input" value=""
-                            autocomplete="on">
+                    <form method="post" action="<?= base_url('admin/add_subklasifikasi'); ?>">
+                        <input type="text" data-toggle="modal" data-target="#defaultModal" name="nama_klasifikasi"
+                            id="nama_klasifikasi" placeholder="Klasifikasi" class="form-control ui-autocomplete-input"
+                            value="" autocomplete="off" readonly>
                         <br>
 
-                        <input type="hidden" name="golongan_id" id="golongan_id" placeholder="id golongan"
+                        <input type="hidden" name="id_klasifikasi" id="id_klasifikasi" placeholder="id klasifikasi"
                             class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
                         <br>
 
@@ -39,7 +39,7 @@
 
                         <div class="js-sweetalert">
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect"
-                                data-type="with-custom-icon">Proses</button>
+                                data-type="with-custom-icon">Tambah</button>
                         </div>
                     </form>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Data Klasifikasi
+                            Data Sub Klasifikasi
                         </h2>
 
                     </div>
@@ -63,19 +63,19 @@
                                 id="example">
                                 <thead>
                                     <tr>
-                                        <th>Kode Golongan</th>
-                                        <th>Golongan</th>
                                         <th>Kode Klasifikasi</th>
                                         <th>Klasifikasi</th>
+                                        <th>Kode Sub Klasifikasi</th>
+                                        <th>Sub Klasifikasi</th>
                                         <th>Aksi</th>
                                     </tr>
 
                                 </thead>
                                 <tfoot>
-                                    <th>Kode Golongan</th>
-                                    <th>Golongan</th>
                                     <th>Kode Klasifikasi</th>
                                     <th>Klasifikasi</th>
+                                    <th>Kode Sub Klasifikasi</th>
+                                    <th>Sub Klasifikasi</th>
                                     <th>Aksi</th>
                                 </tfoot>
 
@@ -84,14 +84,14 @@
                                 <tbody>
                                     <?php
                                     $no = 1;
-                                    foreach ($klasifikasi as $klas) : ?>
+                                    foreach ($subklasifikasi as $klas) : ?>
 
 
                                     <tr>
-                                        <td><?= $klas['golongan_id']; ?></td>
-                                        <td><?= $klas['keterangan']; ?></td>
                                         <td><?= $klas['kode_klas']; ?></td>
                                         <td><?= $klas['keterangan_klas']; ?></td>
+                                        <td><?= $klas['kode_subklasifikasi']; ?></td>
+                                        <td><?= $klas['keterangan']; ?></td>
                                         <td>
                                             <div class="btn btn-sm btn-warning">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
@@ -100,7 +100,7 @@
                                                 </div>
                                             </div>
                                             <a class="btn btn-sm btn-danger waves-effect " data-type="success"
-                                                href="<?= base_url() ?>admin/fungsi_delete_klasifikasi/<?= $klas['id']; ?>"><span
+                                                href="<?= base_url() ?>admin/fungsi_delete_subklasifikasi/<?= $klas['id']; ?>"><span
                                                     class="fa fa-trash tombol-hapus"></span>
                                                 Hapus</a>
 
@@ -125,28 +125,46 @@
 <!-- MODAL  edit -->
 <?php
 $no = 0;
-foreach ($klasifikasi as $klas) : $no++; ?>
+foreach ($subklasifikasi as $klas) : $no++; ?>
 <div class="modal fade" id="editModal<?= $klas['id']; ?>" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Edit Klasifikasi</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Edit Sub Klasifikasi</h4>
             </div>
 
             <div class="modal-body">
-                <?= form_open_multipart('admin/fungsi_edit_klasifikasi') ?>
+                <?= form_open_multipart('admin/fungsi_edit_subklasifikasi') ?>
                 <input type="hidden" id="id" name="id" value="<?= $klas['id']; ?>">
                 <div class="body">
                     <form class="form-horizontal">
+
+
+                        <input type="hidden" id="id_klasifikasi" name="id_klasifikasi" class="form-control"
+                            value="<?= $klas['id_klasifikasi']; ?>" readonly>
+
                         <div class="row clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="email_address_2">Golongan</label>
+                                <label for="email_address_2">Kode Klasifikasi</label>
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" id="golongan_id" name="golongan_id" class="form-control"
-                                            value="<?= $klas['golongan_id']; ?>" readonly>
+                                        <input type="text" id="kode_klas" name="kode_klas" class="form-control"
+                                            value="<?= $klas['kode_klas']; ?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="email_address_2">Klasifikasi</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="keterangan_klas" name="keterangan_klas"
+                                            class="form-control" value="<?= $klas['keterangan_klas']; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -159,8 +177,9 @@ foreach ($klasifikasi as $klas) : $no++; ?>
                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" id="kode_klas" name="kode_klas" class="form-control"
-                                            value="<?= $klas['kode_klas']; ?>" placeholder="">
+                                        <input type="text" id="kode_subklasifikasi" name="kode_subklasifikasi"
+                                            class="form-control" value="<?= $klas['kode_subklasifikasi']; ?>"
+                                            placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +192,7 @@ foreach ($klasifikasi as $klas) : $no++; ?>
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input type="text" id="keterangan" name="keterangan" class="form-control"
-                                            value="<?= $klas['keterangan_klas']; ?>" placeholder="">
+                                            value="<?= $klas['keterangan']; ?>" placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -203,31 +222,31 @@ foreach ($klasifikasi as $klas) : $no++; ?>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Cari Golongan</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Cari KLasifikasi</h4>
             </div>
             <div class="modal-body">
                 <table class="table table-bordered table-striped table-hover dataTable js-basic-example" width="100%">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Golongan</th>
+                            <th>Klasifikasi</th>
                             <th class="hide">ID</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>
-                        <?php foreach ($golongan  as $k) : ?>
+                        <?php foreach ($klasifikasi  as $k) : ?>
 
                         <tr>
                             <td style="text-align:center;" scope="row">
                                 <?= $i; ?>
                             </td>
-                            <td><?= $k['keterangan']; ?></td>
-                            <td class="hide"><?= $k['id_golongan']; ?></td>
+                            <td><?= $k['keterangan_klas']; ?></td>
+                            <td class="hide"><?= $k['id']; ?></td>
                             <td style="text-align:center;">
                                 <button class="btn btn-sm btn-info" id="pilih"
-                                    data-keterangan="<?= $k['keterangan']; ?>" data-id="<?= $k['id_golongan']; ?>">
+                                    data-keterangan="<?= $k['keterangan_klas']; ?>" data-id="<?= $k['id']; ?>">
                                     Pilih</button>
                             </td>
                         </tr>
@@ -254,10 +273,10 @@ foreach ($klasifikasi as $klas) : $no++; ?>
 <script>
 $(document).ready(function() {
     $(document).on('click', '#pilih', function() {
-        var nama_golongan = $(this).data('keterangan');
+        var nama_klas = $(this).data('keterangan');
         var id = $(this).data('id');
-        $('#keterangan').val(nama_golongan);
-        $('#golongan_id').val(id);
+        $('#nama_klasifikasi').val(nama_klas);
+        $('#id_klasifikasi').val(id);
         $('#defaultModal').modal('hide');
     })
 });

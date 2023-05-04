@@ -183,6 +183,15 @@
                             <li>
                                 <a href="<?php echo base_url('admin/klasifikasi') ?>">Klasifikasi</a>
                             </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/sub_klasifikasi') ?>">SubKlasifikasi</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/lahan') ?>">Lahan</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/bangunan') ?>">Bangunan</a>
+                            </li>
 
 
 

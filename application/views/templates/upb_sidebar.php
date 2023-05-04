@@ -119,6 +119,23 @@
 
                     </li>
 
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">mail</i>
+                            <span>Surat</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="<?php echo base_url('upb/suratmasuk') ?>">Surat Masuk</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('upb/purchaseorder') ?>">Surat Keluar</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
 
 
 

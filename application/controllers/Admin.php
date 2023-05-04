@@ -655,14 +655,415 @@ class Admin extends CI_Controller
 
         ];
         $this->db->insert('klasifikasi', $data);
-
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Klasifikasi Added!</div>');
 
         redirect('admin/klasifikasi');
+    }
+
+    public function fungsi_edit_klasifikasi()
+    {
+        $id = $this->input->post('id');
+        $id_gol = $this->input->post('golongan_id');
+        $kode = $this->input->post('kode_klas');
+        $keterangan = $this->input->post('keterangan');
+        $ArrUpdate = array(
+            'golongan_id' => $id_gol,
+            'kode_klas' => $kode,
+            'keterangan_klas' => $keterangan
+
+
+        );
+        $this->Upbmaster_model->updateKlasifikasi($id, $ArrUpdate);
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Golongan Edited!</div>');
+        Redirect(base_url('admin/klasifikasi'));
     }
 
     public function fungsi_delete_klasifikasi($id)
     {
         $this->Upbmaster_model->hapus_klasifikasi($id);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Klasifikasi Deleted!</div>');
         Redirect(Base_url('admin/klasifikasi'));
+    }
+
+    //SUBKLASIFIKASI
+    public function sub_klasifikasi()
+    {
+        $this->load->model('Upbmaster_model', 'Upbmaster_model');
+        $data['subklasifikasi'] = $this->db->get('subklasifikasi')->result_array();
+
+
+
+        $data['klasifikasi'] = $this->Upbmaster_model->getKlasifikasi();
+
+
+        $data['subklasifikasi'] = $this->Upbmaster_model->getSubKlasifikasi();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/subklasifikasi', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_subklasifikasi()
+    {
+        $data['keterangan'] = $this->db->get('subklasifikasi')->result_array();
+        $data = [
+
+            'id_klasifikasi' => $this->input->post('id_klasifikasi'),
+            'kode_subklasifikasi' => $this->input->post('kode'),
+            'keterangan' => $this->input->post('keterangan')
+
+        ];
+        $this->db->insert('subklasifikasi', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Klasifikasi Added!</div>');
+
+        redirect('admin/sub_klasifikasi');
+    }
+
+    public function fungsi_edit_subklasifikasi()
+    {
+        $id = $this->input->post('id');
+        $id_klas = $this->input->post('id_klasifikasi');
+        $kode = $this->input->post('kode_subklasifikasi');
+        $keterangan = $this->input->post('keterangan');
+        $ArrUpdate = array(
+            'id_klasifikasi' => $id_klas,
+            'kode_subklasifikasi' => $kode,
+            'keterangan' => $keterangan
+
+
+        );
+        $this->Upbmaster_model->updateSubKlasifikasi($id, $ArrUpdate);
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Golongan Edited!</div>');
+        Redirect(base_url('admin/sub_klasifikasi'));
+    }
+
+    public function fungsi_delete_subklasifikasi($id)
+    {
+        $this->Upbmaster_model->hapus_subklasifikasi($id);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Klasifikasi Deleted!</div>');
+        Redirect(Base_url('admin/sub_klasifikasi'));
+    }
+
+    //LAHAN
+    public function lahan()
+    {
+        $data['lahan'] = $this->db->get('tbl_lahan')->result_array();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/lahan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_lahan()
+    {
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/add_lahan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_lahan_fungsi()
+    {
+        //jika ada gambar
+        $photo = $_FILES['foto_lahan']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/lahan/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_lahan')) {
+
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/add_lahan');
+            }
+        }
+        $data = [
+
+            'kode_lahan' => $this->input->post('kode_lahan'),
+            'tanggal_pembukuan' => $this->input->post('tanggal_pembukuan'),
+            'nama_lahan' => $this->input->post('nama_lahan'),
+            'alamat' => $this->input->post('alamat'),
+            'luas_lahan' => $this->input->post('luas_lahan'),
+            'id_asal_barang' => $this->input->post('id_asal_barang'),
+            'tahun_perolehan' => $this->input->post('tahun_perolehan'),
+            'tanggal_perolehan' => $this->input->post('tanggal_perolehan'),
+            'harga_perolehan' => $this->input->post('harga_perolehan'),
+            'harga_taksiran' => $this->input->post('harga_taksiran'),
+            'nomor_sertifikat' => $this->input->post('nomor_sertifikat'),
+            'status_sertifikat' => $this->input->post('status_sertifikat'),
+            'status_tanah' => $this->input->post('status_tanah'),
+            'sertifikat_yayasan' => $this->input->post('sertifikat_yayasan'),
+            'tanggal_sewa_mulai' => $this->input->post('tanggal_sewa_mulai'),
+            'tanggal_sewa_akhir' => $this->input->post('tanggal_sewa_akhir'),
+            'keterangan' => $this->input->post('keterangan'),
+            'foto_lahan' => $photo,
+
+        ];
+        $this->db->insert('tbl_lahan', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Lahan Added!</div>');
+
+        redirect('admin/lahan');
+    }
+
+    public function detail_lahan($id_lahan)
+    {
+
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_lahan'] = $this->upbmaster_model->ambil_id_lahan($id_lahan);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/detail_lahan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_delete_lahan($id_lahan)
+    {
+        $this->Upbmaster_model->hapuslahan($id_lahan);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Lantai Deleted!</div>');
+        Redirect(Base_url('admin/lahan'));
+    }
+
+    public function fungsi_edit_lahan()
+    {
+
+        $data['lahan'] = $this->db->get_where('tbl_lahan', ['id_lahan' => $this->input->post('id_lahan')])->row_array();
+        $id_lahan = $this->input->post('id_lahan');
+        $kode_lahan = $this->input->post('kode_lahan');
+        $tanggal_pembukuan = $this->input->post('tanggal_pembukuan');
+        $nama_lahan = $this->input->post('nama_lahan');
+        $alamat = $this->input->post('alamat');
+        $luas_lahan = $this->input->post('luas_lahan');
+        $id_asal_barang = $this->input->post('id_asal_barang');
+        $tahun_perolehan = $this->input->post('tahun_perolehan');
+        $tanggal_perolehan = $this->input->post('tanggal_perolehan');
+        $harga_perolehan = $this->input->post('harga_perolehan');
+        $harga_taksiran = $this->input->post('harga_taksiran');
+        $nomor_sertifikat = $this->input->post('nomor_sertifikat');
+        $status_sertifikat = $this->input->post('status_sertifikat');
+        $status_tanah = $this->input->post('status_tanah');
+        $tanggal_sewa_mulai = $this->input->post('tanggal_sewa_mulai');
+        $tanggal_sewa_akhir = $this->input->post('tanggal_sewa_akhir');
+        $sertifikat_yayasan = $this->input->post('sertifikat_yayasan');
+        $keterangan = $this->input->post('keterangan');
+        //jika ada gambar
+        $photo = $_FILES['foto_lahan']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/lahan/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_lahan')) {
+                $old_image = $data['lahan']['foto_lahan'];
+                if ($old_image != 'default.jpg') {
+                    unlink(FCPATH . 'assets/img/lahan/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('image', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                $referred_from = $this->session->userdata('referred_from');
+                redirect($referred_from, 'refresh');
+            }
+        }
+
+        $this->db->set('kode_lahan', $kode_lahan);
+        $this->db->set('tanggal_pembukuan', $tanggal_pembukuan);
+        $this->db->set('nama_lahan', $nama_lahan);
+        $this->db->set('luas_lahan', $luas_lahan);
+        $this->db->set('id_asal_barang', $id_asal_barang);
+        $this->db->set('tahun_perolehan', $tahun_perolehan);
+        $this->db->set('tanggal_perolehan', $tanggal_perolehan);
+        $this->db->set('harga_perolehan', $harga_perolehan);
+        $this->db->set('harga_taksiran', $harga_taksiran);
+        $this->db->set('nomor_sertifikat', $nomor_sertifikat);
+        $this->db->set('alamat', $alamat);
+        $this->db->set('status_tanah', $status_tanah);
+        $this->db->set('tanggal_sewa_mulai', $tanggal_sewa_mulai);
+        $this->db->set('tanggal_sewa_akhir', $tanggal_sewa_akhir);
+        $this->db->set('sertifikat_yayasan', $sertifikat_yayasan);
+        $this->db->set('status_sertifikat', $status_sertifikat);
+        $this->db->set('keterangan', $keterangan);
+        $this->db->where('id_lahan', $id_lahan);
+        $this->db->update('tbl_lahan');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data lahan Edited!</div>');
+        Redirect(base_url('admin/lahan'));
+    }
+
+    public function update($id_lahan)
+    {
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_lahan'] = $this->upbmaster_model->ambil_id_lahan($id_lahan);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/edit_lahan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    //BANGUNAN
+    public function bangunan()
+    {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['bangunans'] = $this->upbmaster_model->getBangunan();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/bangunan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_bangunan()
+    {
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $data['lahans'] = $this->db->get('tbl_lahan')->result_array();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/add_bangunan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_bangunan_fungsi()
+    {
+        //jika ada gambar
+        $photo = $_FILES['foto_bangunan']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/bangunan/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_bangunan')) {
+
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                $referred_from = $this->session->userdata('referred_from');
+                redirect($referred_from, 'refresh');
+            }
+        }
+        $data = [
+
+            'id_lahan' => $this->input->post('lahan'),
+            'tanggal_pembukuan' => $this->input->post('tanggal_pembukuan'),
+            'kode_bangunan' => $this->input->post('kode_bangunan'),
+            'nama_bangunan' => $this->input->post('nama_bangunan'),
+            'luas_bangunan' => $this->input->post('luas_bangunan'),
+            'id_asal_barang' => $this->input->post('id_asal_barang'),
+            'tahun_perolehan' => $this->input->post('tahun_perolehan'),
+            'tanggal_perolehan' => $this->input->post('tanggal_perolehan'),
+            'harga_perolehan' => $this->input->post('harga_perolehan'),
+            'kapasitas_internet' => $this->input->post('kapasitas_internet'),
+            'keterangan' => $this->input->post('keterangan'),
+            'foto_bangunan' => $photo,
+
+        ];
+        $this->db->insert('tbl_bangunan', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data bangunan Added!</div>');
+
+        redirect('admin/bangunan');
+    }
+
+    public function fungsi_delete_bangunan($id_bangunan)
+    {
+        $this->Upbmaster_model->hapusbangunan($id_bangunan);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Bangunan Deleted!</div>');
+        Redirect(Base_url('admin/bangunan'));
+    }
+
+    public function detail_bangunan($id_bangunan)
+    {
+
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_bangunan'] = $this->upbmaster_model->ambil_id_bangunan($id_bangunan);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/detail_bangunan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_edit_bangunan()
+    {
+
+        $data['lahan'] = $this->db->get_where('tbl_lahan', ['id_lahan' => $this->input->post('id_lahan')])->row_array();
+        $id_bangunan = $this->input->post('id_bangunan');
+        $id_lahan = $this->input->post('id_lahan');
+        $tanggal_pembukuan = $this->input->post('tanggal_pembukuan');
+        $kode_bangunan = $this->input->post('kode_bangunan');
+        $nama_bangunan = $this->input->post('nama_bangunan');
+        $luas_bangunan = $this->input->post('luas_bangunan');
+        $id_asal_barang = $this->input->post('id_asal_barang');
+        $tahun_perolehan = $this->input->post('tahun_perolehan');
+        $tanggal_perolehan = $this->input->post('tanggal_perolehan');
+        $harga_perolehan = $this->input->post('harga_perolehan');
+        $kapasitas_internet = $this->input->post('kapasitas_internet');
+        $keterangan = $this->input->post('keterangan');
+        //jika ada gambar
+        $photo = $_FILES['foto_bangunan']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/lahan/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_bangunan')) {
+                $old_image = $data['lahan']['foto_bangunan'];
+                if ($old_image != 'default.jpg') {
+                    unlink(FCPATH . 'assets/img/bangunan/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('foto_bangunan', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/add_bangunan');
+            }
+        }
+
+        $this->db->set('id_lahan', $id_lahan);
+        $this->db->set('tanggal_pembukuan', $tanggal_pembukuan);
+        $this->db->set('kode_bangunan', $kode_bangunan);
+        $this->db->set('nama_bangunan', $nama_bangunan);
+        $this->db->set('luas_bangunan', $luas_bangunan);
+        $this->db->set('id_asal_barang', $id_asal_barang);
+        $this->db->set('tahun_perolehan', $tahun_perolehan);
+        $this->db->set('tanggal_perolehan', $tanggal_perolehan);
+        $this->db->set('harga_perolehan', $harga_perolehan);
+        $this->db->set('kapasitas_internet', $kapasitas_internet);
+        $this->db->set('keterangan', $keterangan);
+        $this->db->where('id_bangunan', $id_bangunan);
+        $this->db->update('tbl_bangunan');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data lahan Edited!</div>');
+        Redirect(base_url('admin/bangunan'));
+    }
+
+    public function updatebangunan($id_bangunan)
+    {
+        $data['nama_lahan'] = $this->db->get('tbl_lahan')->result_array();
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_bangunan'] = $this->upbmaster_model->ambil_id_bangunan($id_bangunan);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/edit_bangunan', $data);
+        $this->load->view('templates/footer');
     }
 }

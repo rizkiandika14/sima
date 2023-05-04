@@ -301,6 +301,55 @@ class Upb extends CI_Controller
         redirect($referred_from, 'refresh');
     }
 
+    public function suratmasuk()
+    {
+        $this->load->model('Upb_model', 'upb_model');
+        // $data['users'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['suratmasuk'] = $this->Upb_model->getAllSuratMasuk();
+
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/upb_sidebar');
+        $this->load->view('upb/suratmasuk', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_suratmasuk()
+    {
+        $data['suratmasuk'] = $this->db->get('suratmasuk')->result_array();
+
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required|trim');
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+        $this->form_validation->set_rules('isi', 'Isi', 'required|trim');
+
+        //jika ada gambar
+        $upload_pdf = $_FILES['file'];
+
+        if ($upload_pdf) {
+            $config['allowed_types'] = 'pdf';
+            $config['upload_path'] = './assets/surat/suratmasuk/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file')) {
+                $new_file = $this->upload->data('file_name');
+                $data = [
+                    'tanggal' => $this->input->post('tanggal'),
+                    'judul' => $this->input->post('judul'),
+                    'isi' => $this->input->post('isi'),
+                    'file' => $new_file
+                ];
+                $this->db->insert('suratmasuk', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Informasi Added!!</div>');
+                redirect('upb/suratmasuk');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('upb/suratmasuk');
+            }
+        }
+    }
+
     // //ASAL BARANG
     // public function asal_barang()
     // {

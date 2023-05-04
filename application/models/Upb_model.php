@@ -141,4 +141,12 @@ class Upb_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('pengajuan', $data);
     }
+
+    public function getAllSuratMasuk()
+    {
+        $query = "SELECT *
+                    FROM suratmasuk
+                    ";
+        return $this->db->query($query)->result_array();
+    }
 }

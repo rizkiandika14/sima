@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Data Golongan
+                            Data Lahan
                         </h2>
 
                         <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -24,9 +24,8 @@
                             </button> -->
 
 
-                        <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal"
-                            data-target="#defaultModal"> <i class="material-icons">add</i> <span
-                                class="icon-name"></i>Add data</button>
+                        <a href="add_lahan" type="button" class="btn btn-primary waves-effect m-r-20"> <i
+                                class="material-icons">add</i> <span class="icon-name"></i>Add data</a>
 
 
 
@@ -37,6 +36,7 @@
 
 
 
+                        </ul>
                     </div>
                     <div class="body">
                         <div class="table-responsive">
@@ -46,7 +46,8 @@
                                     <tr>
 
                                         <th>Kode</th>
-                                        <th>Keterangan</th>
+                                        <th>Nama Lahan</th>
+                                        <th>Luas Lahan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -54,7 +55,8 @@
                                     <tr>
 
                                         <th>Kode</th>
-                                        <th>Lantai</th>
+                                        <th>Nama Lahan</th>
+                                        <th>Luas Lahan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -62,22 +64,29 @@
 
                                     <?php
 
-                                    foreach ($golongan as $gol) : ?>
+                                    foreach ($lahan as $lhn) : ?>
                                     <tr>
 
-                                        <td><?= $gol['kode_gol']; ?></td>
-                                        <td><?= $gol['keterangan']; ?></td>
+                                        <td><?= $lhn['kode_lahan']; ?></td>
+                                        <td><?= $lhn['nama_lahan']; ?></td>
+                                        <td><?= $lhn['luas_lahan']; ?></td>
                                         <td>
-                                            <div class="btn btn-sm btn-warning">
-                                                <div class="demo-google-material-icon" data-toggle="modal"
-                                                    data-target="#editModal<?= $gol['id_golongan']; ?>"> <i
-                                                        class="material-icons"></i> <span class="icon-name">Edit</span>
-                                                </div>
-                                            </div>
+                                            <a class="btn btn-sm btn-info"
+                                                href="<?= base_url() ?>admin/update/<?= $lhn['id_lahan']; ?>"><i
+                                                    class="material-icons"></i> <span class="icon-name"></span>
+                                                edit</a>
+
                                             <a class="btn btn-sm btn-danger waves-effect " data-type="success"
-                                                href="<?= base_url() ?>admin/fungsi_delete_golongan/<?= $gol['id_golongan']; ?>"><span
+                                                href="<?= base_url() ?>admin/fungsi_delete_lahan/<?= $lhn['id_lahan']; ?>"><span
                                                     class="fa fa-trash tombol-hapus"></span>
                                                 Hapus</a>
+
+                                            <a class="btn btn-xs btn-info"
+                                                href="<?= base_url() ?>admin/detail_lahan/<?= $lhn['id_lahan']; ?>"><i
+                                                    class="material-icons">visibility</i> <span
+                                                    class="icon-name"></span>
+                                                Detail</a>
+
 
 
 
@@ -102,19 +111,19 @@
 
 
     <!-- MODAL  edit -->
-    <?php
-    $no = 0;
-    foreach ($golongan as $gol) : $no++; ?>
-    <div class="modal fade" id="editModal<?= $gol['id_golongan']; ?>" tabindex="-1" role="dialog">
+    <!-- <?php
+            $no = 0;
+            foreach ($lantai as $lan) : $no++; ?>
+    <div class="modal fade" id="editModal<?= $lan['id']; ?>" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Edit Golongan</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">Edit Asal Barang</h4>
                 </div>
 
                 <div class="modal-body">
-                    <?= form_open_multipart('admin/fungsi_edit_golongan') ?>
-                    <input type="hidden" name="id_golongan" value="<?= $gol['id_golongan']; ?>">
+                    <?= form_open_multipart('admin/fungsi_edit_lantai') ?>
+                    <input type="hidden" name="id" value="<?= $lan['id']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                             <div class="row clearfix">
@@ -125,7 +134,7 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <input type="text" id="kode" name="kode" class="form-control"
-                                                value="<?= $gol['kode']; ?>" placeholder="">
+                                                value="<?= $lan['kode']; ?>" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -133,13 +142,13 @@
 
                             <div class="row clearfix">
                                 <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                    <label for="email_address_2">Keterangan</label>
+                                    <label for="email_address_2">Lantai</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            <input type="text" id="keterangan" name="keterangan" class="form-control"
-                                                value="<?= $gol['keterangan']; ?>" placeholder="">
+                                            <input type="text" id="lantai" name="lantai" class="form-control"
+                                                value="<?= $lan['lantai']; ?>" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -163,18 +172,18 @@
             </div>
         </div>
     </div>
-    <?php endforeach ?>
+    <?php endforeach ?> -->
 
 
     <!-- Modals ADD -->
 
-    <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+    <!-- <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Add Golongan</h4>
+                    <h4 class="modal-title" id="defaultModalLabel">Add Lantai</h4>
                 </div>
-                <form action="<?= base_url('admin/tambah_golongan') ?>" method="post">
+                <form action="<?= base_url('admin/tambah_lantai') ?>" method="post">
                     <div class="modal-body">
                         <?php echo form_open_multipart() ?>
                         <div class="body">
@@ -195,13 +204,13 @@
 
                                 <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="email_address_2">Keterangan</label>
+                                        <label for="email_address_2">lantai</label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" id="keterangan" name="keterangan"
-                                                    class="form-control" placeholder="">
+                                                <input type="text" id="lantai" name="lantai" class="form-control"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -224,7 +233,7 @@
             </form>
         </div>
     </div>
-    </div>
+    </div> -->
 
 </section>
 
