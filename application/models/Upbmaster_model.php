@@ -204,20 +204,39 @@ class Upbmaster_model extends CI_Model
         tbl_bangunan.id_bangunan = $id_bangunan
         ";
         return $this->db->query($query)->result_array();
-
-        // $hasil = $this->db->where('id_lahan', $id_lahan)->get('tbl_lahan');
-
-        // if ($hasil->num_rows() > 0) {
-
-        //     return $hasil->result();
-        // } else {
-        //     return false;
-        // }
     }
 
     function updateBangunan($id_bangunan, $data)
     {
         $this->db->where('id_bangunan', $id_bangunan);
         $this->db->update('tbl_bangunan', $data);
+    }
+
+    //RUANGAN
+    public function getRuangan()
+    {
+        $query =  "SELECT tbl_bangunan.id_bangunan, tbl_bangunan.kode_bangunan, tbl_ruangan.id_ruangan, tbl_ruangan.kode_ruangan, tbl_ruangan.nama_ruangan
+         FROM tbl_ruangan
+         INNER JOIN tbl_bangunan ON tbl_bangunan.id_bangunan=tbl_ruangan.id_bangunan
+        
+                     ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function hapusruangan($id_ruangan)
+    {
+        $this->db->where('id_ruangan', $id_ruangan);
+        $this->db->delete('tbl_ruangan');
+    }
+
+    public function ambil_id_ruangan($id_ruangan)
+    {
+        $query = "SELECT tbl_ruangan.*, tbl_bangunan.nama_bangunan,  asal_barang.nama_asal_barang
+        FROM tbl_ruangan 
+        join tbl_bangunan ON tbl_ruangan.id_bangunan = tbl_bangunan.id_bangunan 
+        join asal_barang ON tbl_bangunan.id_asal_barang = asal_barang.id_asal_barang where
+        tbl_ruangan.id_ruangan = $id_ruangan
+        ";
+        return $this->db->query($query)->result_array();
     }
 }

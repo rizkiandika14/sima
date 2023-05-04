@@ -16,44 +16,44 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Detail Bangunan </h2>
+                        Detail Ruangan </h2>
                 </div>
                 <div class="body">
 
 
 
                     <form>
-                        <?php foreach ($detail_bangunan as $dbangunan) : ?>
-                        <label for="nama_lahan"> Lahan</label>
+                        <?php foreach ($detail_ruangan as $druangan) : ?>
+                        <label for="nama_bangunan">Gedung</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="nama_lahan" name="nama_lahan" class="form-control"
-                                    value="<?= $dbangunan['nama_lahan']; ?>" readonly>
+                                <input type="text" id="nama_bangunan" name="nama_bangunan" class="form-control"
+                                    value="<?= $druangan['nama_bangunan']; ?>" readonly>
                             </div>
                         </div>
                         <label for="tanggal_pembukuan">Tanggal Pembukuan</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="date" id="tanggal_pembukuan" name="tanggal_pembukuan" class="form-control"
-                                    value="<?= $dbangunan['tanggal_pembukuan']; ?>" readonly>
+                                    value="<?= $druangan['tanggal_pembukuan']; ?>" readonly>
                             </div>
                         </div>
 
-                        <label for="nama_bangunan">Nama Bangunan</label>
+                        <label for="nama_ruangan">Nama Ruangan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="nama_bangunan" name="nama_bangunan" class="form-control"
-                                    value="<?= $dbangunan['nama_bangunan']; ?>" readonly>
+                                <input type="text" id="nama_ruangan" name="nama_ruangan" class="form-control"
+                                    value="<?= $druangan['nama_ruangan']; ?>" readonly>
                             </div>
                         </div>
 
 
 
-                        <label for="luas_bangunan">Luas Bangunan</label>
+                        <label for="luas_ruangan">Luas Ruangan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="number" id="luas_bangunan" name="luas_bangunan" class="form-control"
-                                    value="<?= $dbangunan['luas_bangunan']; ?>" readonly>
+                                <input type="number" id="luas_ruangan" name="luas_ruangan" class="form-control"
+                                    value="<?= $druangan['luas_ruangan']; ?>" readonly>
                             </div>
                         </div>
 
@@ -62,7 +62,7 @@
                             <div class="form-line">
                                 <input type="text" name="asal_barang" id="asal_barang" placeholder=""
                                     class="form-control ui-autocomplete-input"
-                                    value="<?= $dbangunan['nama_asal_barang']; ?>" autocomplete="off" readonly>
+                                    value="<?= $druangan['nama_asal_barang']; ?>" autocomplete="off" readonly>
                                 <input type="hidden" id="id_asal_barang" name="id_asal_barang">
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="number" id="tahun_perolehan" name="tahun_perolehan" class="form-control"
-                                    value="<?= $dbangunan['tahun_perolehan']; ?>" readonly>
+                                    value="<?= $druangan['tahun_perolehan']; ?>" readonly>
                             </div>
                         </div>
 
@@ -79,23 +79,16 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="date" id="tanggal_perolehan" name="tanggal_perolehan" class="form-control"
-                                    value="<?= $dbangunan['tanggal_perolehan']; ?>" readonly>
+                                    value="<?= $druangan['tanggal_perolehan']; ?>" readonly>
                             </div>
                         </div>
 
-                        <label for="harga_perolehan">Harga Perolehan</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="number" id="harga_perolehan" name="harga_perolehan" class="form-control"
-                                    value="<?= $dbangunan['harga_perolehan']; ?>" readonly>
-                            </div>
-                        </div>
 
-                        <label for="kapasitas_internet">Kapasitas Internet</label>
+                        <label for="peruntukan">Peruntukan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="kapasitas_internet" name="kapasitas_internet"
-                                    class="form-control" value="<?= $dbangunan['kapasitas_internet']; ?>" readonly>
+                                <input type="text" id="peruntukan" name="peruntukan" class="form-control"
+                                    value="<?= $druangan['peruntukan']; ?>" readonly>
                             </div>
                         </div>
 
@@ -104,16 +97,16 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text" id="keterangan" name="keterangan" class="form-control"
-                                    value="<?= $dbangunan['keterangan']; ?>" readonly>
+                                    value="<?= $druangan['keterangan']; ?>" readonly>
                             </div>
                         </div>
 
 
 
-                        <label for="nama">Foto Bangunan (jpg/png) max 2mb</label>
+                        <label for="nama">Foto Ruangan (jpg/png) max 2mb</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <img src="<?= base_url('assets/img/bangunan/') . $dbangunan['foto_bangunan']; ?>"
+                                <img src="<?= base_url('assets/img/ruangan/') . $druangan['foto_ruangan']; ?>"
                                     width="500" height="500" class="img-thumbnail">
                             </div>
                         </div>
@@ -121,7 +114,7 @@
 
 
 
-                        <a href="<?= base_url('admin/bangunan') ?>" type="button"
+                        <a href="<?= base_url('admin/ruangan') ?>" type="button"
                             class="btn btn-primary m-t-15 waves-effect">kembali</a>
                         <?php endforeach; ?>
                     </form>

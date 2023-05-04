@@ -16,28 +16,28 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Edit Bangunan </h2>
+                        Edit Ruangan </h2>
                 </div>
                 <div class="body">
 
 
                     <?php $this->session->set_userdata('referred_from', current_url()); ?>
 
-                    <?php foreach ($detail_bangunan as $bangunans) : ?>
-                    <?php echo form_open_multipart('admin/fungsi_edit_bangunan'); ?>
-                    <input type="hidden" id="id_bangunan" name="id_bangunan" class="form-control"
-                        value="<?= $bangunans['id_bangunan']; ?>">
+                    <?php foreach ($detail_ruangan as $ruangans) : ?>
+                    <?php echo form_open_multipart('admin/fungsi_edit_ruangan'); ?>
+                    <input type="hidden" id="id_ruangan" name="id_ruangan" class="form-control"
+                        value="<?= $ruangans['id_ruangan']; ?>">
 
-                    <label for="nama_lahan">Lahan</label>
+                    <label for="nama_bangunan">Gedung</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <select name="id_lahan" id="id_lahan" class="form-control" required>
-                                <option value="<?php echo $bangunans['id_lahan']; ?>">
-                                    <?php echo $bangunans['nama_lahan']; ?></option>
+                            <select name="id_bangunan" id="id_bangunan" class="form-control" required>
+                                <option value="<?php echo $ruangans['id_bangunan']; ?>">
+                                    <?php echo $ruangans['nama_bangunan']; ?></option>
                                 <?php
-                                    foreach ($nama_lahan as $lahan) : ?>
-                                <option value="<?php echo $lahan['id_lahan']; ?>">
-                                    <?php echo $lahan['nama_lahan']; ?>
+                                    foreach ($nama_bangunan as $bangunan) : ?>
+                                <option value="<?php echo $bangunan['id_bangunan']; ?>">
+                                    <?php echo $bangunan['nama_bangunan']; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -49,34 +49,34 @@
                     <div class="form-group">
                         <div class="form-line">
                             <input type="date" id="tanggal_pembukuan" name="tanggal_pembukuan" class="form-control"
-                                value="<?= $bangunans['tanggal_pembukuan']; ?>">
+                                value="<?= $ruangans['tanggal_pembukuan']; ?>">
                         </div>
                     </div>
 
-                    <label for="kode_bangunan">Kode Bangunan</label>
+                    <label for="kode_ruangan">Kode Ruangan</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <input type="number" id="kode_bangunan" name="kode_bangunan" class="form-control"
-                                value="<?= $bangunans['kode_bangunan']; ?>">
+                            <input type="number" id="kode_ruangan" name="kode_ruangan" class="form-control"
+                                value="<?= $ruangans['kode_ruangan']; ?>">
                         </div>
                     </div>
 
-                    <label for="nama_bangunan">Nama Bangunan</label>
+                    <label for="nama_ruangan">Nama Ruangan</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <input type="text" id="nama_bangunan" name="nama_bangunan" class="form-control"
-                                value="<?= $bangunans['nama_bangunan']; ?>">
+                            <input type="text" id="nama_ruangan" name="nama_ruangan" class="form-control"
+                                value="<?= $ruangans['nama_ruangan']; ?>">
                         </div>
                     </div>
 
 
 
 
-                    <label for="luas_bangunan">Luas Bangunan</label>
+                    <label for="luas_ruangan">Luas Ruangan</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <input type="number" id="luas_bangunan" name="luas_bangunan" class="form-control"
-                                value="<?= $bangunans['luas_bangunan']; ?>">
+                            <input type="number" id="luas_ruangan" name="luas_ruangan" class="form-control"
+                                value="<?= $ruangans['luas_ruangan']; ?>">
                         </div>
                     </div>
 
@@ -85,9 +85,9 @@
                         <div class="form-line">
                             <input type="text" data-toggle="modal" data-target="#defaultModal" name="asal_barang"
                                 id="asal_barang" placeholder="" class="form-control ui-autocomplete-input"
-                                value="<?= $bangunans['nama_asal_barang']; ?>" autocomplete="off">
+                                value="<?= $ruangans['nama_asal_barang']; ?>" autocomplete="off">
                             <input type="hidden" id="id_asal_barang" name="id_asal_barang"
-                                value="<?= $bangunans['id_asal_barang']; ?>">
+                                value="<?= $ruangans['id_asal_barang']; ?>">
                         </div>
                     </div>
 
@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <div class="form-line">
                             <input type="number" id="tahun_perolehan" name="tahun_perolehan" class="form-control"
-                                value="<?= $bangunans['tahun_perolehan']; ?>">
+                                value="<?= $ruangans['tahun_perolehan']; ?>">
                         </div>
                     </div>
 
@@ -103,23 +103,17 @@
                     <div class="form-group">
                         <div class="form-line">
                             <input type="date" id="tanggal_perolehan" name="tanggal_perolehan" class="form-control"
-                                value="<?= $bangunans['tanggal_perolehan']; ?>">
+                                value="<?= $ruangans['tanggal_perolehan']; ?>">
                         </div>
                     </div>
 
-                    <label for="harga_perolehan">Harga Perolehan</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            <input type="number" id="harga_perolehan" name="harga_perolehan" class="form-control"
-                                value="<?= $bangunans['harga_perolehan']; ?>">
-                        </div>
-                    </div>
 
-                    <label for="kapasitas_internet">Kapasitas Internet</label>
+
+                    <label for="peruntukan">Peruntukan</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <input type="text" id="kapasitas_internet" name="kapasitas_internet" class="form-control"
-                                value="<?= $bangunans['kapasitas_internet']; ?>">
+                            <input type="text" id="peruntukan" name="peruntukan" class="form-control"
+                                value="<?= $ruangans['peruntukan']; ?>">
                         </div>
                     </div>
 
@@ -127,7 +121,7 @@
                     <div class="form-group">
                         <div class="form-line">
                             <input type="text" id="keterangan" name="keterangan" class="form-control"
-                                value="<?= $bangunans['keterangan']; ?>">
+                                value="<?= $ruangans['keterangan']; ?>">
                         </div>
                     </div>
 
@@ -136,14 +130,14 @@
                     <label for="nama">Foto Lahan (jpg/png) max 2mb</label>
                     <div class="form-group">
                         <div class="form-line">
-                            <img src="<?= base_url('assets/img/bangunan/') . $bangunans['foto_bangunan']; ?>"
-                                width="500" height="500" class="img-thumbnail">
+                            <img src="<?= base_url('assets/img/ruangan/') . $ruangans['foto_ruangan']; ?>" width="500"
+                                height="500" class="img-thumbnail">
                             <div class="form-group">
                                 <label for="exampleInputFile"></label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="foto_bangunan"
-                                            name="foto_bangunan">
+                                        <input type="file" class="custom-file-input" id="foto_ruangan"
+                                            name="foto_ruangan">
 
                                     </div>
                                 </div>

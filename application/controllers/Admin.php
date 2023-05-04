@@ -870,7 +870,7 @@ class Admin extends CI_Controller
                     unlink(FCPATH . 'assets/img/lahan/' . $old_image);
                 }
                 $new_image = $this->upload->data('file_name');
-                $this->db->set('image', $new_image);
+                $this->db->set('foto_lahan', $new_image);
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
                 $referred_from = $this->session->userdata('referred_from');
@@ -1001,6 +1001,7 @@ class Admin extends CI_Controller
     {
 
         $data['lahan'] = $this->db->get_where('tbl_lahan', ['id_lahan' => $this->input->post('id_lahan')])->row_array();
+        $data['bangunan'] = $this->db->get_where('tbl_bangunan', ['id_bangunan' => $this->input->post('id_bangunan')])->row_array();
         $id_bangunan = $this->input->post('id_bangunan');
         $id_lahan = $this->input->post('id_lahan');
         $tanggal_pembukuan = $this->input->post('tanggal_pembukuan');
@@ -1019,14 +1020,14 @@ class Admin extends CI_Controller
         if ($photo) {
             $config['allowed_types'] = 'jpg|png';
             $config['max_size'] = '2048';
-            $config['upload_path'] = './assets/img/lahan/';
+            $config['upload_path'] = './assets/img/bangunan/';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('foto_bangunan')) {
-                $old_image = $data['lahan']['foto_bangunan'];
-                if ($old_image != 'default.jpg') {
+                $old_image = $data['bangunan']['foto_bangunan'];
+                if ($old_image != '') {
                     unlink(FCPATH . 'assets/img/bangunan/' . $old_image);
                 }
                 $new_image = $this->upload->data('file_name');
@@ -1064,6 +1065,158 @@ class Admin extends CI_Controller
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
         $this->load->view('admin/edit_bangunan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    //RUANGAN
+    public function ruangan()
+    {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['ruangans'] = $this->upbmaster_model->getRuangan();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/ruangan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_ruangan()
+    {
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $data['bangunans'] = $this->db->get('tbl_bangunan')->result_array();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/add_ruangan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_ruangan_fungsi()
+    {
+        //jika ada gambar
+        $photo = $_FILES['foto_ruangan']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/ruangan/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_ruangan')) {
+
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                $referred_from = $this->session->userdata('referred_from');
+                redirect($referred_from, 'refresh');
+            }
+        }
+        $data = [
+
+            'id_bangunan' => $this->input->post('id_bangunan'),
+            'tanggal_pembukuan' => $this->input->post('tanggal_pembukuan'),
+            'kode_ruangan' => $this->input->post('kode_ruangan'),
+            'nama_ruangan' => $this->input->post('nama_ruangan'),
+            'luas_ruangan' => $this->input->post('luas_ruangan'),
+            'id_asal_barang' => $this->input->post('id_asal_barang'),
+            'tahun_perolehan' => $this->input->post('tahun_perolehan'),
+            'tanggal_perolehan' => $this->input->post('tanggal_perolehan'),
+            'peruntukan' => $this->input->post('peruntukan'),
+            'keterangan' => $this->input->post('keterangan'),
+            'foto_ruangan' => $photo,
+
+        ];
+        $this->db->insert('tbl_ruangan', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Ruangan Added!</div>');
+
+        redirect('admin/ruangan');
+    }
+
+    public function fungsi_delete_ruangan($id_ruangan)
+    {
+        $this->Upbmaster_model->hapusruangan($id_ruangan);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data ruangan Deleted!</div>');
+        Redirect(Base_url('admin/ruangan'));
+    }
+
+    public function detail_ruangan($id_ruangan)
+    {
+
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_ruangan'] = $this->upbmaster_model->ambil_id_ruangan($id_ruangan);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/detail_ruangan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_edit_ruangan()
+    {
+
+        $data['bangunan'] = $this->db->get_where('tbl_bangunan', ['id_bangunan' => $this->input->post('id_bangunan')])->row_array();
+        $data['ruangan'] = $this->db->get_where('tbl_ruangan', ['id_ruangan' => $this->input->post('id_ruangan')])->row_array();
+        $id_ruangan = $this->input->post('id_ruangan');
+        $id_bangunan = $this->input->post('id_bangunan');
+        $tanggal_pembukuan = $this->input->post('tanggal_pembukuan');
+        $kode_ruangan = $this->input->post('kode_ruangan');
+        $nama_ruangan = $this->input->post('nama_ruangan');
+        $luas_ruangan = $this->input->post('luas_ruangan');
+        $id_asal_barang = $this->input->post('id_asal_barang');
+        $tahun_perolehan = $this->input->post('tahun_perolehan');
+        $tanggal_perolehan = $this->input->post('tanggal_perolehan');
+        $peruntukan = $this->input->post('peruntukan');
+        $keterangan = $this->input->post('keterangan');
+        //jika ada gambar
+        $photo = $_FILES['foto_ruangan']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/ruangan/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_ruangan')) {
+                $old_image = $data['ruangan']['foto_ruangan'];
+                if ($old_image != '') {
+                    unlink(FCPATH . 'assets/img/ruangan/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('foto_ruangan', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/add_ruangan');
+            }
+        }
+
+        $this->db->set('id_bangunan', $id_bangunan);
+        $this->db->set('tanggal_pembukuan', $tanggal_pembukuan);
+        $this->db->set('kode_ruangan', $kode_ruangan);
+        $this->db->set('nama_ruangan', $nama_ruangan);
+        $this->db->set('luas_ruangan', $luas_ruangan);
+        $this->db->set('id_asal_barang', $id_asal_barang);
+        $this->db->set('tahun_perolehan', $tahun_perolehan);
+        $this->db->set('tanggal_perolehan', $tanggal_perolehan);
+        $this->db->set('peruntukan', $peruntukan);
+        $this->db->set('keterangan', $keterangan);
+        $this->db->where('id_ruangan', $id_ruangan);
+        $this->db->update('tbl_ruangan');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data lahan Edited!</div>');
+        Redirect(base_url('admin/ruangan'));
+    }
+
+    public function updateruangan($id_ruangan)
+    {
+        $data['nama_bangunan'] = $this->db->get('tbl_bangunan')->result_array();
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_ruangan'] = $this->upbmaster_model->ambil_id_ruangan($id_ruangan);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/edit_ruangan', $data);
         $this->load->view('templates/footer');
     }
 }

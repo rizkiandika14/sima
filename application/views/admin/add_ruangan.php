@@ -16,53 +16,61 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Detail Bangunan </h2>
+                        Tambah Ruangan </h2>
                 </div>
                 <div class="body">
-
-
-
+                    <?php echo form_open_multipart('admin/add_ruangan_fungsi') ?>
                     <form>
-                        <?php foreach ($detail_bangunan as $dbangunan) : ?>
-                        <label for="nama_lahan"> Lahan</label>
+
+                        <label for="id_bangunan">Gedung</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="nama_lahan" name="nama_lahan" class="form-control"
-                                    value="<?= $dbangunan['nama_lahan']; ?>" readonly>
+                                <select name="id_bangunan" id="id_bangunan" class="form-control" required>
+                                    <option value="">--Pilih Lahan--</option>
+                                    <?php
+                                    foreach ($bangunans as $bangunan) : ?>
+                                    <option value="<?php echo $bangunan['id_bangunan']; ?>">
+                                        <?php echo $bangunan['nama_bangunan']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
+
                         <label for="tanggal_pembukuan">Tanggal Pembukuan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="date" id="tanggal_pembukuan" name="tanggal_pembukuan" class="form-control"
-                                    value="<?= $dbangunan['tanggal_pembukuan']; ?>" readonly>
+                                <input type="date" id="tanggal_pembukuan" name="tanggal_pembukuan" class="form-control">
                             </div>
                         </div>
 
-                        <label for="nama_bangunan">Nama Bangunan</label>
+                        <label for="kode_ruangan">Kode Ruangan (3 digit)</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="nama_bangunan" name="nama_bangunan" class="form-control"
-                                    value="<?= $dbangunan['nama_bangunan']; ?>" readonly>
+                                <input type="number" id="kode_ruangan" name="kode_ruangan" class="form-control">
                             </div>
                         </div>
 
-
-
-                        <label for="luas_bangunan">Luas Bangunan</label>
+                        <label for="nama_ruangan">Nama Ruangan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="number" id="luas_bangunan" name="luas_bangunan" class="form-control"
-                                    value="<?= $dbangunan['luas_bangunan']; ?>" readonly>
+                                <input type="text" id="nama_ruangan" name="nama_ruangan" class="form-control">
+                            </div>
+                        </div>
+
+                        <label for="luas_ruangan">Luas Ruangan</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="number" id="luas_ruangan" name="luas_ruangan" class="form-control">
                             </div>
                         </div>
 
                         <label for="asal_barang">Asal Barang</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="asal_barang" id="asal_barang" placeholder=""
-                                    class="form-control ui-autocomplete-input"
-                                    value="<?= $dbangunan['nama_asal_barang']; ?>" autocomplete="off" readonly>
+                                <input type="text" data-toggle="modal" data-target="#defaultModal" name="asal_barang"
+                                    id="asal_barang" placeholder="" class="form-control ui-autocomplete-input" value=""
+                                    autocomplete="off" readonly>
                                 <input type="hidden" id="id_asal_barang" name="id_asal_barang">
                             </div>
                         </div>
@@ -70,32 +78,21 @@
                         <label for="tahun_perolehan">Tahun Perolehan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="number" id="tahun_perolehan" name="tahun_perolehan" class="form-control"
-                                    value="<?= $dbangunan['tahun_perolehan']; ?>" readonly>
+                                <input type="number" id="tahun_perolehan" name="tahun_perolehan" class="form-control">
                             </div>
                         </div>
 
                         <label for="tanggal_perolehan">Tanggal Perolehan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="date" id="tanggal_perolehan" name="tanggal_perolehan" class="form-control"
-                                    value="<?= $dbangunan['tanggal_perolehan']; ?>" readonly>
+                                <input type="date" id="tanggal_perolehan" name="tanggal_perolehan" class="form-control">
                             </div>
                         </div>
 
-                        <label for="harga_perolehan">Harga Perolehan</label>
+                        <label for="peruntukan">Peruntukan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="number" id="harga_perolehan" name="harga_perolehan" class="form-control"
-                                    value="<?= $dbangunan['harga_perolehan']; ?>" readonly>
-                            </div>
-                        </div>
-
-                        <label for="kapasitas_internet">Kapasitas Internet</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="text" id="kapasitas_internet" name="kapasitas_internet"
-                                    class="form-control" value="<?= $dbangunan['kapasitas_internet']; ?>" readonly>
+                                <input type="text" id="peruntukan" name="peruntukan" class="form-control">
                             </div>
                         </div>
 
@@ -103,31 +100,27 @@
                         <label for="keterangan">Keterangan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="keterangan" name="keterangan" class="form-control"
-                                    value="<?= $dbangunan['keterangan']; ?>" readonly>
+                                <input type="text" id="keterangan" name="keterangan" class="form-control">
                             </div>
                         </div>
 
 
 
-                        <label for="nama">Foto Bangunan (jpg/png) max 2mb</label>
+                        <label for="nama">Foto Lahan (jpg/png) max 2mb</label>
                         <div class="form-group">
-                            <div class="form-line">
-                                <img src="<?= base_url('assets/img/bangunan/') . $dbangunan['foto_bangunan']; ?>"
-                                    width="500" height="500" class="img-thumbnail">
+                            <label for="exampleInputFile"></label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="foto_ruangan" name="foto_ruangan">
+
+                                </div>
                             </div>
                         </div>
 
-
-
-
-                        <a href="<?= base_url('admin/bangunan') ?>" type="button"
-                            class="btn btn-primary m-t-15 waves-effect">kembali</a>
-                        <?php endforeach; ?>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">TAMBAH</button>
                     </form>
 
-
-
+                    <?php echo form_close() ?>
                 </div>
             </div>
         </div>

@@ -192,6 +192,9 @@
                             <li>
                                 <a href="<?php echo base_url('admin/bangunan') ?>">Bangunan</a>
                             </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/ruangan') ?>">Ruangan</a>
+                            </li>
 
 
 
