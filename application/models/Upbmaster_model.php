@@ -199,8 +199,8 @@ class Upbmaster_model extends CI_Model
     {
         $query = "SELECT tbl_bangunan.*, tbl_lahan.nama_lahan,  asal_barang.nama_asal_barang
         FROM tbl_bangunan 
-        join tbl_lahan ON tbl_bangunan.id_lahan = tbl_lahan.id_lahan 
-        join asal_barang ON tbl_bangunan.id_asal_barang = asal_barang.id_asal_barang where
+        LEFT JOIN tbl_lahan ON tbl_bangunan.id_lahan = tbl_lahan.id_lahan 
+        LEFT JOIN asal_barang ON tbl_bangunan.id_asal_barang = asal_barang.id_asal_barang where
         tbl_bangunan.id_bangunan = $id_bangunan
         ";
         return $this->db->query($query)->result_array();
@@ -233,9 +233,24 @@ class Upbmaster_model extends CI_Model
     {
         $query = "SELECT tbl_ruangan.*, tbl_bangunan.nama_bangunan,  asal_barang.nama_asal_barang
         FROM tbl_ruangan 
-        join tbl_bangunan ON tbl_ruangan.id_bangunan = tbl_bangunan.id_bangunan 
-        join asal_barang ON tbl_bangunan.id_asal_barang = asal_barang.id_asal_barang where
+        left join tbl_bangunan ON tbl_ruangan.id_bangunan = tbl_bangunan.id_bangunan 
+        left join asal_barang ON tbl_ruangan.id_asal_barang = asal_barang.id_asal_barang where
         tbl_ruangan.id_ruangan = $id_ruangan
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function ambil_kode_ruangan()
+    {
+        $query = "SELECT kode_ruangan FROM tbl_ruangan ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function kode_bangunan()
+    {
+        $query = "SELECT tbl_ruangan.*, tbl_bangunan.kode_bangunan
+        FROM tbl_ruangan 
+        left join tbl_bangunan ON tbl_ruangan.id_bangunan = tbl_bangunan.id_bangunan 
         ";
         return $this->db->query($query)->result_array();
     }

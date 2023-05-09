@@ -22,18 +22,14 @@
                     <?php echo form_open_multipart('admin/add_ruangan_fungsi') ?>
                     <form>
 
-                        <label for="id_bangunan">Gedung</label>
+                        <label for="bangunan">Bangunan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <select name="id_bangunan" id="id_bangunan" class="form-control" required>
-                                    <option value="">--Pilih Lahan--</option>
-                                    <?php
-                                    foreach ($bangunans as $bangunan) : ?>
-                                    <option value="<?php echo $bangunan['id_bangunan']; ?>">
-                                        <?php echo $bangunan['nama_bangunan']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <input type="text" data-toggle="modal" data-target="#defaultModalGedung" name="bangunan"
+                                    id="bangunan" placeholder="" class="form-control ui-autocomplete-input" value=""
+                                    autocomplete="off" readonly>
+                                <input type="hidden" id="id_bangunan" name="id_bangunan">
+                                <input type="hidden" id="kode_bangunan" name="kode_bangunan">
                             </div>
                         </div>
 
@@ -127,6 +123,58 @@
 
     </div>
 
+    <!-- MODAL ADD GEDUNG-->
+    <div class="modal fade" id="defaultModalGedung" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Cari Gedung</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                        width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kode Bangunan</th>
+                                <th>Nama Bangunan</th>
+                                <th class="hide">ID</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            <?php foreach ($bangunans  as $bgn) : ?>
+
+                            <tr>
+                                <td style="text-align:center;" scope="row">
+                                    <?= $i; ?>
+                                </td>
+                                <td><?= $bgn['kode_bangunan']; ?></td>
+                                <td><?= $bgn['nama_bangunan']; ?></td>
+                                <td class="hide"><?= $bgn['id_bangunan']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih-bangunan"
+                                        data-kode-bangunan="<?= $bgn['kode_bangunan']; ?>"
+                                        data-nama-bangunan="<?= $bgn['nama_bangunan']; ?>"
+                                        data-id-bangunan="<?= $bgn['id_bangunan']; ?>">
+                                        Pilih</button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        <?php echo form_close() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL ADD -->
     <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -183,6 +231,18 @@
 <!-- jQuery UI -->
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
+$(document).ready(function() {
+    $(document).on('click', '#pilih-bangunan', function() {
+        var nama_klas = $(this).data('nama-bangunan');
+        var id = $(this).data('id-bangunan');
+        var kode = $(this).data('kode-bangunan');
+        $('#bangunan').val(nama_klas);
+        $('#id_bangunan').val(id);
+        $('#kode_bangunan').val(kode);
+        $('#defaultModalGedung').modal('hide');
+    })
+});
+
 $(document).ready(function() {
     $(document).on('click', '#pilih', function() {
         var nama_klas = $(this).data('keterangan');

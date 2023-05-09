@@ -61,7 +61,7 @@
                                 <input type="text" data-toggle="modal" data-target="#defaultModal" name="asal_barang"
                                     id="asal_barang" placeholder="" class="form-control ui-autocomplete-input" value=""
                                     autocomplete="off" readonly>
-                                <input type="hidden" id="id_asal_barang" name="id_asal_barang">
+                                <input type="hidden" id="id_asal_barang" name="id_asal_barang" value="">
                             </div>
                         </div>
 

@@ -595,7 +595,7 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('lantai', 'Barang', 'required');
         $data = [
 
-            'kode' => $this->input->post('kode'),
+            'kode_gol' => $this->input->post('kode'),
             'keterangan' => $this->input->post('keterangan')
         ];
         $this->db->insert('golongan', $data);
@@ -1218,5 +1218,82 @@ class Admin extends CI_Controller
         $this->load->view('templates/admin_sidebar');
         $this->load->view('admin/edit_ruangan', $data);
         $this->load->view('templates/footer');
+    }
+
+    //ASET
+    public function aset()
+    {
+        // $this->load->model('Upbmaster_model', 'upbmaster_model');
+        // $data['ruangans'] = $this->upbmaster_model->getRuangan();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/aset');
+        $this->load->view('templates/footer');
+    }
+
+    public function add_aset()
+    {
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['kode_bangunan'] = $this->upbmaster_model->kode_bangunan();
+        $data['ruangan'] = $this->db->get('tbl_ruangan')->result_array();
+        $data['subklasifikasi'] = $this->db->get('subklasifikasi')->result_array();
+        $data['jenisbarang'] = $this->db->get('jenis_barang')->result_array();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/add_aset', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_aset_fungsi()
+    {
+        //jika ada gambar
+        $photo = $_FILES['foto_barang']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/barang/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_barang')) {
+
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                $referred_from = $this->session->userdata('referred_from');
+                redirect($referred_from, 'refresh');
+            }
+        }
+        $data = [
+
+            'id_ruangan' => $this->input->post('id_ruangan'),
+            'id_subklasifikasi' => $this->input->post('id_subklasifikasi'),
+            'id_jenis_barang' => $this->input->post('id_jenis_barang'),
+            'kode_lokasi' => $this->input->post('kode_lokasi'),
+            'kode_barang' => $this->input->post('kode_barang'),
+            'nama_barang' => $this->input->post('nama_barang'),
+            'jumlah_barang' => $this->input->post('jumlah_barang'),
+            'spesifikasi_teknis' => $this->input->post('spesifikasi_teknis'),
+            'serial_number' => $this->input->post('serial_number'),
+            'model_number' => $this->input->post('model_number'),
+            'id_asal_barang' => $this->input->post('id_asal_barang'),
+            'bulan_perolehan' => $this->input->post('bulan_perolehan'),
+            'tahun_perolehan' => $this->input->post('tahun_perolehan'),
+            'tanggal_perolehan' => $this->input->post('tanggal_perolehan'),
+            'harga_perolehan' => $this->input->post('harga_perolehan'),
+            'keadaan_barang' => $this->input->post('keadaan_barang'),
+            'peruntukan' => $this->input->post('peruntukan'),
+            'keterangan' => $this->input->post('keterangan'),
+            'foto_ruangan' => $photo,
+
+        ];
+        $this->db->insert('tbl_barang', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Barang Added!</div>');
+
+        redirect('admin/aset');
     }
 }

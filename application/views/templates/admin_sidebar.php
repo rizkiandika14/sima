@@ -172,9 +172,6 @@
                                 <a href="<?php echo base_url('admin/jenis_barang') ?>">Jenis Barang</a>
                             </li>
 
-                            <li>
-                                <a href="<?php echo base_url('admin/lantai') ?>">Lantai</a>
-                            </li>
 
                             <li>
                                 <a href="<?php echo base_url('admin/golongan') ?>">Golongan</a>
@@ -194,6 +191,9 @@
                             </li>
                             <li>
                                 <a href="<?php echo base_url('admin/ruangan') ?>">Ruangan</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/aset') ?>">Barang</a>
                             </li>
 
 

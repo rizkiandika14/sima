@@ -234,7 +234,6 @@ class Upb extends CI_Controller
         $harga = $this->input->post('harga');
         $satuan = $this->input->post('satuan');
         $total = $this->input->post('total');
-
         $realisasi = $this->input->post('realisasi');
         $status = 'waiting approvel';
         $ArrUpdate = array(
@@ -263,7 +262,7 @@ class Upb extends CI_Controller
         $harga = $this->input->post('harga');
         $satuan = $this->input->post('satuan');
         $total = $this->input->post('total');
-        $metodep = $this->input->post('metode_pembayaran');
+        // $metodep = $this->input->post('metode_pembayaran');
         $realisasi = $this->input->post('realisasi');
         $status = 'waiting approvel';
         $ArrUpdate = array(
@@ -272,7 +271,7 @@ class Upb extends CI_Controller
             'harga' => $harga,
             'satuan' => $satuan,
             'total' => $total,
-            'metode_pembayaran' => $metodep,
+            // 'metode_pembayaran' => $metodep,
             'status' => $status,
             'realisasi' => $realisasi
 
@@ -301,6 +300,7 @@ class Upb extends CI_Controller
         redirect($referred_from, 'refresh');
     }
 
+    //SURAT MAASUK
     public function suratmasuk()
     {
         $this->load->model('Upb_model', 'upb_model');
@@ -349,246 +349,77 @@ class Upb extends CI_Controller
             }
         }
     }
+    public function detail_suratmasuk($id_suratmasuk)
+    {
+        $this->load->model('Upb_model', 'upb_model');
+        // $data['users'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['suratmasuk'] = $this->Upb_model->getDetailSuratmasuk($id_suratmasuk);
 
-    // //ASAL BARANG
-    // public function asal_barang()
-    // {
-    //     $this->load->model('Upbmaster_model', 'Upbmaster_model');
-    //     $data['nama_asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $this->load->view('templates/header');
+        $this->load->view('templates/upb_sidebar');
+        $this->load->view('upb/detail_suratmasuk', $data);
+        $this->load->view('templates/footer');
+    }
 
-
-    //     $data['asal_barang'] = $this->Upbmaster_model->getAsalBarang();
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/admin_sidebar');
-    //     $this->load->view('admin/asal_barang', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-    // public function tambah_asal_barang()
-    // {
-    //     $data['nama_asal_barang'] = $this->db->get('asal_barang')->result_array();
-
-    //     $this->form_validation->set_rules('nama_asal_barang', 'Barang', 'required');
-    //     $data = [
-
-    //         'nama_asal_barang' => $this->input->post('nama_asal_barang')
-    //     ];
-    //     $this->db->insert('asal_barang', $data);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Asal Barang added!</div>');
-    //     redirect('admin/asal_barang');
-    // }
-
-    // public function fungsi_edit_asal_barang()
-    // {
-    //     $id = $this->input->post('id_asal_barang');
-    //     $nama_asal_barang = $this->input->post('nama_asal_barang');
-    //     $ArrUpdate = array(
-    //         'nama_asal_barang' => $nama_asal_barang
+    //SURAT KELUAR
+    public function suratkeluar()
+    {
+        $this->load->model('Upb_model', 'upb_model');
+        // $data['users'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['suratkeluar'] = $this->Upb_model->getAllSuratKeluar();
 
 
-    //     );
-    //     $this->Upbmaster_model->updateAsalBarang($id, $ArrUpdate);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Asal Barang Edited!</div>');
-    //     Redirect(base_url('admin/asal_barang'));
-    // }
+        $this->load->view('templates/header');
+        $this->load->view('templates/upb_sidebar');
+        $this->load->view('upb/suratkeluar', $data);
+        $this->load->view('templates/footer');
+    }
 
-    // public function fungsi_delete_asal_barang($id)
-    // {
-    //     $this->Upbmaster_model->hapus($id);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Asal Barang Deleted!</div>');
-    //     Redirect(Base_url('admin/asal_barang'));
-    // }
+    public function add_suratkeluar()
+    {
+        $data['suratkeluar'] = $this->db->get('suratkeluar')->result_array();
 
-    // //JENIS BARANG 
-    // public function jenis_barang()
-    // {
-    //     $this->load->model('Upbmaster_model', 'Upbmaster_model');
-    //     $data['jenis_barang'] = $this->db->get('jenis_barang')->result_array();
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'required|trim');
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+        $this->form_validation->set_rules('isi', 'Isi', 'required|trim');
 
+        //jika ada gambar
+        $upload_pdf = $_FILES['file'];
 
-    //     $data['jenis_barang'] = $this->Upbmaster_model->getJenisBarang();
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/admin_sidebar');
-    //     $this->load->view('admin/jenis_barang', $data);
-    //     $this->load->view('templates/footer');
-    // }
+        if ($upload_pdf) {
+            $config['allowed_types'] = 'pdf';
+            $config['upload_path'] = './assets/surat/suratkeluar/';
 
-    // public function tambah_jenis_barang()
-    // {
-    //     $data['jenis_barang'] = $this->db->get('jenis_barang')->result_array();
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
 
-    //     $this->form_validation->set_rules('nama_asal_barang', 'Barang', 'required');
-    //     $data = [
+            if ($this->upload->do_upload('file')) {
+                $new_file = $this->upload->data('file_name');
+                $data = [
+                    'tanggal' => $this->input->post('tanggal'),
+                    'judul' => $this->input->post('judul'),
+                    'isi' => $this->input->post('isi'),
+                    'file' => $new_file
+                ];
+                $this->db->insert('suratkeluar', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Informasi Added!!</div>');
+                redirect('upb/suratkeluar');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('upb/suratkeluar');
+            }
+        }
+    }
 
-    //         'jenis_barang' => $this->input->post('jenis_barang')
-    //     ];
-    //     $this->db->insert('jenis_barang', $data);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Jenis Barang added!</div>');
-    //     redirect('admin/jenis_barang');
-    // }
+    public function detail_suratkeluar($id_suratkeluar)
+    {
+        $this->load->model('Upb_model', 'upb_model');
+        // $data['users'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['suratkeluar'] = $this->Upb_model->getDetailSuratkeluar($id_suratkeluar);
 
-    // public function fungsi_edit_jenis_barang()
-    // {
-    //     $id = $this->input->post('id_jenis_barang');
-    //     $jenis_barang = $this->input->post('jenis_barang');
-    //     $ArrUpdate = array(
-    //         'jenis_barang' => $jenis_barang
-
-
-    //     );
-    //     $this->Upbmaster_model->updateJenisBarang($id, $ArrUpdate);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Jenis Barang Edited!</div>');
-    //     Redirect(base_url('admin/jenis_barang'));
-    // }
-
-    // public function fungsi_delete_jenis_barang($id)
-    // {
-    //     $this->Upbmaster_model->hapusjenisbarang($id);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Jenis Barang Deleted!</div>');
-    //     Redirect(Base_url('admin/jenis_barang'));
-    // }
-
-    // //LANTAI
-    // public function lantai()
-    // {
-    //     $this->load->model('Upbmaster_model', 'Upbmaster_model');
-    //     $data['lantai'] = $this->db->get('lantai')->result_array();
-
-
-    //     $data['lantai'] = $this->Upbmaster_model->getLantai();
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/admin_sidebar');
-    //     $this->load->view('admin/lantai', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-    // public function tambah_lantai()
-    // {
-    //     $data['lantai'] = $this->db->get('lantai')->result_array();
-
-    //     $this->form_validation->set_rules('lantai', 'Barang', 'required');
-    //     $data = [
-
-    //         'kode' => $this->input->post('kode'),
-    //         'lantai' => $this->input->post('lantai')
-    //     ];
-    //     $this->db->insert('lantai', $data);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Lantai added!</div>');
-    //     redirect('upb/lantai');
-    // }
-
-    // public function fungsi_edit_lantai()
-    // {
-    //     $id = $this->input->post('id');
-    //     $kode = $this->input->post('kode');
-    //     $lantai = $this->input->post('lantai');
-    //     $ArrUpdate = array(
-    //         'kode' => $kode,
-    //         'lantai' => $lantai
-
-
-    //     );
-    //     $this->Upbmaster_model->updateLantai($id, $ArrUpdate);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Lantai Edited!</div>');
-    //     Redirect(base_url('admin/lantai'));
-    // }
-
-    // public function fungsi_delete_lantai($id)
-    // {
-    //     $this->Upbmaster_model->hapuslantai($id);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Lantai Deleted!</div>');
-    //     Redirect(Base_url('admin/jenis_barang'));
-    // }
-
-    // //GOLONGAN
-    // public function golongan()
-    // {
-    //     $this->load->model('Upbmaster_model', 'Upbmaster_model');
-    //     $data['golongan'] = $this->db->get('golongan')->result_array();
-
-
-    //     $data['golongan'] = $this->Upbmaster_model->getGolongan();
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/admin_sidebar');
-    //     $this->load->view('admin/golongan', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-    // public function tambah_golongan()
-    // {
-    //     $data['golongan'] = $this->db->get('golongan')->result_array();
-
-    //     $this->form_validation->set_rules('lantai', 'Barang', 'required');
-    //     $data = [
-
-    //         'kode' => $this->input->post('kode'),
-    //         'keterangan' => $this->input->post('keterangan')
-    //     ];
-    //     $this->db->insert('golongan', $data);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Golongan added!</div>');
-    //     redirect('admin/golongan');
-    // }
-
-    // public function fungsi_edit_golongan()
-    // {
-    //     $id = $this->input->post('id_golongan');
-    //     $kode = $this->input->post('kode');
-    //     $keterangan = $this->input->post('keterangan');
-    //     $ArrUpdate = array(
-    //         'kode' => $kode,
-    //         'keterangan' => $keterangan
-
-
-    //     );
-    //     $this->Upbmaster_model->updateGolongan($id, $ArrUpdate);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Golongan Edited!</div>');
-    //     Redirect(base_url('admin/golongan'));
-    // }
-
-    // public function fungsi_delete_golongan($id)
-    // {
-    //     $this->Upbmaster_model->hapusgolongan($id);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Golongan Deleted!</div>');
-    //     Redirect(Base_url('admin/golongan'));
-    // }
-
-    // //KLASIFIKASI
-    // public function klasifikasi()
-    // {
-    //     $this->load->model('Upbmaster_model', 'Upbmaster_model');
-    //     $data['klasifikasi'] = $this->db->get('klasifikasi')->result_array();
-
-
-
-    //     $data['golongan'] = $this->Upbmaster_model->getGolongan();
-
-
-    //     $data['klasifikasi'] = $this->Upbmaster_model->getKlasifikasi();
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/admin_sidebar');
-    //     $this->load->view('admin/klasifikasi', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-    // public function add_klasifikasi()
-    // {
-    //     $data['keterangan'] = $this->db->get('klasifikasi')->result_array();
-    //     $data = [
-
-    //         'kode_klas' => $this->input->post('kode'),
-    //         'keterangan_klas' => $this->input->post('keterangan'),
-    //         'golongan_id' => $this->input->post('golongan_id')
-
-    //     ];
-    //     $this->db->insert('klasifikasi', $data);
-
-
-    //     redirect('admin/klasifikasi');
-    // }
-
-    // public function fungsi_delete_klasifikasi($id_klas)
-    // {
-    //     $this->Upbmaster_model->hapus_klasifikasi($id_klas);
-    //     Redirect(Base_url('admin/klasifikasi'));
-    // }
+        $this->load->view('templates/header');
+        $this->load->view('templates/upb_sidebar');
+        $this->load->view('upb/detail_suratkeluar', $data);
+        $this->load->view('templates/footer');
+    }
 }

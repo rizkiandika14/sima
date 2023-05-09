@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Data Lahan
+                            Data Bangunan
                         </h2>
 
 
@@ -32,16 +32,16 @@
                                 <thead>
                                     <tr>
                                         <th>Kode Lahan</th>
-                                        <th>Kode Gedung</th>
-                                        <th>Nama Gedung</th>
+                                        <th>Kode Bangunan</th>
+                                        <th>Nama Bangunan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Kode Lahan</th>
-                                        <th>Kode Gedung</th>
-                                        <th>Nama Gedung</th>
+                                        <th>Kode Bangunan</th>
+                                        <th>Nama Bangunan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>

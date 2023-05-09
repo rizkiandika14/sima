@@ -142,10 +142,37 @@ class Upb_model extends CI_Model
         $this->db->update('pengajuan', $data);
     }
 
+    //SURAT MASUK
     public function getAllSuratMasuk()
     {
         $query = "SELECT *
                     FROM suratmasuk
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+
+    public function getDetailSuratmasuk($id_suratmasuk)
+    {
+        $query = "SELECT *
+                    FROM suratmasuk where id_suratmasuk = $id_suratmasuk
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+    //SURAT KELUAR
+    public function getAllSuratKeluar()
+    {
+        $query = "SELECT *
+                    FROM suratkeluar
+                    ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getDetailSuratkeluar($id_suratkeluar)
+    {
+        $query = "SELECT *
+                    FROM suratkeluar where id_suratkeluar = $id_suratkeluar
                     ";
         return $this->db->query($query)->result_array();
     }

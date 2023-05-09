@@ -123,8 +123,8 @@
                 <tr>
                     <th style="text-align: center;  "><b>No.</b></th>
                     <th style="text-align: center;  "><b>Nama Barang</b></th>
+                    <!-- <th style="text-align: center;  "><b>Jumlah</b></th> -->
                     <th style="text-align: center;  "><b>Jumlah</b></th>
-                    <th style="text-align: center;  "><b>Realisasi</b></th>
                     <th style="text-align: center;  "><b>Harga</b></th>
                     <th style="text-align: center;  "><b>Total Harga</b></th>
 
@@ -140,7 +140,7 @@
                 <tr>
                     <td style="text-align: center; font-size: 12px;"><?php echo $no++; ?></td>
                     <td style="text-align: left; font-size: 12px;"><?= $dpr['nama_brg']; ?></td>
-                    <td style="text-align: left; font-size: 12px;"><?= $dpr['jumlah']; ?></td>
+                    <!-- <td style="text-align: left; font-size: 12px;"><?= $dpr['jumlah']; ?></td> -->
                     <td style="text-align: left; font-size: 12px;"><?= $dpr['realisasi']; ?></td>
                     <td style="text-align: left; font-size: 12px;">Rp. <?= number_format($dpr['harga']); ?></td>
                     <td style="text-align: left; font-size: 12px;">Rp. <?= number_format($dpr['total']); ?></td>
@@ -157,7 +157,7 @@
                 foreach ($totalp->result() as $total) {
                 ?>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="4">
                         <b>TOTAL</b>
                     </td colspan="1">
                     <td><b><?php echo 'Rp. ' . number_format($total->totalp) ?></b></td>

@@ -130,7 +130,7 @@
                             </li>
 
                             <li>
-                                <a href="<?php echo base_url('upb/purchaseorder') ?>">Surat Keluar</a>
+                                <a href="<?php echo base_url('upb/suratkeluar') ?>">Surat Keluar</a>
                             </li>
                         </ul>
 

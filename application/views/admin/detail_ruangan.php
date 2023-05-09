@@ -60,10 +60,11 @@
                         <label for="asal_barang">Asal Barang</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="asal_barang" id="asal_barang" placeholder=""
-                                    class="form-control ui-autocomplete-input"
-                                    value="<?= $druangan['nama_asal_barang']; ?>" autocomplete="off" readonly>
-                                <input type="hidden" id="id_asal_barang" name="id_asal_barang">
+                                <input type="text" name="asal_barang" id="asal_barang"
+                                    value="<?= $druangan['nama_asal_barang']; ?>"
+                                    class="form-control ui-autocomplete-input" readonly>
+                                <input type="hidden" id="id_asal_barang" name="id_asal_barang"
+                                    value="<?= $druangan['id_asal_barang']; ?>">
                             </div>
                         </div>
 

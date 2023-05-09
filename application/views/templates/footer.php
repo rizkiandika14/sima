@@ -1,5 +1,3 @@
-
-
 <!-- Jquery Core Js -->
 <script src="<?= base_url('assets/'); ?>plugins/jquery/jquery.min.js"></script>
 
@@ -28,9 +26,6 @@
 
 <!-- ChartJs -->
 <script src="<?= base_url('assets/'); ?>plugins/chartjs/Chart.bundle.js"></script>
-
-<!-- Select Plugin Js -->
-<script src="<?= base_url('assets/'); ?>plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
 <!-- Flot Charts Plugin Js -->
 <script src="<?= base_url('assets/'); ?>plugins/flot-charts/jquery.flot.js"></script>
@@ -72,11 +67,7 @@
 <script src="<?= base_url('assets/'); ?>js/demo.js"></script>
 
 
-<script>
-    $(document).ready(function () {
-        $(#example).DataTable();
-    });
-</script>
+
 
 
 </body>

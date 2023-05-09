@@ -71,13 +71,13 @@
                                                 Proses</a> -->
 
 
-                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                            <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                             <div class="btn btn-sm btn-warning">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editpoModal<?= $dpo['id']; ?>"> <i
                                                         class="material-icons"></i> <span class="icon-name">Edit</span>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
 
 
@@ -165,7 +165,7 @@
                                         <div class="form-line">
 
                                             <input type="number" id="realisasi" name="realisasi" class="form-control"
-                                                value="<?= $brg['jumlah']; ?>">
+                                                value="<?= $brg['realisasi']; ?>">
                                         </div>
                                     </div>
                                 </div>

@@ -76,8 +76,7 @@
                         </form>
                         <br>
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable"
-                                id="example">
+                            <table class="table table-bordered table-striped table-hover js-exportable dataTable">
                                 <thead>
                                     <tr>
                                         <th>No</th>

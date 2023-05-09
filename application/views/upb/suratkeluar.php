@@ -12,13 +12,12 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Surat Masuk
+                            Surat Keluar
                         </h2>
 
                         <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal"
                             data-target="#defaultModal"> <i class="material-icons">add</i> <span
-                                class="icon-name"></i>Add
-                                Aset</button>
+                                class="icon-name"></i>Add Data</button>
 
                     </div>
                     <div class="body">
@@ -41,15 +40,15 @@
 
                                     <?php
                                     $no = 1;
-                                    foreach ($suratmasuk as $sm) : ?>
+                                    foreach ($suratkeluar as $sk) : ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?= $sm['tanggal']; ?></td>
-                                        <td><?= $sm['judul']; ?></td>
+                                        <td><?= $sk['tanggal']; ?></td>
+                                        <td><?= $sk['judul']; ?></td>
 
                                         <td>
                                             <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>Upb/detail_suratmasuk/<?= $sm['id_suratmasuk'] ?>"><i
+                                                href="<?= base_url() ?>Upb/detail_suratkeluar/<?= $sk['id_suratkeluar'] ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>
                                                 Detail</a>
@@ -79,12 +78,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Add Surat Masuk</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Add Surat Keluar</h4>
             </div>
             <div class="modal-body">
 
                 <div class="body">
-                    <?php echo form_open_multipart('upb/add_suratmasuk') ?>
+                    <?php echo form_open_multipart('upb/add_suratkeluar') ?>
                     <form class="form-horizontal">
 
                         <div class="row clearfix">
