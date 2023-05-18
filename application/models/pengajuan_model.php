@@ -10,7 +10,7 @@ class Pengajuan_model extends CI_Model
 
 
 
-        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, '$now' 
+        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan, deskripsi) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi,  '$now',deskripsi
                     from barang_temp 
                     where user_id = $user_id AND minggu = 1
                     ";
@@ -56,7 +56,7 @@ class Pengajuan_model extends CI_Model
 
 
 
-        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, '$now' 
+        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan, deskripsi) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, '$now', deskripsi
                     from barang_temp 
                     where user_id = $user_id AND minggu = 2
                     ";
@@ -75,7 +75,7 @@ class Pengajuan_model extends CI_Model
 
 
 
-        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, '$now' 
+        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan, deskripsi) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, '$now',deskripsi 
                     from barang_temp 
                     where user_id = $user_id AND minggu = 3
                     ";
@@ -94,7 +94,7 @@ class Pengajuan_model extends CI_Model
 
 
 
-        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, '$now' 
+        $query = "INSERT INTO pengajuan (barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, waktu_pengajuan, deskripsi) select barang_id, user_id, jumlah, satuan, harga, total, minggu, divisi, '$now',deskripsi 
                     from barang_temp 
                     where user_id = $user_id AND minggu = 4
                     ";

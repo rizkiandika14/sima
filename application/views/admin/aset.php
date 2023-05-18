@@ -27,7 +27,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-3"
                                 id="example">
                                 <thead>
                                     <tr>
@@ -47,42 +47,37 @@
                                 </tfoot>
                                 <tbody>
 
-                                    <!-- <?php
+                                    <?php
 
-                                            foreach ($bangunans as $bgn) : ?>
+                                    foreach ($asets as $aset) : ?>
                                     <tr>
 
-                                        <td><?= $bgn['kode_lahan']; ?></td>
-                                        <td><?= $bgn['kode_bangunan']; ?></td>
-                                        <td><?= $bgn['nama_bangunan']; ?></td>
+                                        <td><?= $aset['kode_lokasi']; ?></td>
+                                        <td><?= $aset['kode_barang']; ?></td>
+                                        <td><?= $aset['nama_barang']; ?></td>
                                         <td>
                                             <a class="btn btn-sm btn-info"
-                                                href="<?= base_url() ?>admin/updatebangunan/<?= $bgn['id_bangunan']; ?>"><i
+                                                href="<?= base_url() ?>admin/updatebarang/<?= $aset['id_barang']; ?>"><i
                                                     class="material-icons"></i> <span class="icon-name"></span>
                                                 edit</a>
 
                                             <a class="btn btn-sm btn-danger waves-effect " data-type="success"
-                                                href="<?= base_url() ?>admin/fungsi_delete_bangunan/<?= $bgn['id_bangunan']; ?>"><span
+                                                href="<?= base_url() ?>admin/fungsi_delete_barang/<?= $aset['id_barang']; ?>"><span
                                                     class="fa fa-trash tombol-hapus"></span>
                                                 Hapus</a>
 
                                             <a class="btn btn-xs btn-info"
-                                                href="<?= base_url() ?>admin/detail_bangunan/<?= $bgn['id_bangunan']; ?>"><i
+                                                href="<?= base_url() ?>admin/detail_barang/<?= $aset['id_barang']; ?>"><i
                                                     class="material-icons">visibility</i> <span
                                                     class="icon-name"></span>
                                                 Detail</a>
-
-
-
-
-
 
 
                                         </td>
 
 
                                     </tr>
-                                    <?php endforeach; ?> -->
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

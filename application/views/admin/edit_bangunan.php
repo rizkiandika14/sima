@@ -44,6 +44,16 @@
                         </div>
                     </div>
 
+                    <label for="subklasifikasi">Sub Klasifikasi</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" data-toggle="modal" data-target="#defaultModalSubklasifikasi"
+                                name="subklasifikasi" id="subklasifikasi" placeholder="Pilih Subklasifikasi"
+                                class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
+                            <input type="text" id="id_subklasifikasi" name="id_subklasifikasi" value="">
+                            <input type="text" id="kode_barang" name="kode_barang" value="">
+                        </div>
+                    </div>
 
                     <label for="tanggal_pembukuan">Tanggal Pembukuan</label>
                     <div class="form-group">
@@ -69,9 +79,6 @@
                         </div>
                     </div>
 
-
-
-
                     <label for="luas_bangunan">Luas Bangunan</label>
                     <div class="form-group">
                         <div class="form-line">
@@ -84,12 +91,13 @@
                     <div class="form-group">
                         <div class="form-line">
                             <input type="text" data-toggle="modal" data-target="#defaultModal" name="asal_barang"
-                                id="asal_barang" placeholder="" class="form-control ui-autocomplete-input"
-                                value="<?= $bangunans['nama_asal_barang']; ?>" autocomplete="off">
-                            <input type="hidden" id="id_asal_barang" name="id_asal_barang"
-                                value="<?= $bangunans['id_asal_barang']; ?>">
+                                id="asal_barang" placeholder="" class="form-control ui-autocomplete-input" value=""
+                                autocomplete="off">
+                            <input type="hidden" id="id_asal_barang" name="id_asal_barang" value="">
+                            <input type="hidden" id="kode_asal_barang" name="kode_asal_barang" value="">
                         </div>
                     </div>
+
 
                     <label for="tahun_perolehan">Tahun Perolehan</label>
                     <div class="form-group">
@@ -166,6 +174,56 @@
 
     </div>
 
+    <!-- MODAL ADD SUBKLASIFIKASI -->
+    <div class="modal fade" id="defaultModalSubklasifikasi" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Cari Subklasifikasi</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                        width="100%">
+                        <thead>
+                            <tr>
+                                <th>Kode Subklasifikasi</th>
+                                <th>Nama Subklasifikasi</th>
+                                <th class="hide">ID</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            <?php foreach ($subklasifikasi  as $sk) : ?>
+
+                            <tr>
+                                <td style="text-align:center;" scope="row">
+                                    <?= $sk['kode_gol'] ?>.<?= $sk['kode_klas'] ?>.<?= $sk['kode_subklasifikasi'] ?>
+                                </td>
+                                <td><?= $sk['keterangan_subklas']; ?></td>
+                                <td class="hide"><?= $sk['id']; ?></td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" id="pilih2"
+                                        data-nama-subklasifikasi="<?= $sk['keterangan_subklas']; ?>"
+                                        data-id-subklasifikasi="<?= $sk['id']; ?>"
+                                        data-kode-barang="<?= $sk['kode_gol'] ?>.<?= $sk['kode_klas'] ?>.<?= $sk['kode_subklasifikasi'] ?>">
+                                        Pilih</button>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        <?php echo form_close() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL ADD -->
     <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -178,7 +236,7 @@
                         width="100%">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>Kode Asal Barang</th>
                                 <th>Asal Barang</th>
                                 <th class="hide">ID</th>
                                 <th>Aksi</th>
@@ -190,14 +248,15 @@
 
                             <tr>
                                 <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
+                                    <?= $ab['kode_asal_barang']; ?>
                                 </td>
                                 <td><?= $ab['nama_asal_barang']; ?></td>
                                 <td class="hide"><?= $ab['id_asal_barang']; ?></td>
                                 <td style="text-align:center;">
                                     <button class="btn btn-sm btn-info" id="pilih"
                                         data-keterangan="<?= $ab['nama_asal_barang']; ?>"
-                                        data-id="<?= $ab['id_asal_barang']; ?>">
+                                        data-id="<?= $ab['id_asal_barang']; ?>"
+                                        data-kode="<?= $ab['kode_asal_barang']; ?>">
                                         Pilih</button>
                                 </td>
                             </tr>
@@ -226,9 +285,22 @@ $(document).ready(function() {
     $(document).on('click', '#pilih', function() {
         var nama_klas = $(this).data('keterangan');
         var id = $(this).data('id');
+        var kode = $(this).data('kode');
         $('#asal_barang').val(nama_klas);
+        $('#kode_asal_barang').val(kode);
         $('#id_asal_barang').val(id);
         $('#defaultModal').modal('hide');
+    })
+});
+$(document).ready(function() {
+    $(document).on('click', '#pilih2', function() {
+        var nama_klas = $(this).data('nama-subklasifikasi');
+        var id = $(this).data('id-subklasifikasi');
+        var kode = $(this).data('kode-barang');
+        $('#subklasifikasi').val(nama_klas);
+        $('#id_subklasifikasi').val(id);
+        $('#kode_barang').val(kode);
+        $('#defaultModalSubklasifikasi').modal('hide');
     })
 });
 </script>

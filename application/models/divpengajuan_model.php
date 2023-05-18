@@ -8,7 +8,7 @@ class Divpengajuan_model extends CI_Model
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id');
-        $query = "SELECT barang.nama_brg, pengajuan.waktu_pengajuan, pengajuan.id, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi, pengajuan.user_id
+        $query = "SELECT barang.nama_brg, pengajuan.waktu_pengajuan, pengajuan.id, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi,  pengajuan.keterangan, pengajuan.user_id
         FROM pengajuan
         INNER JOIN barang ON pengajuan.barang_id=barang.id
         where user_id = $user_id AND validasi = 'belum diterima'
@@ -21,7 +21,7 @@ class Divpengajuan_model extends CI_Model
 
         $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
         $user_id = $this->session->userdata('id');
-        $query = "SELECT barang.nama_brg, pengajuan.id, pengajuan.waktu_pengajuan, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi, pengajuan.user_id
+        $query = "SELECT barang.nama_brg, pengajuan.id, pengajuan.waktu_pengajuan, pengajuan.realisasi , pengajuan.jumlah, pengajuan.satuan, pengajuan.harga, pengajuan.total, pengajuan.status, pengajuan.waktu_validasi, pengajuan.validasi,  pengajuan.user_id
         FROM pengajuan
         INNER JOIN barang ON pengajuan.barang_id=barang.id
         where user_id = $user_id AND validasi != 'belum diterima' 

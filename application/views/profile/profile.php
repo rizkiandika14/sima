@@ -1,7 +1,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row clearfix">
-
+            <?= $this->session->flashdata('message'); ?>
             <div class="col-xs-12 col-sm-9">
                 <div class="card">
                     <div class="body">
@@ -35,6 +35,14 @@
                                                     <li>Nama Lengkap : <a><?= $u['nama']; ?></a></li>
                                                     <li>Divisi : <a><?= $u['divisi']; ?></a></li>
                                                     <li>Contact : <a><?= $u['contact']; ?></a></li>
+                                                    <li><label for="nama">Foto Tanda Tangan</label>
+                                                        <div class="form-group">
+                                                            <div class="form-line">
+                                                                <img src="<?= base_url('assets/img/ttd/') . $u['foto_ttd']; ?>"
+                                                                    width="100" height="100" class="img-thumbnail">
+                                                            </div>
+                                                        </div>
+                                                    </li>
 
                                                 </div>
                                                 <?php endforeach; ?>
@@ -100,13 +108,33 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="submit" class="btn btn-danger">SUBMIT</button>
+                                            <label for="nama" class="col-sm-2 control-label">Foto Tanda Tangan</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-line">
+                                                    <img src="<?= base_url('assets/img/ttd/') . $u['foto_ttd']; ?>"
+                                                        width="100" height="100" class="img-thumbnail">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputFile"></label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input"
+                                                                    id="foto_ttd" name="foto_ttd">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <?php endforeach; ?>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-danger">EDIT</button>
+                                            </div>
+                                        </div>
+
 
                                     </form>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>

@@ -231,6 +231,7 @@ class Admin extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];
@@ -251,6 +252,7 @@ class Admin extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];
@@ -270,6 +272,7 @@ class Admin extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];
@@ -289,6 +292,7 @@ class Admin extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];
@@ -444,7 +448,7 @@ class Admin extends CI_Controller
 
         $this->form_validation->set_rules('nama_asal_barang', 'Barang', 'required');
         $data = [
-
+            'kode_asal_barang' => $this->input->post('kode_asal_barang'),
             'nama_asal_barang' => $this->input->post('nama_asal_barang')
         ];
         $this->db->insert('asal_barang', $data);
@@ -455,8 +459,10 @@ class Admin extends CI_Controller
     public function fungsi_edit_asal_barang()
     {
         $id = $this->input->post('id_asal_barang');
+        $kode = $this->input->post('kode_asal_barang');
         $nama_asal_barang = $this->input->post('nama_asal_barang');
         $ArrUpdate = array(
+            'kode_asal_barang' => $kode,
             'nama_asal_barang' => $nama_asal_barang
 
 
@@ -525,15 +531,7 @@ class Admin extends CI_Controller
     //LANTAI
     public function lantai()
     {
-        $this->load->model('Upbmaster_model', 'Upbmaster_model');
-        $data['lantai'] = $this->db->get('lantai')->result_array();
-
-
-        $data['lantai'] = $this->Upbmaster_model->getLantai();
-        $this->load->view('templates/header');
-        $this->load->view('templates/admin_sidebar');
-        $this->load->view('admin/lantai', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('admin/lantai');
     }
 
     public function tambah_lantai()
@@ -609,7 +607,7 @@ class Admin extends CI_Controller
         $kode = $this->input->post('kode');
         $keterangan = $this->input->post('keterangan');
         $ArrUpdate = array(
-            'kode' => $kode,
+            'kode_gol' => $kode,
             'keterangan' => $keterangan
 
 
@@ -710,11 +708,11 @@ class Admin extends CI_Controller
 
             'id_klasifikasi' => $this->input->post('id_klasifikasi'),
             'kode_subklasifikasi' => $this->input->post('kode'),
-            'keterangan' => $this->input->post('keterangan')
+            'keterangan_subklas' => $this->input->post('keterangan')
 
         ];
         $this->db->insert('subklasifikasi', $data);
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Klasifikasi Added!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data SubKlasifikasi Added!</div>');
 
         redirect('admin/sub_klasifikasi');
     }
@@ -728,19 +726,19 @@ class Admin extends CI_Controller
         $ArrUpdate = array(
             'id_klasifikasi' => $id_klas,
             'kode_subklasifikasi' => $kode,
-            'keterangan' => $keterangan
+            'keterangan_subklas' => $keterangan
 
 
         );
         $this->Upbmaster_model->updateSubKlasifikasi($id, $ArrUpdate);
-        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Golongan Edited!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data SubKlasifikasi Edited!</div>');
         Redirect(base_url('admin/sub_klasifikasi'));
     }
 
     public function fungsi_delete_subklasifikasi($id)
     {
         $this->Upbmaster_model->hapus_subklasifikasi($id);
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Klasifikasi Deleted!</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data SubKlasifikasi Deleted!</div>');
         Redirect(Base_url('admin/sub_klasifikasi'));
     }
 
@@ -756,8 +754,9 @@ class Admin extends CI_Controller
 
     public function add_lahan()
     {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
         $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
-
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
         $this->load->view('admin/add_lahan', $data);
@@ -788,6 +787,7 @@ class Admin extends CI_Controller
         $data = [
 
             'kode_lahan' => $this->input->post('kode_lahan'),
+            'kode_barang' => $this->input->post('kode_barang') . '/' . $this->input->post('kode_asal_barang') . '.' . $this->input->post('tahun_perolehan'),
             'tanggal_pembukuan' => $this->input->post('tanggal_pembukuan'),
             'nama_lahan' => $this->input->post('nama_lahan'),
             'alamat' => $this->input->post('alamat'),
@@ -833,10 +833,12 @@ class Admin extends CI_Controller
 
     public function fungsi_edit_lahan()
     {
-
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
         $data['lahan'] = $this->db->get_where('tbl_lahan', ['id_lahan' => $this->input->post('id_lahan')])->row_array();
         $id_lahan = $this->input->post('id_lahan');
         $kode_lahan = $this->input->post('kode_lahan');
+        $kode_barang = $this->input->post('kode_barang') . '/' . $this->input->post('kode_asal_barang') . '.' . $this->input->post('tahun_perolehan');
         $tanggal_pembukuan = $this->input->post('tanggal_pembukuan');
         $nama_lahan = $this->input->post('nama_lahan');
         $alamat = $this->input->post('alamat');
@@ -879,6 +881,7 @@ class Admin extends CI_Controller
         }
 
         $this->db->set('kode_lahan', $kode_lahan);
+        $this->db->set('kode_barang', $kode_barang);
         $this->db->set('tanggal_pembukuan', $tanggal_pembukuan);
         $this->db->set('nama_lahan', $nama_lahan);
         $this->db->set('luas_lahan', $luas_lahan);
@@ -906,6 +909,7 @@ class Admin extends CI_Controller
     {
         $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
         $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
         $data['detail_lahan'] = $this->upbmaster_model->ambil_id_lahan($id_lahan);
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
@@ -918,6 +922,7 @@ class Admin extends CI_Controller
     {
         $this->load->model('Upbmaster_model', 'upbmaster_model');
         $data['bangunans'] = $this->upbmaster_model->getBangunan();
+
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
         $this->load->view('admin/bangunan', $data);
@@ -926,9 +931,10 @@ class Admin extends CI_Controller
 
     public function add_bangunan()
     {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
         $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
         $data['lahans'] = $this->db->get('tbl_lahan')->result_array();
-
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
         $this->load->view('admin/add_bangunan', $data);
@@ -960,6 +966,7 @@ class Admin extends CI_Controller
         $data = [
 
             'id_lahan' => $this->input->post('lahan'),
+            'kode_barang' => $this->input->post('kode_barang') . '/' . $this->input->post('kode_asal_barang') . '.' . $this->input->post('tahun_perolehan'),
             'tanggal_pembukuan' => $this->input->post('tanggal_pembukuan'),
             'kode_bangunan' => $this->input->post('kode_bangunan'),
             'nama_bangunan' => $this->input->post('nama_bangunan'),
@@ -999,11 +1006,13 @@ class Admin extends CI_Controller
 
     public function fungsi_edit_bangunan()
     {
-
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
         $data['lahan'] = $this->db->get_where('tbl_lahan', ['id_lahan' => $this->input->post('id_lahan')])->row_array();
         $data['bangunan'] = $this->db->get_where('tbl_bangunan', ['id_bangunan' => $this->input->post('id_bangunan')])->row_array();
         $id_bangunan = $this->input->post('id_bangunan');
         $id_lahan = $this->input->post('id_lahan');
+        $kode_barang = $this->input->post('kode_barang') . '/' . $this->input->post('kode_asal_barang') . '.' . $this->input->post('tahun_perolehan');
         $tanggal_pembukuan = $this->input->post('tanggal_pembukuan');
         $kode_bangunan = $this->input->post('kode_bangunan');
         $nama_bangunan = $this->input->post('nama_bangunan');
@@ -1039,6 +1048,7 @@ class Admin extends CI_Controller
         }
 
         $this->db->set('id_lahan', $id_lahan);
+        $this->db->set('kode_barang', $kode_barang);
         $this->db->set('tanggal_pembukuan', $tanggal_pembukuan);
         $this->db->set('kode_bangunan', $kode_bangunan);
         $this->db->set('nama_bangunan', $nama_bangunan);
@@ -1061,6 +1071,7 @@ class Admin extends CI_Controller
         $data['nama_lahan'] = $this->db->get('tbl_lahan')->result_array();
         $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
         $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
         $data['detail_bangunan'] = $this->upbmaster_model->ambil_id_bangunan($id_bangunan);
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
@@ -1187,7 +1198,7 @@ class Admin extends CI_Controller
                 $this->db->set('foto_ruangan', $new_image);
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
-                redirect('admin/add_ruangan');
+                redirect('admin/edit_ruangan');
             }
         }
 
@@ -1223,21 +1234,23 @@ class Admin extends CI_Controller
     //ASET
     public function aset()
     {
-        // $this->load->model('Upbmaster_model', 'upbmaster_model');
-        // $data['ruangans'] = $this->upbmaster_model->getRuangan();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['asets'] = $this->upbmaster_model->getAset();
         $this->load->view('templates/header');
         $this->load->view('templates/admin_sidebar');
-        $this->load->view('admin/aset');
+        $this->load->view('admin/aset', $data);
         $this->load->view('templates/footer');
     }
 
     public function add_aset()
     {
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
         $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
         $this->load->model('Upbmaster_model', 'upbmaster_model');
         $data['kode_bangunan'] = $this->upbmaster_model->kode_bangunan();
         $data['ruangan'] = $this->db->get('tbl_ruangan')->result_array();
-        $data['subklasifikasi'] = $this->db->get('subklasifikasi')->result_array();
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
         $data['jenisbarang'] = $this->db->get('jenis_barang')->result_array();
 
         $this->load->view('templates/header');
@@ -1274,26 +1287,276 @@ class Admin extends CI_Controller
             'id_subklasifikasi' => $this->input->post('id_subklasifikasi'),
             'id_jenis_barang' => $this->input->post('id_jenis_barang'),
             'kode_lokasi' => $this->input->post('kode_lokasi'),
-            'kode_barang' => $this->input->post('kode_barang'),
+            'kode_barang' => $this->input->post('kode_barang') . '/' . $this->input->post('kode_asal_barang') . '.' . $this->input->post('tahun_perolehan'),
             'nama_barang' => $this->input->post('nama_barang'),
             'jumlah_barang' => $this->input->post('jumlah_barang'),
+            'satuan_barang' => $this->input->post('satuan'),
             'spesifikasi_teknis' => $this->input->post('spesifikasi_teknis'),
             'serial_number' => $this->input->post('serial_number'),
             'model_number' => $this->input->post('model_number'),
             'id_asal_barang' => $this->input->post('id_asal_barang'),
-            'bulan_perolehan' => $this->input->post('bulan_perolehan'),
             'tahun_perolehan' => $this->input->post('tahun_perolehan'),
             'tanggal_perolehan' => $this->input->post('tanggal_perolehan'),
             'harga_perolehan' => $this->input->post('harga_perolehan'),
             'keadaan_barang' => $this->input->post('keadaan_barang'),
             'peruntukan' => $this->input->post('peruntukan'),
             'keterangan' => $this->input->post('keterangan'),
-            'foto_ruangan' => $photo,
+            'foto_barang' => $photo,
 
         ];
         $this->db->insert('tbl_barang', $data);
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Barang Added!</div>');
 
         redirect('admin/aset');
+    }
+
+    public function detail_barang($id_barang)
+    {
+
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_barang'] = $this->upbmaster_model->ambil_id_barang($id_barang);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/detail_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function fungsi_delete_barang($id_barang)
+    {
+        $this->Upbmaster_model->hapusbarang($id_barang);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data Barang Deleted!</div>');
+        Redirect(Base_url('admin/aset'));
+    }
+
+    public function fungsi_edit_barang()
+    {
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['kode_bangunan'] = $this->upbmaster_model->kode_bangunan();
+        $data['ruangan'] = $this->db->get('tbl_ruangan')->result_array();
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
+        $data['jenisbarang'] = $this->db->get('jenis_barang')->result_array();
+
+        $data['bangunan'] = $this->db->get_where('tbl_bangunan', ['id_bangunan' => $this->input->post('id_bangunan')])->row_array();
+        $data['ruangan'] = $this->db->get_where('tbl_ruangan', ['id_ruangan' => $this->input->post('id_ruangan')])->row_array();
+        $data['barang'] = $this->db->get_where('tbl_barang', ['id_barang' => $this->input->post('id_barang')])->row_array();
+        $id_barang = $this->input->post('id_barang');
+        $id_ruangan = $this->input->post('id_ruangan');
+        $id_subklasifikasi = $this->input->post('id_subklasifikasi');
+        $id_jenis_barang = $this->input->post('id_jenis_barang');
+        $kode_lokasi = $this->input->post('kode_lokasi');
+        $kode_barang = $this->input->post('kode_barang') . '/' . $this->input->post('kode_asal_barang') . '.' . $this->input->post('tahun_perolehan');
+        $nama_barang = $this->input->post('nama_barang');
+        $jumlah_barang = $this->input->post('jumlah_barang');
+        $satuan_barang = $this->input->post('satuan');
+        $spesifikasi_teknis = $this->input->post('spesifikasi_teknis');
+        $serial_number = $this->input->post('serial_number');
+        $model_number = $this->input->post('model_number');
+        $id_asal_barang = $this->input->post('id_asal_barang');
+        $tahun_perolehan = $this->input->post('tahun_perolehan');
+        $tanggal_perolehan = $this->input->post('tanggal_perolehan');
+        $harga_perolehan = $this->input->post('harga_perolehan');
+        $keadaan_barang = $this->input->post('keadaan_barang');
+        $peruntukan = $this->input->post('peruntukan');
+        $keterangan = $this->input->post('keterangan');
+
+        //jika ada gambar
+        $photo = $_FILES['foto_barang']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/barang/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_barang')) {
+                $old_image = $data['barang']['foto_barang'];
+                if ($old_image != '') {
+                    unlink(FCPATH . 'assets/img/barang/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('foto_barang', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/edit_barang');
+            }
+        }
+
+        $this->db->set('id_ruangan', $id_ruangan);
+        $this->db->set('id_subklasifikasi', $id_subklasifikasi);
+        $this->db->set('id_jenis_barang', $id_jenis_barang);
+        $this->db->set('kode_lokasi', $kode_lokasi);
+        $this->db->set('kode_barang', $kode_barang);
+        $this->db->set('nama_barang', $nama_barang);
+        $this->db->set('jumlah_barang', $jumlah_barang);
+        $this->db->set('satuan_barang', $satuan_barang);
+        $this->db->set('spesifikasi_teknis', $spesifikasi_teknis);
+        $this->db->set('serial_number', $serial_number);
+        $this->db->set('model_number', $model_number);
+        $this->db->set('id_asal_barang', $id_asal_barang);
+        $this->db->set('tahun_perolehan', $tahun_perolehan);
+        $this->db->set('tanggal_perolehan', $tanggal_perolehan);
+        $this->db->set('harga_perolehan', $harga_perolehan);
+        $this->db->set('keadaan_barang', $keadaan_barang);
+        $this->db->set('peruntukan', $peruntukan);
+        $this->db->set('keterangan', $keterangan);
+        $this->db->where('id_barang', $id_barang);
+        $this->db->update('tbl_barang');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Barang Edited!</div>');
+        Redirect(base_url('admin/aset'));
+    }
+
+    public function updatebarang($id_barang)
+    {
+        $this->load->model('Barang_model', 'barang_model');
+        $data['satuans'] = $this->barang_model->getSatuan();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['ruangan'] = $this->db->get('tbl_ruangan')->result_array();
+        $data['jenisbarang'] = $this->db->get('jenis_barang')->result_array();
+        $data['kode_bangunan'] = $this->upbmaster_model->kode_bangunan();
+        $data['subklasifikasi'] = $this->upbmaster_model->kode_barang();
+        $data['asal_barang'] = $this->db->get('asal_barang')->result_array();
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['detail_barang'] = $this->upbmaster_model->ambil_id_barang($id_barang);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/edit_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function laporan_master_barang()
+    {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['pencarian_data'] = $this->upbmaster_model->ambil_all_barang();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/laporan_master_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function laporan_tahun_master_barang()
+    {
+        $thn = $this->input->post('thn');
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['pencarian_data'] = $this->upbmaster_model->ambil_tahun_barang($thn);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/laporan_master_barang', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function bangunan_isi($kode_bangunan)
+    {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['kode_bangunan'] = $this->upbmaster_model->ambil_kode_bangunan($kode_bangunan);
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/bangunan_isi', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function ruangan_isi($kode_ruangan)
+    {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['kode_ruang'] = $this->upbmaster_model->ambil_kode_ruangan_isi($kode_ruangan);
+        $data['kode_ruangan'] = $kode_ruangan;
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/ruangan_isi', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function jabatan()
+    {
+        $this->load->model('User_model', 'user_model');
+        $data['jabatan'] = $this->user_model->getJabatan();
+        $this->load->view('templates/header');
+        $this->load->view('templates/admin_sidebar');
+        $this->load->view('admin/jabatan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function add_jabatan()
+    {
+        $photo = $_FILES['ttd']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/ttd_ketua/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('ttd')) {
+
+                $photo = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/jabatan');
+            }
+        }
+        $data = [
+
+            'nama_divisi' => $this->input->post('nama_divisi'),
+            'nama_ketua' => $this->input->post('nama_ketua'),
+            'ttd' => $photo
+        ];
+        $this->db->insert('jabatan', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Jabatan added!</div>');
+        redirect('admin/jabatan');
+    }
+
+    public function fungsi_edit_jabatan()
+    {
+        $data['jabatan'] = $this->db->get_where('jabatan', ['id_jabatan' => $this->input->post('id_jabatan')])->row_array();
+        $id_jabatan = $this->input->post('id_jabatan');
+        $nama_divisi = $this->input->post('nama_divisi');
+        $nama_ketua = $this->input->post('nama_ketua');
+        //jika ada gambar
+        $photo = $_FILES['ttd']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/ttd_ketua/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('ttd')) {
+                $old_image = $data['jabatan']['ttd'];
+                if ($old_image != '') {
+                    unlink(FCPATH . 'assets/img/ttd_ketua/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('ttd', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/jabatan');
+            }
+        }
+
+        $this->db->set('nama_divisi', $nama_divisi);
+        $this->db->set('nama_ketua', $nama_ketua);
+        $this->db->where('id_jabatan', $id_jabatan);
+        $this->db->update('jabatan');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data Edited!</div>');
+        Redirect(base_url('admin/jabatan'));
+    }
+
+    public function cetak_kode_barang($id_barang)
+    {
+        $this->load->model('Upbmaster_model', 'upbmaster_model');
+        $data['kode'] = $this->upbmaster_model->ambil_kode_barang($id_barang);
+
+        $this->db->set('cetak', 'Sudah tercetak');
+        $this->db->where('id_barang', $id_barang);
+        $this->db->update('tbl_barang');
+        $this->load->view('cetak/kode_barang', $data);
     }
 }

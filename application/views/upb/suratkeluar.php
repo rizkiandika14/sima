@@ -28,8 +28,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tanggal</th>
-                                        <th>Nama Surat</th>
-
+                                        <th>Perihal</th>
                                         <th>Aksi</th>
                                     </tr>
 
@@ -44,7 +43,7 @@
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?= $sk['tanggal']; ?></td>
-                                        <td><?= $sk['judul']; ?></td>
+                                        <td><?= $sk['perihal']; ?></td>
 
                                         <td>
                                             <a class="btn btn-sm btn-info"
@@ -84,105 +83,75 @@
 
                 <div class="body">
                     <?php echo form_open_multipart('upb/add_suratkeluar') ?>
-                    <form class="form-horizontal">
+                    <form>
 
-                        <div class="row clearfix">
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="nama">tanggal</label>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="date" id="tanggal" name="tanggal" class="form-control">
+                                <label class="form-label"></label>
                             </div>
-                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="date" id="tanggal" name="tanggal" class="form-control"
-                                            placeholder="">
-                                    </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" id="no_surat" name="no_surat" class="form-control">
+                                <label class="form-label">No Surat</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" id="tujuan_pengiriman" name="tujuan_pengiriman" class="form-control">
+                                <label class="form-label">Tujuan_pengiriman</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" id="perihal" name="perihal" class="form-control">
+                                <label class="form-label">Perihal</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" id="isi" name="isi" class="form-control">
+                                <label class="form-label">Isi</label>
+                            </div>
+                        </div>
+
+
+
+                        <label for="nama">File</label>
+                        <div class="form-group">
+                            <label for="exampleInputFile"></label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file" name="file" required>
+                                    <label for="file" class="custom-file-label">Choose
+                                        file</label>
                                 </div>
                             </div>
-
-                            <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                    <label for="nama">judul</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="text" id="judul" name="judul" class="form-control"
-                                                placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="nama">Isi</label>
-                                    </div>
-                                    <div class="col-lg-9 col-md-10 col-sm-8 col-xs-7">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="isi" name="isi" class="form-control"
-                                                    placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- <div class="row clearfix">
-                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 form-control-label">
-                                                <label for="nama">File</label>
-                                            </div>
-                                            <div class="col-lg-9 col-md-10 col-sm-8 col-xs-7">
-                                                <div class="form-group">
-                                                    <div class="form-line">
-
-                                                        <input type="file" class="custom-file-input" id="file"
-                                                            name="file" required>
-                                                        <label for="file" class="custom-file-label"></label>
-
-                                                    </div>
-                                                </div>
-                                            </div> -->
-
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="nama">File</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-10 col-sm-8 col-xs-7">
-                                            <div class="form-group">
-                                                <label for="exampleInputFile"></label>
-                                                <div class="input-group">
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="file"
-                                                            name="file" required>
-                                                        <label for="file" class="custom-file-label">Choose
-                                                            file</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                        </div>
 
 
-
-
-                                </div>
-
-
-
-                                <div class="modal-footer js-sweetalert">
-                                    <button type="submit" id="tombol-tambah" class="btn btn-primary waves-effect"
-                                        data-type="success">SAVE
-                                        CHANGES</button>
-                                    <button type="button" class="btn btn-link waves-effect"
-                                        data-dismiss="modal">CLOSE</button>
-                                    <?php echo form_close() ?>
-                                </div>
-                    </form>
                 </div>
-            </div>
 
+                <div class="modal-footer js-sweetalert">
+                    <button type="submit" id="tombol-tambah" class="btn btn-primary waves-effect"
+                        data-type="success">SAVE
+                        CHANGES</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                    <?php echo form_close() ?>
+                </div>
+                </form>
+            </div>
         </div>
+
     </div>
 </div>
+</div>
+
 
 
 

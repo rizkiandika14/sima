@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        Tambah Bangunan </h2>
+                        Tambah Barang </h2>
                 </div>
                 <div class="body">
                     <?php echo form_open_multipart('admin/add_aset_fungsi') ?>
@@ -29,6 +29,7 @@
                                     id="ruangan" placeholder="" class="form-control ui-autocomplete-input" value=""
                                     autocomplete="off" readonly>
                                 <input type="hidden" id="id_ruangan" name="id_ruangan">
+                                <input type="hidden" id="kode_lokasi" name="kode_lokasi">
                             </div>
                         </div>
 
@@ -38,7 +39,8 @@
                                 <input type="text" data-toggle="modal" data-target="#defaultModalSubklasifikasi"
                                     name="subklasifikasi" id="subklasifikasi" placeholder=""
                                     class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                                <input type="hidden" id="id_subklasifikasi" name="id_subklasifikasi">
+                                <input type="text" id="id_subklasifikasi" name="id_subklasifikasi">
+                                <input type="hidden" id="kode_barang" name="kode_barang">
                             </div>
                         </div>
 
@@ -62,7 +64,22 @@
                         <label for="jumlah">Jumlah Barang</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="number" id="jumlah" name="jumlah" class="form-control">
+                                <input type="number" id="jumlah_barang" name="jumlah_barang" class="form-control">
+                            </div>
+                        </div>
+
+                        <label for="satuan">Satuan</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select name="satuan" id="satuan" class="form-control">
+                                    <option value="">--Pilih Satuan--</option>
+                                    <?php
+                                    foreach ($satuans as $satuan) : ?>
+                                    <option value="<?php echo $satuan['satuan']; ?>">
+                                        <?php echo $satuan['satuan']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
 
@@ -95,13 +112,7 @@
                                     id="asal_barang" placeholder="" class="form-control ui-autocomplete-input" value=""
                                     autocomplete="off" readonly>
                                 <input type="hidden" id="id_asal_barang" name="id_asal_barang">
-                            </div>
-                        </div>
-
-                        <label for="bulan_perolehan">Bulan Perolehan (ditulis 2 digit angka)</label>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input type="number" id="bulan_perolehan" name="bulan_perolehan" class="form-control">
+                                <input type="hidden" id="kode_asal_barang" name="kode_asal_barang" value="">
                             </div>
                         </div>
 
@@ -150,7 +161,7 @@
 
 
 
-                        <label for="nama">Foto Lahan (jpg/png) max 2mb</label>
+                        <label for="nama">Foto Barang (jpg/png) max 2mb</label>
                         <div class="form-group">
                             <label for="exampleInputFile"></label>
                             <div class="input-group">
@@ -202,7 +213,8 @@
                                 <td style="text-align:center;">
                                     <button class="btn btn-sm btn-info" id="pilih"
                                         data-nama-ruangan="<?= $ru['nama_ruangan']; ?>"
-                                        data-id-ruangan="<?= $ru['id_ruangan']; ?>">
+                                        data-id-ruangan="<?= $ru['id_ruangan']; ?>"
+                                        data-kode-lokasi="<?= $ru['kode_bangunan'] ?>.<?= $ru['kode_ruangan'] ?>">
                                         Pilih</button>
                                 </td>
                             </tr>
@@ -244,14 +256,15 @@
 
                             <tr>
                                 <td style="text-align:center;" scope="row">
-                                    <?= $sk['kode_subklasifikasi'] ?>
+                                    <?= $sk['kode_gol'] ?>.<?= $sk['kode_klas'] ?>.<?= $sk['kode_subklasifikasi'] ?>
                                 </td>
-                                <td><?= $sk['keterangan']; ?></td>
+                                <td><?= $sk['keterangan_subklas']; ?></td>
                                 <td class="hide"><?= $sk['id']; ?></td>
                                 <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih"
-                                        data-nama-subklasifikasi="<?= $sk['keterangan']; ?>"
-                                        data-id-subklasifikasi="<?= $sk['id']; ?>">
+                                    <button class="btn btn-sm btn-info" id="pilih2"
+                                        data-nama-subklasifikasi="<?= $sk['keterangan_subklas']; ?>"
+                                        data-id-subklasifikasi="<?= $sk['id']; ?>"
+                                        data-kode-barang="<?= $sk['kode_gol'] ?>.<?= $sk['kode_klas'] ?>.<?= $sk['kode_subklasifikasi'] ?>">
                                         Pilih</button>
                                 </td>
                             </tr>
@@ -298,7 +311,7 @@
                                 <td><?= $jb['jenis_barang']; ?></td>
                                 <td class="hide"><?= $jb['id_jenis_barang']; ?></td>
                                 <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih"
+                                    <button class="btn btn-sm btn-info" id="pilih3"
                                         data-nama-jenisbarang="<?= $jb['jenis_barang']; ?>"
                                         data-id-jenisbarang="<?= $jb['id_jenis_barang']; ?>">
                                         Pilih</button>
@@ -330,7 +343,7 @@
                         width="100%">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>Kode Asal Barang</th>
                                 <th>Asal Barang</th>
                                 <th class="hide">ID</th>
                                 <th>Aksi</th>
@@ -342,14 +355,15 @@
 
                             <tr>
                                 <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
+                                    <?= $ab['kode_asal_barang']; ?>
                                 </td>
                                 <td><?= $ab['nama_asal_barang']; ?></td>
                                 <td class="hide"><?= $ab['id_asal_barang']; ?></td>
                                 <td style="text-align:center;">
-                                    <button class="btn btn-sm btn-info" id="pilih"
+                                    <button class="btn btn-sm btn-info" id="pilih4"
                                         data-keterangan="<?= $ab['nama_asal_barang']; ?>"
-                                        data-id="<?= $ab['id_asal_barang']; ?>">
+                                        data-id="<?= $ab['id_asal_barang']; ?>"
+                                        data-kode="<?= $ab['kode_asal_barang']; ?>">
                                         Pilih</button>
                                 </td>
                             </tr>
@@ -378,24 +392,28 @@ $(document).ready(function() {
     $(document).on('click', '#pilih', function() {
         var nama_klas = $(this).data('nama-ruangan');
         var id = $(this).data('id-ruangan');
+        var kode = $(this).data('kode-lokasi');
         $('#ruangan').val(nama_klas);
         $('#id_ruangan').val(id);
+        $('#kode_lokasi').val(kode);
         $('#defaultModalRuangan').modal('hide');
     })
 });
 
 $(document).ready(function() {
-    $(document).on('click', '#pilih', function() {
+    $(document).on('click', '#pilih2', function() {
         var nama_klas = $(this).data('nama-subklasifikasi');
         var id = $(this).data('id-subklasifikasi');
+        var kode = $(this).data('kode-barang');
         $('#subklasifikasi').val(nama_klas);
         $('#id_subklasifikasi').val(id);
+        $('#kode_barang').val(kode);
         $('#defaultModalSubklasifikasi').modal('hide');
     })
 });
 
 $(document).ready(function() {
-    $(document).on('click', '#pilih', function() {
+    $(document).on('click', '#pilih3', function() {
         var nama_klas = $(this).data('nama-jenisbarang');
         var id = $(this).data('id-jenisbarang');
         $('#jenis_barang').val(nama_klas);
@@ -405,10 +423,12 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $(document).on('click', '#pilih', function() {
+    $(document).on('click', '#pilih4', function() {
         var nama_klas = $(this).data('keterangan');
         var id = $(this).data('id');
+        var kode = $(this).data('kode');
         $('#asal_barang').val(nama_klas);
+        $('#kode_asal_barang').val(kode);
         $('#id_asal_barang').val(id);
         $('#defaultModal').modal('hide');
     })

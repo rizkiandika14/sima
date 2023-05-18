@@ -4,6 +4,7 @@
             <a href="javascript:void(0);">Admin<b></b></a>
             <small>Sistem Informasi Manajemen | Amikom Purwokerto</small>
         </div>
+        <?= $this->session->flashdata('message'); ?>
         <div class="card">
             <div class="body">
                 <form id="sign_in" method="POST" action="<?= base_url('auth/proses_login') ?>">

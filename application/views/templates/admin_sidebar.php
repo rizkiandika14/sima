@@ -95,6 +95,13 @@
                     </li>
 
                     <li>
+                        <a href="<?php echo base_url('admin/jabatan') ?>">
+                            <i class="material-icons">person</i>
+                            <span>Kelola Jabatan</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">menu</i>
                             <span>Kelola Data</span>
@@ -211,7 +218,10 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo base_url('admin/laporan') ?>">Data Laporan</a>
+                                <a href="<?php echo base_url('admin/laporan') ?>">Data Laporan Pengajuan</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/laporan_master_barang') ?>">Data Laporan Master Data Barang</a>
                             </li>
                         </ul>
                     </li>

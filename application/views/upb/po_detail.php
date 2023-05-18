@@ -24,7 +24,7 @@
                                 </button>
                             </div>
                         </form>
-
+                        <input type="text" name="kode" id="kode" value="">
                     </div>
                     <div class="body">
                         <div class="table-responsive">
@@ -40,7 +40,8 @@
                                         <th>Harga</th>
                                         <th>Total</th>
                                         <th>Status</th>
-
+                                        <th>Validasi</th>
+                                        <th>Deskripsi</th>
                                         <th>Aksi</th>
                                     </tr>
 
@@ -61,6 +62,8 @@
                                         <td>Rp. <?= number_format($dpo['harga']);  ?></td>
                                         <td>Rp. <?= number_format($dpo['total']); ?></td>
                                         <td><?= $dpo['status']; ?></td>
+                                        <td><?= $dpo['validasi']; ?></td>
+                                        <td><?= $dpo['deskripsi']; ?></td>
 
 
                                         <td>
@@ -71,13 +74,19 @@
                                                 Proses</a> -->
 
 
-                                            <!-- <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                             <div class="btn btn-sm btn-warning">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
                                                     data-target="#editpoModal<?= $dpo['id']; ?>"> <i
                                                         class="material-icons"></i> <span class="icon-name">Edit</span>
                                                 </div>
-                                            </div> -->
+                                            </div>
+
+                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                            <a class="btn btn-sm btn-success"
+                                                href="<?= base_url() ?>upb/selesai/<?= $dpo['id']; ?>"><span
+                                                    class="fa fa-trash"></span>
+                                                Selesai</a>
 
 
 
@@ -191,7 +200,7 @@
                                         <div class="form-line">
 
                                             <input type="number" id="harga" name="harga" class="form-control"
-                                                onkeyup="hitung();" value="<?= $brg['harga']; ?>" readonly>
+                                                onkeyup="hitung();" value="<?= $brg['harga']; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -280,9 +289,9 @@ $(document).ready(function() {
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#jumlah, #harga").keyup(function() {
+    $("#realisasi, #harga").keyup(function() {
         var harga = $("#harga").val();
-        var jumlah = $("#jumlah").val();
+        var jumlah = $("#realisasi").val();
 
         var total = parseInt(harga) * parseInt(jumlah);
         $("#total").val(total);

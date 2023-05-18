@@ -28,24 +28,16 @@
                                 class="material-icons">add</i> <span class="icon-name"></i>Add data</a>
 
 
-
-
-
-
-
-
-
-
                         </ul>
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-4"
                                 id="example">
                                 <thead>
                                     <tr>
-
-                                        <th>Kode</th>
+                                        <th>Kode Barang Lahan</th>
+                                        <th>Kode Lahan</th>
                                         <th>Nama Lahan</th>
                                         <th>Luas Lahan</th>
                                         <th>Aksi</th>
@@ -53,8 +45,8 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-
-                                        <th>Kode</th>
+                                        <th>Kode Barang Lahan</th>
+                                        <th>Kode Lahan</th>
                                         <th>Nama Lahan</th>
                                         <th>Luas Lahan</th>
                                         <th>Aksi</th>
@@ -66,7 +58,7 @@
 
                                     foreach ($lahan as $lhn) : ?>
                                     <tr>
-
+                                        <td><?= $lhn['kode_barang'] ?></td>
                                         <td><?= $lhn['kode_lahan']; ?></td>
                                         <td><?= $lhn['nama_lahan']; ?></td>
                                         <td><?= $lhn['luas_lahan']; ?></td>

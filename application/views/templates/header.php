@@ -17,28 +17,28 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
-    <link href=" <?= base_url('assets/'); ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="<?= base_url('assets/'); ?>plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="<?= base_url('assets/'); ?>plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Sweetalert Css -->
-    <link href="<?= base_url('assets/'); ?>plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 
     <!-- Morris Chart Css-->
-    <link href="<?= base_url('assets/'); ?>plugins/morrisjs/morris.css" rel="stylesheet" />
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/morrisjs/morris.css" rel="stylesheet" />
 
     <!-- JQuery DataTable Css -->
-    <link href="<?= base_url('assets/'); ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
 
     <!-- Custom Css -->
-    <link href="<?= base_url('assets/'); ?>css/style.css" rel="stylesheet">
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>css/style.css" rel="stylesheet">
 
-    <link href="<?= base_url('assets/'); ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="<?= base_url('vendor/AdminBSBMaterialDesign-master/'); ?>plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
   
 

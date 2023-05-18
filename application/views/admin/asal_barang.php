@@ -41,18 +41,18 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-barang"
                                 id="example">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>Kode Asal Barang</th>
                                         <th>Asal Barang</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No</th>
+                                        <th>Kode Asal Barang</th>
                                         <th>Asal Barang</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -63,7 +63,7 @@
                                     $no = 1;
                                     foreach ($asal_barang as $asb) : ?>
                                     <tr>
-                                        <td><?= $no++ ?></td>
+                                        <td><?= $asb['kode_asal_barang'] ?></td>
                                         <td><?= $asb['nama_asal_barang']; ?></td>
                                         <td>
                                             <div class="btn btn-sm btn-warning">
@@ -117,9 +117,24 @@
 
                 <div class="modal-body">
                     <?= form_open_multipart('admin/fungsi_edit_asal_barang') ?>
-                    <input type="hidden" name="id" value="<?= $asb['i_asal_barang']; ?>">
+                    <input type="hidden" id="id_asal_barang" name="id_asal_barang"
+                        value="<?= $asb['id_asal_barang']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
+                            <div class="row clearfix">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                    <label for="email_address_2">Kode Asal Barang</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" id="kode_asal_barang" name="kode_asal_barang"
+                                                class="form-control" value="<?= $asb['kode_asal_barang']; ?>"
+                                                placeholder="" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row clearfix">
                                 <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                                     <label for="email_address_2">Asal Barang</label>
@@ -169,6 +184,19 @@
                         <?php echo form_open_multipart() ?>
                         <div class="body">
                             <form class="form-horizontal">
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="email_address_2">Kode Asal Barang</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="kode_asal_barang" name="kode_asal_barang"
+                                                    class="form-control" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                                         <label for="email_address_2">Asal Barang</label>

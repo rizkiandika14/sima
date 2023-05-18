@@ -57,6 +57,10 @@
                         <input type="hidden" name="minggu" id="minggu" value="1">
                         <input type="hidden" name="user_id" id="user_id" value="<?= $user['id']; ?>">
                         <input type="hidden" name="divisi" id="divisi" value="<?= $user['divisi']; ?>">
+                        <br>
+
+                        <input type="text" name="deskripsi" id="deskripsi" placeholder="Deskripsi Merk"
+                            class="form-control ui-autocomplete-input" value="" autocomplete="off">
 
                         <div class="js-sweetalert">
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect"

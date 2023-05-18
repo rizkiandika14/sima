@@ -40,7 +40,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-barang"
                                 id="example">
                                 <thead>
                                     <tr>
@@ -125,7 +125,7 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <input type="text" id="kode" name="kode" class="form-control"
-                                                value="<?= $gol['kode']; ?>" placeholder="">
+                                                value="<?= $gol['kode_gol']; ?>" placeholder="">
                                         </div>
                                     </div>
                                 </div>

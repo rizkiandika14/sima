@@ -27,11 +27,13 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-5"
                                 id="example">
                                 <thead>
                                     <tr>
+                                        <th>Kode Barang Bangunan</th>
                                         <th>Kode Lahan</th>
+                                        <th>Nama Lahan</th>
                                         <th>Kode Bangunan</th>
                                         <th>Nama Bangunan</th>
                                         <th>Aksi</th>
@@ -39,7 +41,9 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
+                                        <th>Kode Barang Bangunan</th>
                                         <th>Kode Lahan</th>
+                                        <th>Nama Lahan</th>
                                         <th>Kode Bangunan</th>
                                         <th>Nama Bangunan</th>
                                         <th>Aksi</th>
@@ -51,9 +55,12 @@
 
                                     foreach ($bangunans as $bgn) : ?>
                                     <tr>
-
+                                        <td><?= $bgn['kode_barang']; ?></td>
                                         <td><?= $bgn['kode_lahan']; ?></td>
-                                        <td><?= $bgn['kode_bangunan']; ?></td>
+                                        <td><?= $bgn['nama_lahan']; ?></td>
+                                        <td><a
+                                                href="<?= base_url() ?>admin/bangunan_isi/<?= $bgn['kode_bangunan']; ?>"><?= $bgn['kode_bangunan']; ?></a>
+                                        </td>
                                         <td><?= $bgn['nama_bangunan']; ?></td>
                                         <td>
                                             <a class="btn btn-sm btn-info"

@@ -25,6 +25,26 @@ class Auth extends CI_Controller
             $this->load->view('auth/register');
             $this->load->view('templates/auth_footer');
         } else {
+            //jika ada gambar
+            $photo = $_FILES['foto_ttd']['name'];
+
+            if ($photo) {
+                $config['allowed_types'] = 'jpg|png';
+                $config['max_size'] = '2048';
+                $config['upload_path'] = './assets/img/ttd/';
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ($this->upload->do_upload('foto_ttd')) {
+
+                    $photo = $this->upload->data('file_name');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                    $referred_from = $this->session->userdata('referred_from');
+                    redirect($referred_from, 'refresh');
+                }
+            }
             $password = md5($this->input->post('password'));
             $data = [
                 'divisi' => htmlspecialchars($this->input->post('divisi', true)),
@@ -33,11 +53,13 @@ class Auth extends CI_Controller
                 'username' => htmlspecialchars($this->input->post('username', true)),
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'password' => $password,
+                'foto_ttd' => $photo,
                 'role' => 2
             ];
 
+
             $this->db->insert('user', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Congratulation your account has been created. Please Login</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Congratulation your account has been created. Please Wait for Activation</div>');
             redirect('auth');
         }
     }

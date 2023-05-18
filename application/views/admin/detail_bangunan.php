@@ -31,6 +31,15 @@
                                     value="<?= $dbangunan['nama_lahan']; ?>" readonly>
                             </div>
                         </div>
+
+                        <label for="subklasifikasi">Kode Barang</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="subklasifikasi" name="subklasifikasi" class="form-control"
+                                    value="<?= $dbangunan['kode_barang']; ?>" readonly>
+                            </div>
+                        </div>
+
                         <label for="tanggal_pembukuan">Tanggal Pembukuan</label>
                         <div class="form-group">
                             <div class="form-line">

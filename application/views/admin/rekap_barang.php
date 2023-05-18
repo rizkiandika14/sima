@@ -92,7 +92,7 @@
             <div class="card">
                 <div class="body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable"
                             id="example">
                             <thead>
                                 <tr>

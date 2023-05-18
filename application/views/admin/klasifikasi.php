@@ -20,21 +20,34 @@
                 <div class="body">
 
                     <form method="post" action="<?= base_url('admin/add_klasifikasi'); ?>">
-                        <input type="text" data-toggle="modal" data-target="#defaultModal" name="keterangan"
-                            id="keterangan" placeholder="Golongan" class="form-control ui-autocomplete-input" value=""
-                            autocomplete="on">
-                        <br>
-
                         <input type="hidden" name="golongan_id" id="golongan_id" placeholder="id golongan"
                             class="form-control ui-autocomplete-input" value="" autocomplete="off" readonly>
-                        <br>
 
-                        <input type="text" name="kode" id="kode" placeholder="Kode"
-                            class="form-control ui-autocomplete-input" value="" autocomplete="off">
-                        <br>
-                        <input type="text" name="keterangan" id="keterangan" placeholder="Keterangan"
-                            class="form-control ui-autocomplete-input" value="" autocomplete="off">
 
+                        <label for="peruntukan">Pilih Golongan</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" data-toggle="modal" data-target="#defaultModal" name="keterangan"
+                                    id="keterangan" placeholder="Pilih Golongan"
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="on">
+                            </div>
+                        </div>
+
+                        <label for="peruntukan">Nama Klasifikasi</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" name="keterangan" id="keterangan" placeholder=""
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <label for="peruntukan">Kode Klasifikasi</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" name="kode" id="kode" placeholder=""
+                                    class="form-control ui-autocomplete-input" value="" autocomplete="off">
+                            </div>
+                        </div>
 
 
                         <div class="js-sweetalert">
@@ -59,7 +72,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-4"
                                 id="example">
                                 <thead>
                                     <tr>
@@ -140,7 +153,7 @@ foreach ($klasifikasi as $klas) : $no++; ?>
                     <form class="form-horizontal">
                         <div class="row clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="email_address_2">Golongan</label>
+                                <label for="email_address_2">Kode Golongan</label>
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -154,20 +167,7 @@ foreach ($klasifikasi as $klas) : $no++; ?>
 
                         <div class="row clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="email_address_2">Kode</label>
-                            </div>
-                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="kode_klas" name="kode_klas" class="form-control"
-                                            value="<?= $klas['kode_klas']; ?>" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="email_address_2">Keterangan</label>
+                                <label for="email_address_2">Nama Kasifikasi</label>
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
@@ -178,6 +178,21 @@ foreach ($klasifikasi as $klas) : $no++; ?>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="email_address_2">Kode Klasifikasi</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="kode_klas" name="kode_klas" class="form-control"
+                                            value="<?= $klas['kode_klas']; ?>" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
 
 

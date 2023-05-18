@@ -163,6 +163,7 @@ class Divisi extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];
@@ -182,6 +183,7 @@ class Divisi extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];
@@ -201,6 +203,7 @@ class Divisi extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];
@@ -219,6 +222,7 @@ class Divisi extends CI_Controller
             'total' => $this->input->post('total'),
             'minggu' => $this->input->post('minggu'),
             'divisi' => $this->input->post('divisi'),
+            'deskripsi' => $this->input->post('deskripsi'),
             'barang_id' => $this->input->post('barang_id'),
             'user_id' => $this->input->post('user_id')
         ];

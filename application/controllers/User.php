@@ -98,12 +98,36 @@ class User extends CI_Controller
         $email = $this->input->post('email');
         $contact = $this->input->post('contact');
         $nama = $this->input->post('nama');
-        $ArrUpdate = array(
-            'nama' => $nama,
-            'email' => $email,
-            'contact' => $contact
-        );
-        $this->user_model->updateUser($id, $ArrUpdate);
+        $photo = $_FILES['foto_ttd']['name'];
+
+        if ($photo) {
+            $config['allowed_types'] = 'jpg|png';
+            $config['max_size'] = '2048';
+            $config['upload_path'] = './assets/img/ttd/';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('foto_ttd')) {
+                $old_image = $data['user']['foto_ttd'];
+                if ($old_image != '') {
+                    unlink(FCPATH . 'assets/img/ttd/' . $old_image);
+                }
+                $new_image = $this->upload->data('file_name');
+                $this->db->set('foto_ttd', $new_image);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">' . $this->upload->display_errors() . '</div>');
+                $referred_from = $this->session->userdata('referred_from');
+                redirect($referred_from, 'refresh');
+            }
+        }
+
+        $this->db->set('nama', $nama);
+        $this->db->set('email', $email);
+        $this->db->set('contact', $contact);
+        $this->db->where('id', $id);
+        $this->db->update('user');
+        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Data User Edited!</div>');
         $referred_from = $this->session->userdata('referred_from');
         redirect($referred_from, 'refresh');
     }

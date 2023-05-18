@@ -128,7 +128,7 @@
     </div>
 
     <?php
-    $user = $this->db->query("SELECT username as user FROM user Where divisi = '$divisi'");
+    $user = $this->db->query("SELECT nama as user, foto_ttd FROM user Where divisi = '$divisi'");
 
     foreach ($user->result() as $users) {
     ?>
@@ -136,28 +136,32 @@
 
     <div class="kiri" style="margin: 0 auto;">
         <p>Penerima :<br><?= $divisi ?></p>
-        <p><img src="<?= base_url('assets/'); ?>images/centang.png" style="width:50px;height:50px" /></p>
+        <p><img src="<?= base_url('assets/img/ttd/') . $users->foto_ttd; ?>" style="width:50px;height:50px" /></p>
         <b>
             <p><u><?php echo $users->user ?></u><br></p>
         </b>
     </div>
     <?php } ?>
+    <?php
+    $user = $this->db->query("SELECT nama_ketua, nama_divisi, ttd FROM jabatan Where id_jabatan = '1'");
 
+    foreach ($user->result() as $users) {
+    ?>
     <div class="kanan" style="margin: 0 auto;">
         <p></p>
-        <p>Purwokerto, <?php echo tanggal_indo($dp['waktu_validasi']) ?><br>Bagian Aset dan Kerumahtanggan </p>
+        <p>Purwokerto, <?php echo tanggal_indo($dp['waktu_validasi']) ?><br><?php echo $users->nama_divisi ?></p>
         <p></p>
         <p> </p>
-        <p><img src="<?= base_url('assets/'); ?>images/centang.png" style="width:50px;height:50px" /></p>
+        <p><img src="<?= base_url('assets/img/ttd_ketua/') . $users->ttd; ?>" style="width:50px;height:50px" /></p>
         <b>
-            <p><u><?= $this->session->userdata('username'); ?></u><br></p>
+            <p><u><?php echo $users->nama_ketua ?></u><br></p>
         </b>
         <br>
         <br>
         <br>
 
     </div>
-
+    <?php } ?>
 </body>
 
 <script type="text/javascript">

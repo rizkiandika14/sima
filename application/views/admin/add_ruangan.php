@@ -102,7 +102,7 @@
 
 
 
-                        <label for="nama">Foto Lahan (jpg/png) max 2mb</label>
+                        <label for="nama">Foto Ruangan (jpg/png) max 2mb</label>
                         <div class="form-group">
                             <label for="exampleInputFile"></label>
                             <div class="input-group">
@@ -135,7 +135,6 @@
                         width="100%">
                         <thead>
                             <tr>
-                                <th>No</th>
                                 <th>Kode Bangunan</th>
                                 <th>Nama Bangunan</th>
                                 <th class="hide">ID</th>
@@ -147,9 +146,6 @@
                             <?php foreach ($bangunans  as $bgn) : ?>
 
                             <tr>
-                                <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
-                                </td>
                                 <td><?= $bgn['kode_bangunan']; ?></td>
                                 <td><?= $bgn['nama_bangunan']; ?></td>
                                 <td class="hide"><?= $bgn['id_bangunan']; ?></td>
@@ -187,7 +183,7 @@
                         width="100%">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>Kode Asal Barang</th>
                                 <th>Asal Barang</th>
                                 <th class="hide">ID</th>
                                 <th>Aksi</th>
@@ -199,7 +195,7 @@
 
                             <tr>
                                 <td style="text-align:center;" scope="row">
-                                    <?= $i; ?>
+                                    <?= $ab['kode_asal_barang']; ?>
                                 </td>
                                 <td><?= $ab['nama_asal_barang']; ?></td>
                                 <td class="hide"><?= $ab['id_asal_barang']; ?></td>

@@ -31,10 +31,19 @@
                                     value="<?= $lahans['kode_lahan']; ?>" readonly>
                             </div>
                         </div>
+
+                        <label for="subklasifikasi">Kode Barang</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" id="subklasifikasi" name="subklasifikasi" class="form-control"
+                                    value="<?= $lahans['kode_barang']; ?>" readonly>
+                            </div>
+                        </div>
+
                         <label for="tanggal_pembukuan">Tanggal Pembukuan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="date" id="tanggal_pembukuan" name="tanggal_pembukuan" class="form-control"
+                                <input type="text" id="tanggal_pembukuan" name="tanggal_pembukuan" class="form-control"
                                     value="<?= $lahans['tanggal_pembukuan']; ?>" readonly>
                             </div>
                         </div>
@@ -84,7 +93,7 @@
                         <label for="tanggal_perolehan">Tanggal Perolehan</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="date" id="tanggal_perolehan" name="tanggal_perolehan" class="form-control"
+                                <input type="text" id="tanggal_perolehan" name="tanggal_perolehan" class="form-control"
                                     value="<?= $lahans['tanggal_perolehan']; ?>" readonly>
                             </div>
                         </div>
@@ -141,7 +150,7 @@
                         <label for="tanggal_sewa_mulai">Tanggal Sewa Mulai (Diisi apabila status tanah : Sewa)</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="date" id="tanggal_sewa_mulai" name="tanggal_sewa_mulai"
+                                <input type="text" id="tanggal_sewa_mulai" name="tanggal_sewa_mulai"
                                     class="form-control" value="<?= $lahans['tanggal_sewa_mulai']; ?>" readonly>
                             </div>
                         </div>
@@ -149,7 +158,7 @@
                         <label for="tanggal_sewa_akhir">Tanggal Sewa Akhir (Diisi apabila status tanah : Sewa)</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="date" id="tanggal_sewa_akhir" name="tanggal_sewa_akhir"
+                                <input type="text" id="tanggal_sewa_akhir" name="tanggal_sewa_akhir"
                                     class="form-control" value="<?= $lahans['tanggal_sewa_akhir']; ?>" readonly>
                             </div>
                         </div>

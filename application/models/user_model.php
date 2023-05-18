@@ -36,4 +36,12 @@ class User_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('user', $data);
     }
+
+    public function getJabatan()
+    {
+        $query = "SELECT *
+                    FROM jabatan
+                    ";
+        return $this->db->query($query)->result_array();
+    }
 }

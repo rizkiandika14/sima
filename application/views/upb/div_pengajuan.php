@@ -79,7 +79,7 @@
                                             </div>
 
 
-
+                                            <!-- 
                                             <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                             <div class="btn btn-sm btn-success">
                                                 <div class="demo-google-material-icon" data-toggle="modal"
@@ -87,14 +87,23 @@
                                                         class="material-icons"></i> <span
                                                         class="icon-name">Setujui</span>
                                                 </div>
+                                            </div> -->
+
+                                            <?php $this->session->set_userdata('referred_from', current_url()); ?>
+                                            <div class="btn btn-sm btn-danger">
+                                                <div class="demo-google-material-icon" data-toggle="modal"
+                                                    data-target="#tolakModal<?= $dp['id']; ?>"> <i
+                                                        class="material-icons"></i> <span class="icon-name">Tolak</span>
+                                                </div>
                                             </div>
 
 
 
-                                            <a class="btn btn-sm btn-danger"
+
+                                            <!-- <a class="btn btn-sm btn-danger"
                                                 href="<?= base_url() ?>Upb/ditolak/<?= $dp['id']; ?>"><span
                                                     class="fa fa-trash"></span>
-                                                Tolak</a>
+                                                Tolak</a> -->
 
 
                                         </td>
@@ -336,6 +345,131 @@ foreach ($dpengajuan as $brg) : $no++; ?>
     </div>
 </div>
 <?php endforeach ?>
+
+
+<!-- MODAL  Tolak -->
+<?php
+$no = 0;
+foreach ($dpengajuan as $brg) : $no++; ?>
+<div class="modal fade" id="tolakModal<?= $brg['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">TOLAK PENGAJUAN</h4>
+            </div>
+            <div class="modal-body">
+                <?= form_open_multipart('upb/tolak') ?>
+                <input type="hidden" name="id" value="<?= $brg['id']; ?>">
+                <div class="body">
+                    <form class="form-horizontal">
+                        <div class="row clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="nama">Nama Barang</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+
+                                        <input type="text" id="nama_brg" name="nama_brg" class="form-control"
+                                            value="<?= $brg['nama_brg']; ?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="nama">Jumlah</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+
+                                        <input type="number" id="jumlah" name="jumlah" class="form-control"
+                                            onkeyup="hitung();" value="<?= $brg['jumlah']; ?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="nama">Realisasi</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+
+                                        <input type="number" id="realisasi" name="realisasi" class="form-control"
+                                            value="<?= $brg['jumlah']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="nama">Satuan</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+
+                                        <input type="text" id="satuan" name="satuan" class="form-control"
+                                            value="<?= $brg['satuan']; ?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="nama">Harga</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+
+                                        <input type="number" id="harga" name="harga" class="form-control"
+                                            onkeyup="hitung();" value="<?= $brg['harga']; ?>">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="nama">Total</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+
+                                        <input type="text" id="total" name="total" class="form-control"
+                                            onkeyup="hitung();" value="<?= $brg['total']; ?>" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="nama">Alasan ditolak</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+
+                                        <input type="text" id="keterangan" name="keterangan" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-link waves-effect">SETUJUI</button>
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                            <?php echo form_close() ?>
+
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach ?>
+
 
 
 </section>

@@ -117,7 +117,7 @@
                     <td style="text-align: center; font-size: 12px;"><?php echo $no++; ?></td>
                     <td style="text-align: left; font-size: 12px;"><?= $dp['nama_brg']; ?></td>
                     <td style="text-align: center; font-size: 12px;"><?= $dp['jumlah']; ?></td>
-                    <td style="text-align: center; font-size: 12px;"><?= $dp['realisasi']; ?></td>
+
                     <td style="text-align: left; font-size: 12px;">Rp. <?= number_format($dp['harga']); ?></td>
                     <td style="text-align: left; font-size: 12px;">Rp. <?= number_format($dp['total']); ?></td>
                 </tr>
@@ -132,7 +132,7 @@
                 foreach ($totalp->result() as $total) {
                 ?>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="4">
                         <b>TOTAL</b>
                     </td colspan="1">
                     <td><b><?php echo 'Rp. ' . number_format($total->totalp) ?></b></td>

@@ -61,7 +61,8 @@
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="<?= base_url() ?>user/profile3/<?= $this->session->userdata('id'); ?>"><i class="material-icons">person</i>Profile</a>
+                            <li><a href="<?= base_url() ?>user/profile3/<?= $this->session->userdata('id'); ?>"><i
+                                        class="material-icons">person</i>Profile</a>
                             </li>
 
                             <li role="separator" class="divider"></li>
@@ -96,8 +97,16 @@
                             </li>
 
                             <li>
-                                <a href="<?php echo base_url('upb/aset') ?>">Data Asset</a>
+                                <a href="<?php echo base_url('upb/datapengajuan') ?>">
+                                    Data Pengajuan Ditolak
+                                </a>
                             </li>
+
+                             <li>
+                                <a href="<?php echo base_url('upb/barang') ?>">Data Barang</a>
+                            </li> 
+
+                            
                         </ul>
 
                     </li>
@@ -122,6 +131,22 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">mail</i>
+                            <span>Berita Acara</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="<?php echo base_url('upb/berita_acara') ?>">Berita Acara</a>
+                            </li>
+
+                            
+                        </ul>
+
+                    </li>
+
+
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">mail</i>
                             <span>Surat</span>
                         </a>
                         <ul class="ml-menu">
@@ -136,6 +161,24 @@
 
                     </li>
 
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">mail</i>
+                            <span>Arsip</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="<?php echo base_url('upb/arsipnota') ?>">Arsip Nota</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo base_url('upb/arsipgambar') ?>">Arsip Gambar</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                   
 
 
 

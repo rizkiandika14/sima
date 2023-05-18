@@ -4,9 +4,11 @@
             <a href="javascript:void(0);">Register<b></b></a>
             <small>SIMA</small>
         </div>
+        <?= $this->session->flashdata('message'); ?>
         <div class="card">
             <div class="body">
-                <form id="sign_up" action="<?= base_url('auth/register') ?>" method="POST">
+                <?php echo form_open_multipart('auth/register') ?>
+                <form>
                     <div class="msg">Register a new membership</div>
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -62,6 +64,17 @@
                         </div>
                     </div>
 
+                    <label for="nama">Foto Tanda Tangan(ukuran 1:1) (jpg/png) max 2mb</label>
+                    <div class="form-group">
+                        <label for="exampleInputFile"></label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="foto_ttd" name="foto_ttd" required>
+
+                            </div>
+                        </div>
+                    </div>
+
 
 
                     <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">REGISTER</button>
@@ -70,6 +83,7 @@
                         <a href="<?= base_url('auth'); ?>">Already have an account? Login!</a>
                     </div>
                 </form>
+                <?php echo form_close() ?>
             </div>
         </div>
     </div>

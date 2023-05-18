@@ -27,6 +27,7 @@
                                         <th>Total</th>
                                         <th>Realisasi</th>
                                         <th>Status</th>
+                                        <th>Keterangan</th>
                                         <th>Validasi</th>
                                         <th>Aksi</th>
 
@@ -50,6 +51,7 @@
                                         <td>Rp. <?= number_format($divp['total']); ?></td>
                                         <td><?= $divp['realisasi']; ?></td>
                                         <td><?= $divp['status']; ?></td>
+                                        <td><?= $divp['keterangan']; ?></td>
                                         <td><?= $divp['validasi']; ?></td>
                                         <?php $this->session->set_userdata('referred_from', current_url()); ?>
                                         <td>

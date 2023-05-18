@@ -90,9 +90,9 @@ class Upbmaster_model extends CI_Model
     //KLASIFIKASI
     public function getKlasifikasi()
     {
-        $query =  "SELECT golongan.keterangan, klasifikasi.golongan_id, klasifikasi.id, klasifikasi.kode_klas, klasifikasi.keterangan_klas
+        $query =  "SELECT golongan.keterangan, golongan.kode_gol, klasifikasi.golongan_id, klasifikasi.id, klasifikasi.kode_klas, klasifikasi.keterangan_klas
         FROM klasifikasi 
-        INNER JOIN golongan ON klasifikasi.golongan_id=golongan.id_golongan
+        LEFT JOIN golongan ON klasifikasi.golongan_id=golongan.id_golongan
        
                     ";
         return $this->db->query($query)->result_array();
@@ -113,10 +113,10 @@ class Upbmaster_model extends CI_Model
     //SUBKLASIFIKASI
     public function getSubKlasifikasi()
     {
-        $query =  "SELECT klasifikasi.keterangan_klas, klasifikasi.kode_klas, klasifikasi.golongan_id, subklasifikasi.id_klasifikasi, subklasifikasi.id, subklasifikasi.kode_subklasifikasi, subklasifikasi.keterangan
+        $query =  "SELECT golongan.keterangan, golongan.kode_gol, klasifikasi.keterangan_klas, klasifikasi.kode_klas, klasifikasi.golongan_id, subklasifikasi.id_klasifikasi, subklasifikasi.id, subklasifikasi.kode_subklasifikasi, subklasifikasi.keterangan_subklas
          FROM subklasifikasi 
-         INNER JOIN klasifikasi ON subklasifikasi.id_klasifikasi=klasifikasi.id
-        
+         LEFT JOIN klasifikasi ON subklasifikasi.id_klasifikasi=klasifikasi.id
+         LEFT JOIN golongan ON klasifikasi.golongan_id=golongan.id_golongan
                      ";
         return $this->db->query($query)->result_array();
     }
@@ -181,9 +181,9 @@ class Upbmaster_model extends CI_Model
     //BANGUNAN
     public function getBangunan()
     {
-        $query =  "SELECT tbl_lahan.id_lahan, tbl_lahan.kode_lahan, tbl_bangunan.id_bangunan, tbl_bangunan.kode_bangunan, tbl_bangunan.nama_bangunan
+        $query =  "SELECT tbl_lahan.id_lahan, tbl_lahan.kode_lahan, tbl_lahan.nama_lahan, tbl_bangunan.id_bangunan, tbl_bangunan.kode_barang, tbl_bangunan.kode_bangunan, tbl_bangunan.nama_bangunan
          FROM tbl_bangunan
-         INNER JOIN tbl_lahan ON tbl_lahan.id_lahan=tbl_bangunan.id_lahan
+         LEFT JOIN tbl_lahan ON tbl_lahan.id_lahan=tbl_bangunan.id_lahan
         
                      ";
         return $this->db->query($query)->result_array();
@@ -215,9 +215,9 @@ class Upbmaster_model extends CI_Model
     //RUANGAN
     public function getRuangan()
     {
-        $query =  "SELECT tbl_bangunan.id_bangunan, tbl_bangunan.kode_bangunan, tbl_ruangan.id_ruangan, tbl_ruangan.kode_ruangan, tbl_ruangan.nama_ruangan
+        $query =  "SELECT tbl_bangunan.id_bangunan, tbl_bangunan.kode_bangunan, tbl_ruangan.id_ruangan, tbl_ruangan.kode_ruangan, tbl_ruangan.nama_ruangan, tbl_bangunan.nama_bangunan
          FROM tbl_ruangan
-         INNER JOIN tbl_bangunan ON tbl_bangunan.id_bangunan=tbl_ruangan.id_bangunan
+         left join tbl_bangunan ON tbl_bangunan.id_bangunan=tbl_ruangan.id_bangunan
         
                      ";
         return $this->db->query($query)->result_array();
@@ -251,6 +251,99 @@ class Upbmaster_model extends CI_Model
         $query = "SELECT tbl_ruangan.*, tbl_bangunan.kode_bangunan
         FROM tbl_ruangan 
         left join tbl_bangunan ON tbl_ruangan.id_bangunan = tbl_bangunan.id_bangunan 
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function kode_barang()
+    {
+        $query = "SELECT subklasifikasi.*, klasifikasi.id AS id_klas, klasifikasi.golongan_id, klasifikasi.kode_klas, klasifikasi.keterangan_klas, golongan.id_golongan, golongan.kode_gol, golongan.keterangan
+        FROM subklasifikasi
+        left join klasifikasi ON klasifikasi.id = subklasifikasi.id_klasifikasi
+        left join golongan ON golongan.id_golongan = klasifikasi.golongan_id
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    //ASET
+    public function getAset()
+    {
+        $query =  "SELECT *
+            FROM tbl_barang
+        
+            ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function hapusbarang($id_barang)
+    {
+        $this->db->where('id_barang', $id_barang);
+        $this->db->delete('tbl_barang');
+    }
+
+    public function ambil_id_barang($id_barang)
+    {
+        $query = "SELECT tbl_barang.*, tbl_ruangan.nama_ruangan, jenis_barang.jenis_barang, asal_barang.nama_asal_barang, subklasifikasi.keterangan_subklas
+        FROM tbl_barang
+        left join tbl_ruangan ON tbl_ruangan.id_ruangan = tbl_barang.id_ruangan
+        left join subklasifikasi ON subklasifikasi.id = tbl_barang.id_subklasifikasi
+        left join jenis_barang ON tbl_barang.id_jenis_barang = jenis_barang.id_jenis_barang
+        left join asal_barang ON tbl_barang.id_asal_barang = asal_barang.id_asal_barang where
+        tbl_barang.id_barang = $id_barang
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function ambil_all_barang()
+    {
+        $query = "SELECT tbl_barang.*, tbl_ruangan.nama_ruangan, jenis_barang.jenis_barang, asal_barang.nama_asal_barang, subklasifikasi.keterangan_subklas
+        FROM tbl_barang
+        left join tbl_ruangan ON tbl_ruangan.id_ruangan = tbl_barang.id_ruangan
+        left join subklasifikasi ON subklasifikasi.id = tbl_barang.id_subklasifikasi
+        left join jenis_barang ON tbl_barang.id_jenis_barang = jenis_barang.id_jenis_barang
+        left join asal_barang ON tbl_barang.id_asal_barang = asal_barang.id_asal_barang
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function ambil_tahun_barang($thn)
+    {
+        $query = "SELECT tbl_barang.*, tbl_ruangan.nama_ruangan, jenis_barang.jenis_barang, asal_barang.nama_asal_barang, subklasifikasi.keterangan_subklas
+        FROM tbl_barang
+        left join tbl_ruangan ON tbl_ruangan.id_ruangan = tbl_barang.id_ruangan
+        left join subklasifikasi ON subklasifikasi.id = tbl_barang.id_subklasifikasi
+        left join jenis_barang ON tbl_barang.id_jenis_barang = jenis_barang.id_jenis_barang
+        left join asal_barang ON tbl_barang.id_asal_barang = asal_barang.id_asal_barang
+        where tbl_barang.tahun_perolehan = $thn
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function ambil_kode_bangunan($kode_bangunan)
+    {
+        $query = "SELECT tbl_ruangan.*, tbl_bangunan.kode_bangunan
+        FROM tbl_ruangan
+        left join tbl_bangunan ON tbl_ruangan.id_bangunan = tbl_bangunan.id_bangunan where
+        tbl_bangunan.kode_bangunan = $kode_bangunan
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function ambil_kode_ruangan_isi($kode_ruangan)
+    {
+        $query = "SELECT tbl_barang.*, tbl_ruangan.kode_ruangan, tbl_ruangan.nama_ruangan
+        FROM tbl_barang
+        left join tbl_ruangan ON tbl_barang.id_ruangan = tbl_ruangan.id_ruangan where
+        tbl_ruangan.kode_ruangan = $kode_ruangan
+        ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function ambil_kode_barang($id_barang)
+    {
+        $query = "SELECT tbl_barang.*
+        FROM tbl_barang where
+        id_barang= $id_barang
         ";
         return $this->db->query($query)->result_array();
     }

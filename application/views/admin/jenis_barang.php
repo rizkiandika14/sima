@@ -39,7 +39,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-barang"
                                 id="example">
                                 <thead>
                                     <tr>
@@ -115,7 +115,8 @@
 
                 <div class="modal-body">
                     <?= form_open_multipart('admin/fungsi_edit_jenis_barang') ?>
-                    <input type="hidden" name="id" value="<?= $jnsb['id_jenis_barang']; ?>">
+                    <input type="hidden" id="id_jenis_barang" name="id_jenis_barang"
+                        value="<?= $jnsb['id_jenis_barang']; ?>">
                     <div class="body">
                         <form class="form-horizontal">
                             <div class="row clearfix">

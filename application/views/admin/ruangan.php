@@ -27,11 +27,12 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example"
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable-4"
                                 id="example">
                                 <thead>
                                     <tr>
                                         <th>Kode Bangunan</th>
+                                        <th>Nama Bangunan</th>
                                         <th>Kode Ruangan</th>
                                         <th>Nama Ruangan</th>
                                         <th>Aksi</th>
@@ -40,6 +41,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>Kode Bangunan</th>
+                                        <th>Nama Bangunan</th>
                                         <th>Kode Ruangan</th>
                                         <th>Nama Ruangan</th>
                                         <th>Aksi</th>
@@ -53,7 +55,10 @@
                                     <tr>
 
                                         <td><?= $rgn['kode_bangunan']; ?></td>
-                                        <td><?= $rgn['kode_bangunan']; ?>.<?= $rgn['kode_ruangan']; ?></td>
+                                        <td><?= $rgn['nama_bangunan']; ?></td>
+                                        <td><a
+                                                href="<?= base_url() ?>admin/ruangan_isi/<?= $rgn['kode_ruangan']; ?>"><?= $rgn['kode_bangunan']; ?>.<?= $rgn['kode_ruangan']; ?></a>
+                                        </td>
                                         <td><?= $rgn['nama_ruangan']; ?></td>
                                         <td>
                                             <a class="btn btn-sm btn-info"
